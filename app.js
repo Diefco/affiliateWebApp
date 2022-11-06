@@ -18,9 +18,6 @@ connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 /* Configruación del view engine EJS */
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/src/views'));
-
-console.log(app.get('views'));
-
 /* Recursos estaticos (css, js, imgs, etc) */
 app.use('/assets', express.static(path.join(__dirname, '/src/assets')));
 
@@ -32,7 +29,7 @@ app.use('/', require('./src/routes/login.js'));
 app.use('/admin/clientes', require('./src/routes/admin/clientes.js'));
 app.use('/admin/compras', require('./src/routes/admin/compras.js'));
 app.use('/admin/premios', require('./src/routes/admin/premios.js'));
-/* Compras sera la URL Home del dashboard admin*/
+/* Pedidos sera la URL Home del dashboard admin*/
 app.use('/admin/pedidos', require('./src/routes/admin/pedidos.js'));
 
 /* Rutas cliente */
