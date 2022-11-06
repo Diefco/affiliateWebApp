@@ -1,15 +1,13 @@
 const express = require('express');
 const app = express();
 
-/* Para obtener la url actual */
 const path = require('path');
-// import { fileURLToPath } from 'url';
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 
+/* Variables de entorno */
 let dotenv = require('dotenv');
 dotenv = dotenv.config({ path: path.join(__dirname, '/src/config/.env') });
 
+/* MySQl Connection */
 const connection = require('./src/config/db.js');
 
 connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
@@ -17,16 +15,14 @@ connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 	console.log('The solution is: ', results[0].solution);
 });
 
-/* Config EJS */
+/* Configruación del view engine EJS */
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/src/views'));
 
-/* Routes */
-app.get('/', function (req, res) {
-	res.render('index', {
-		username: 'Stiven',
-	});
-});
+/* Rutas */
+app.use('/', require('./src/routes/routesWeb.js'));
+
+app.use('/clientes', require('./src/routes/clientes.js'));
 
 // Puerto y lanzamiento de la app
 app.set('port', process.env.PORT || 3000);

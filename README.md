@@ -4,16 +4,16 @@ Un programa de afiliados para brindar puntos y recompensas a tus clientes por la
 
 Node version: 14.20.1
 
-### Notes:
+### Notas:
 
-Remember to rebuild the node modules.
+Recuerda instalar los modulos:
 
 ```
 npm install
 ```
 
-And to build the production build // docs:
+Para desarrollo ejecuta:
 
 ```
-npm run build
+npm run dev
 ```
