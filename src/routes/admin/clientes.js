@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-	res.render('clientes', {
+	res.render('admin/clientes', {
 		arrayClientes: [
 			{ id: '1', nombre: 'Juan', correo: 'alt@yahoo.com' },
 			{ id: '2', nombre: 'Pedro', correo: 'sgag@hotmail.com' },

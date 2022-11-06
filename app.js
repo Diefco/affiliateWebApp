@@ -19,10 +19,20 @@ connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/src/views'));
 
-/* Rutas */
-app.use('/', require('./src/routes/routesWeb.js'));
+console.log(app.get('views'));
 
-app.use('/clientes', require('./src/routes/clientes.js'));
+/* Rutas */
+/* Home es el login para ambos tipos de usuarios*/
+app.use('/', require('./src/routes/login.js'));
+
+/* Rutas Administrador */
+app.use('/admin/clientes', require('./src/routes/admin/clientes.js'));
+app.use('/admin/compras', require('./src/routes/admin/compras.js'));
+app.use('/admin/premios', require('./src/routes/admin/premios.js'));
+/* Compras sera la URL Home del dashboard admin*/
+app.use('/admin/pedidos', require('./src/routes/admin/pedidos.js'));
+
+/* Rutas cliente */
 
 // Puerto y lanzamiento de la app
 app.set('port', process.env.PORT || 3000);
