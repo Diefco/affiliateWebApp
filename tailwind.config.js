@@ -4,8 +4,8 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				primary: '#2333789',
-				secondary: '#E61B76',
+				cBlue: '#233789',
+				cPink: '#E61B76',
 			},
 		},
 		container: {
@@ -15,5 +15,5 @@ module.exports = {
 			body: ['"Poppins"', 'Arial', 'Helvetica', 'sans-serif'],
 		},
 	},
-	plugins: [],
+	plugins: [require('@tailwindcss/forms')],
 };

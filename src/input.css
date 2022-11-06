@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.cupcakes-bg::before {
+	content: '';
+	background-image: url(../img/cupcakes-pattern.svg);
+	background-size: 50rem;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0.1;
+}
