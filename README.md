@@ -12,8 +12,14 @@ Recuerda instalar los modulos:
 npm install
 ```
 
-Para desarrollo ejecuta:
+Modo de desarrollo:
 
 ```
 npm run dev
+```
+
+Mantener actualizado tailwind en desarollo:
+
+```
+npm run tailwind
 ```

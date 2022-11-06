@@ -21,6 +21,9 @@ app.set('views', path.join(__dirname, '/src/views'));
 
 console.log(app.get('views'));
 
+/* Recursos estaticos (css, js, imgs, etc) */
+app.use('/assets', express.static(path.join(__dirname, '/src/assets')));
+
 /* Rutas */
 /* Home es el login para ambos tipos de usuarios*/
 app.use('/', require('./src/routes/login.js'));
