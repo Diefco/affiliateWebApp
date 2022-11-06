@@ -1,21 +1,20 @@
-import './src/config/addRequire.js';
 const express = require('express');
 const app = express();
 
 /* Para obtener la url actual */
 const path = require('path');
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// import { fileURLToPath } from 'url';
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 let dotenv = require('dotenv');
 dotenv = dotenv.config({ path: path.join(__dirname, '/src/config/.env') });
 
-import { connection } from './src/config/db.js';
+const connection = require('./src/config/db.js');
 
-connection.query('CREATE DATABASE mydb', function (err, result) {
-	if (err) throw err;
-	console.log('Database created');
+connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+	if (error) throw error;
+	console.log('The solution is: ', results[0].solution);
 });
 
 /* Config EJS */
