@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-const Connection = mysql.createConnection({
+const connection = mysql.createConnection({
 	host: process.env.DB_HOST,
 	user: process.env.DB_USER,
 	password: process.env.DB_PASSWORD,
@@ -8,9 +8,9 @@ const Connection = mysql.createConnection({
 	port: process.env.DB_PORT,
 });
 
-// connection.connect((err) => {
-// 	if (err) throw err;
-// 	console.log('Connected to database');
-// });
+connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+	if (error) throw error;
+	console.log('Base de datos MySQL conectada');
+});
 
-module.exports = Connection;
+module.exports = connection;

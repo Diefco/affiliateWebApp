@@ -7,21 +7,9 @@ const path = require('path');
 let dotenv = require('dotenv');
 dotenv = dotenv.config({ path: path.join(__dirname, '/src/config/.env') });
 
-/* MySQl Connection */
-const connection = require('./src/config/db.js');
-
-connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-	if (error) throw error;
-	console.log('The solution is: ', results[0].solution);
-});
-
-// prueba crear bas de datos
+/* MySQl Creación base de datos. */
 const createDb = require('./src/config/createDb.js');
-
 createDb();
-// console.log(createDb);
-
-// createDb();
 
 /* Configruación del view engine EJS */
 app.set('view engine', 'ejs');
@@ -46,6 +34,5 @@ app.use('/admin/pedidos', require('./src/routes/admin/pedidos.js'));
 app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), (req, res) => {
-	console.log('The value of DBUSER is:', process.env.DB_USER);
 	console.log(`Server runing in http://localhost:${app.get('port')}`);
 });
