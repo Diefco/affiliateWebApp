@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
-		<%- include('templates/headMetas'); -%>
+		<%- include('../templates/headMetas'); -%>
 		<title>Inicia sesión</title>
 	</head>
 	<body class="cupcakes-bg">
 
-		<main class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 ">
-			<div class="mx-auto max-w-lg">
-				<h1 class="text-center text-2xl font-bold text-cBlue sm:text-3xl">
+		<main class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8 ">
+			<div class="max-w-lg mx-auto">
+				<h1 class="text-2xl font-bold text-center text-cBlue sm:text-3xl">
 					¡Bienvenid@!
 				</h1>
 			
-				<p class="mx-auto mt-4 max-w-md text-center text-gray-700">
+				<p class="max-w-md mx-auto mt-4 text-center text-gray-700">
 					Nos alegra tenerte aquí. Si ya has realizado compras con nosotros podrás consultar aquí tus puntos y reclamar los grandiosos premios que tenemos para ti.
 				</p>
 			
-				<form action="/login" class="mt-6 mb-0 space-y-4 rounded-lg p-8 bg-white shadow-2xl">
+				<form method="POST" action="/admin/auth" class="p-8 mt-6 mb-0 space-y-4 bg-white rounded-lg shadow-2xl">
 					<p class="text-lg font-medium">Inicia sesión en tu cuenta</p>
 			
 					<div>
@@ -26,14 +26,14 @@
 						<input
 						type="email"
 						id="email"
-						class="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
+						class="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
 						placeholder="Ingresa tu correo"
 						/>
 			
-						<span class="absolute inset-y-0 right-4 inline-flex items-center">
+						<span class="absolute inset-y-0 inline-flex items-center right-4">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							class="h-5 w-5 text-gray-400"
+							class="w-5 h-5 text-gray-400"
 							fill="none"
 							viewBox="0 0 24 24"
 							stroke="currentColor"
@@ -50,20 +50,20 @@
 					</div>
 			
 					<div>
-					<label for="password class="text-sm font-medium">Contraseña</label>
+					<label for="password" class="text-sm font-medium">Contraseña</label>
 			
 					<div class="relative mt-1">
 						<input
 						type="password"
 						id="password"
-						class="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
+						class="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
 						placeholder="Ingresa tu contraseña"
 						/>
 			
-						<span class="absolute inset-y-0 right-4 inline-flex items-center">
+						<span class="absolute inset-y-0 inline-flex items-center right-4">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							class="h-5 w-5 text-gray-400"
+							class="w-5 h-5 text-gray-400"
 							fill="none"
 							viewBox="0 0 24 24"
 							stroke="currentColor"
@@ -87,12 +87,12 @@
 			
 					<button
 					type="submit"
-					class="block w-full rounded-lg bg-cPink px-5 py-3 text-sm font-medium text-white"
+					class="block w-full px-5 py-3 text-sm font-medium text-white rounded-lg bg-cPink"
 					>
 					Iniciar sesión
 					</button>
 			
-					<p class="text-center text-sm text-gray-500">
+					<p class="text-sm text-center text-gray-500">
 					¿No tienes cuenta? Envianos un mensaje a nuestro correo
 					<a class="underline" href="mailto:contacto@empresa.com" class="text-cBlue">contacto@empresa.com</a>
 					</p>
