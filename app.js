@@ -3,9 +3,33 @@ const app = express();
 
 const path = require('path');
 
+/* url encoded y json */
+app.use(express.urlencoded({ extended: false })); // pasar a true con imagenes
+app.use(express.json());
+
+/* configuración de la sessión */
+const session = require('express-session');
+app.set('trust proxy', 1); // trust first proxy
+app.use(
+	session({
+		secret: 'keyboard cat',
+		resave: false,
+		saveUninitialized: true,
+		cookie: { secure: true },
+	})
+);
+
 /* Variables de entorno */
 let dotenv = require('dotenv');
 dotenv = dotenv.config({ path: path.join(__dirname, '/src/config/.env') });
+
+/* conexión base de datos */
+const con = require('./src/config/db.js');
+
+app.use(function (req, res, next) {
+	req.con = con;
+	next();
+});
 
 /* MySQl Creación base de datos. */
 const createDb = require('./src/config/createDb.js');
@@ -21,14 +45,11 @@ app.use('/assets', express.static(path.join(__dirname, '/src/assets')));
 /* Home es el login para ambos tipos de usuarios*/
 app.use('/', require('./src/routes/login.js'));
 
-/* Rutas Administrador */
-app.use('/admin/clientes', require('./src/routes/admin/clientes.js'));
-app.use('/admin/compras', require('./src/routes/admin/compras.js'));
-app.use('/admin/premios', require('./src/routes/admin/premios.js'));
-/* Pedidos sera la URL Home del dashboard admin*/
-app.use('/admin/pedidos', require('./src/routes/admin/pedidos.js'));
+/* Incluir rutas admin*/
+const loginRouter = require('./src/routes/admin/loginRouter');
 
-/* Rutas cliente */
+/* routing admin */
+app.use('/admin/', loginRouter);
 
 // Puerto y lanzamiento de la app
 app.set('port', process.env.PORT || 3000);

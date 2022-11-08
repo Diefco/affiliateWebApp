@@ -1,7 +1,7 @@
 const createDb = () => {
-	const connection = require('./db');
+	const con = require('./db');
 
-	// connection.query(
+	// con.query(
 	// 	'CREATE DATABASE IF NOT EXISTS `db_webAfiliate` DEFAULT CHARACTER SET utf8',
 	// 	function (error, results, fields) {
 	// 		if (error) throw error;
@@ -11,15 +11,15 @@ const createDb = () => {
 	// 	}
 	// );
 
-	connection.query(
-		'CREATE TABLE IF NOT EXISTS `administradores` (`id` INT NOT NULL AUTO_INCREMENT,`correo` VARCHAR(45) NOT NULL,`contraseña` VARCHAR(45) NOT NULL,PRIMARY KEY (`id`))ENGINE = InnoDB',
+	con.query(
+		'CREATE TABLE IF NOT EXISTS `admin` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NOT NULL,`password` VARCHAR(45) NOT NULL,PRIMARY KEY (`id`))ENGINE = InnoDB',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
-				console.log('Tabla administradores creada');
-				connection.query(
-					'INSERT INTO administradores (correo, contraseña) VALUES ("admin@admin.com","admin")',
+				console.log('Tabla admin creada');
+				con.query(
+					'INSERT INTO admin (email, password) VALUES ("admin@admin.com","admin")',
 					function (error, results, fields) {
 						if (error) throw error;
 
@@ -32,68 +32,68 @@ const createDb = () => {
 		}
 	);
 
-	connection.query(
-		'CREATE TABLE IF NOT EXISTS `clientes` (`id` INT NOT NULL AUTO_INCREMENT,`correo` VARCHAR(45) NOT NULL,`nombre` VARCHAR(45) NOT NULL,`telefono` VARCHAR(45) NOT NULL,`direccion` VARCHAR(50) NOT NULL,`fechaCreacion` DATETIME(6) NOT NULL,`contraseña` VARCHAR(45) NOT NULL,`idAdministrador` INT NOT NULL,PRIMARY KEY (`id`),FOREIGN KEY (`idAdministrador`)REFERENCES `administradores` (`id`)ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
+	con.query(
+		'CREATE TABLE IF NOT EXISTS `clients` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NOT NULL,`name` VARCHAR(45) NOT NULL,`phone` VARCHAR(45) NOT NULL,`address` VARCHAR(50) NOT NULL,`creationDate` DATETIME(6) NOT NULL,`password` VARCHAR(45) NOT NULL,`idAdmin` INT NOT NULL,PRIMARY KEY (`id`),FOREIGN KEY (`idAdmin`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
-				console.log('Tabla clientes creada');
+				console.log('Tabla clients creada');
 			}
 		}
 	);
 
-	connection.query(
-		'CREATE TABLE IF NOT EXISTS `compras` (`id` INT NOT NULL,`idCliente` VARCHAR(45) NOT NULL,`nombreCompra` VARCHAR(45) NOT NULL,`descripcion` VARCHAR(45) NOT NULL,`fechaCompra` DATETIME(6) NOT NULL,`valorCompra` DECIMAL(50) NOT NULL,`creado` DATETIME NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
+	con.query(
+		'CREATE TABLE IF NOT EXISTS `purchases` (`id` INT NOT NULL,`idClient` VARCHAR(45) NOT NULL,`namePurchase` VARCHAR(45) NOT NULL,`description` VARCHAR(45) NOT NULL,`datePurchase` DATETIME(6) NOT NULL,`valuePurchase` DECIMAL(50) NOT NULL,`createDate` DATETIME NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
-				console.log('Tabla compras creada');
+				console.log('Tabla purchases creada');
 			}
 		}
 	);
 
-	connection.query(
-		'CREATE TABLE IF NOT EXISTS `premios` (`id` INT NOT NULL,`nombrePremio` VARCHAR(45) NOT NULL,`imagen` TEXT NOT NULL,`precioPunto` DECIMAL(50) NOT NULL,`descripcion` VARCHAR(280) NOT NULL,`fechaFinalizacion` DATETIME(6) NOT NULL,`tiempoEntrega` DATETIME(6) NOT NULL,PRIMARY KEY (`id`))ENGINE = InnoDB;',
+	con.query(
+		'CREATE TABLE IF NOT EXISTS `rewards` (`id` INT NOT NULL,`nameReward` VARCHAR(45) NOT NULL,`image` TEXT NOT NULL,`pricePoints` DECIMAL(50) NOT NULL,`description` VARCHAR(280) NOT NULL,`finishDate` DATETIME(6) NOT NULL,`deliveryTime` DATETIME(6) NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
-				console.log('Tabla premios creada');
+				console.log('Tabla rewards creada');
 			}
 		}
 	);
 
-	connection.query(
-		'CREATE TABLE IF NOT EXISTS `pedidos` (`id` INT NOT NULL,`telefonoContacto` VARCHAR(45) NOT NULL,`fechaInicio` DATETIME NOT NULL,`precioPuntos` VARCHAR(45) NOT NULL,`direccionEntrega` VARCHAR(45) NOT NULL,`fechaEntrega` VARCHAR(45) NOT NULL,`horarioDisponible` TIME NOT NULL,`mensajeEntrega` VARCHAR(280) NULL,`idPremio` INT NOT NULL,PRIMARY KEY (`id`),CONSTRAINT `idPremio`FOREIGN KEY (`idPremio`)REFERENCES `premios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
+	con.query(
+		'CREATE TABLE IF NOT EXISTS `orders` (`id` INT NOT NULL,`phoneContact` VARCHAR(45) NOT NULL,`orderDate` DATETIME NOT NULL,`pricePoints` VARCHAR(45) NOT NULL,`deliveryAddress` VARCHAR(45) NOT NULL,`deliveryDate` VARCHAR(45) NOT NULL,`scheduleAvailable` TIME NOT NULL,`deliveryMessage` VARCHAR(280) NULL,`idReward` INT NOT NULL,PRIMARY KEY (`id`),CONSTRAINT `idreward`FOREIGN KEY (`idReward`) REFERENCES `rewards` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
-				console.log('Tabla pedidos creada');
+				console.log('Tabla orders creada');
 			}
 		}
 	);
 
-	connection.query(
-		'CREATE TABLE IF NOT EXISTS `puntos` (`id` INT NOT NULL,`puntos` VARCHAR(45) NOT NULL,`fechaCompra` DATETIME NOT NULL,`idCompra` INT NOT NULL,`idCliente` INT NOT NULL,PRIMARY KEY (`id`),CONSTRAINT `idCliente` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT `idCompra`FOREIGN KEY (`idCompra`)REFERENCES `compras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)ENGINE = InnoDB;',
+	con.query(
+		'CREATE TABLE IF NOT EXISTS `points` (`id` INT NOT NULL,`points` VARCHAR(45) NOT NULL,`datePurchase` DATETIME NOT NULL,`idPurchase` INT NOT NULL,`idClient` INT NOT NULL,PRIMARY KEY (`id`), CONSTRAINT `idClient` FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT `idPurchase` FOREIGN KEY (`idPurchase`)REFERENCES `purchases` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
-				console.log('Tabla puntos creada');
+				console.log('Tabla points creada');
 			}
 		}
 	);
 
-	connection.query(
-		'CREATE TABLE IF NOT EXISTS `estadoPedido` (`id` INT NOT NULL,`estado` VARCHAR(45) NOT NULL,`idCliente` INT NOT NULL,`idPedido` INT NOT NULL,PRIMARY KEY (`id`),FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`id`)ON DELETE NO ACTION ON UPDATE NO ACTION, FOREIGN KEY (`idPedido`)REFERENCES `pedidos` (`id`)ON DELETE NO ACTION ON UPDATE NO ACTION)ENGINE = InnoDB;',
+	con.query(
+		'CREATE TABLE IF NOT EXISTS `orderState` (`id` INT NOT NULL,`stateName` VARCHAR(45) NOT NULL,`idClient` INT NOT NULL,`idorder` INT NOT NULL,PRIMARY KEY (`id`),FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`)ON DELETE NO ACTION ON UPDATE NO ACTION, FOREIGN KEY (`idOrder`)REFERENCES `orders` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
-				console.log('Tabla estadoPedido creada');
+				console.log('Tabla orderState creada');
 			}
 		}
 	);
