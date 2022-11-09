@@ -1,14 +1,15 @@
-Admin = require('../models/adminModel.js');
+const Admin = require('../models/adminModel.js');
+const session = require('express-session');
 
 module.exports = {
 	index: (req, res) => {
+		// renderiza el view .ejs:
 		res.render('admin/login');
 	},
 	validate: (req, res) => {
 		Admin.auth(req.con, req.body, (err, results) => {
-			console.log(results);
 			if (results.auth === false) {
-				// Fallo autenticación
+				// Fallo autenticación, renderiza el view .ejs:
 				res.render('admin/login', {
 					alert: true,
 					alertTitle: 'Ups...',
@@ -20,7 +21,11 @@ module.exports = {
 				});
 			} else {
 				// autenticación correcta
-				res.redirect('/admin/ok');
+				req.session.loggedin = true;
+				req.session.idUser = results.sessionIdUser;
+				req.session.email = results.sessionEmail;
+				//ToDo: Cambiar a /admin/pedidos/
+				res.redirect('/admin/clientes');
 			}
 		});
 	},

@@ -7,21 +7,21 @@ const path = require('path');
 app.use(express.urlencoded({ extended: false })); // pasar a true con imagenes
 app.use(express.json());
 
+/* Variables de entorno */
+let dotenv = require('dotenv');
+dotenv = dotenv.config({ path: path.join(__dirname, '/src/config/.env') });
+
 /* configuración de la sessión */
 const session = require('express-session');
 app.set('trust proxy', 1); // trust first proxy
 app.use(
 	session({
-		secret: 'keyboard cat',
+		secret: process.env.SESSION_SECRET,
 		resave: false,
 		saveUninitialized: true,
 		cookie: { secure: true },
 	})
 );
-
-/* Variables de entorno */
-let dotenv = require('dotenv');
-dotenv = dotenv.config({ path: path.join(__dirname, '/src/config/.env') });
 
 /* conexión base de datos */
 const con = require('./src/config/db.js');
