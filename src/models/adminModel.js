@@ -1,3 +1,5 @@
+const bcryptjs = require('bcryptjs');
+
 module.exports = {
 	// get: function (con, callback) {
 	// 	con.query('SELECT * FROM admin', callback);
@@ -13,15 +15,26 @@ module.exports = {
 				`SELECT * FROM admin WHERE email = '${data.email}'`,
 				(error, results, fields) => {
 					if (error) throw error;
+					// Validamos si es undefined = no encontro el correo
+					if (results[0] === undefined) {
+						return callback(null, {
+							auth: false,
+							msg: 'El correo o contraseña no son correctos',
+						});
+					}
+					// Comparamos la contraseña enviada por el usar con la bd.
 					if (
-						results[0] === undefined ||
-						data.password != results[0].password
+						!bcryptjs.compareSync(
+							data.password,
+							results[0].password
+						)
 					) {
 						return callback(null, {
 							auth: false,
 							msg: 'El correo o contraseña no son correctos',
 						});
 					}
+					// Encontro el correo y la contraseña es correcta.
 					return callback(null, {
 						auth: true,
 						msg: 'El correo y contraseña son correctos',

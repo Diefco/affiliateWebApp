@@ -12,14 +12,14 @@ const createDb = () => {
 	// );
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `admin` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NOT NULL,`password` VARCHAR(45) NOT NULL,PRIMARY KEY (`id`))ENGINE = InnoDB',
+		'CREATE TABLE IF NOT EXISTS `admin` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NOT NULL,`password` VARCHAR(60) NOT NULL,PRIMARY KEY (`id`))ENGINE = InnoDB',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
 				console.log('Tabla admin creada');
 				con.query(
-					'INSERT INTO admin (email, password) VALUES ("admin@admin.com","admin")',
+					'INSERT INTO admin (email, password) VALUES ("admin@admin.com","$2a$10$EFtp6DTl7L93qrI/IsblX.aGEARq7Mqw3u08WkRBq9dg/aJ.g3cY6")',
 					function (error, results, fields) {
 						if (error) throw error;
 
