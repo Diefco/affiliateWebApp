@@ -1,27 +1,15 @@
 const express = require('express');
 const app = express();
-
 const path = require('path');
+let dotenv = require('dotenv');
+const cookieSession = require('cookie-session');
 
 /* url encoded y json */
 app.use(express.urlencoded({ extended: false })); // pasar a true con imagenes
 app.use(express.json());
 
 /* Variables de entorno */
-let dotenv = require('dotenv');
 dotenv = dotenv.config({ path: path.join(__dirname, '/src/config/.env') });
-
-/* configuración de la sessión */
-const session = require('express-session');
-app.set('trust proxy', 1); // trust first proxy
-app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: true,
-		cookie: { secure: true },
-	})
-);
 
 /* conexión base de datos */
 const con = require('./src/config/db.js');
@@ -35,15 +23,24 @@ app.use(function (req, res, next) {
 const createDb = require('./src/config/createDb.js');
 createDb();
 
+/* configuración de la sessión */
+app.use(
+	cookieSession({
+		name: 'session',
+		keys: [process.env.SESSION_KEY1, process.env.SESSION_KEY2],
+		maxAge: 24 * 60 * 60 * 1000 * 30, // 24 hours
+	})
+);
+
 /* Configruación del view engine EJS */
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/src/views'));
+
 /* Recursos estaticos (css, js, imgs, etc) */
 app.use('/assets', express.static(path.join(__dirname, '/src/assets')));
 
 /* Rutas admin*/
-const loginRouter = require('./src/routes/admin/loginRouter');
-
+const loginRouter = require('./src/routes/admin/router');
 app.use('/admin/', loginRouter);
 
 // Puerto y lanzamiento de la app

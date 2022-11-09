@@ -1,14 +1,6 @@
 const bcryptjs = require('bcryptjs');
 
 module.exports = {
-	// get: function (con, callback) {
-	// 	con.query('SELECT * FROM admin', callback);
-	// },
-
-	// getById: function (con, id, callback) {
-	// 	con.query(`SELECT * FROM admin WHERE id = ${id}`, callback);
-	// },
-
 	auth: (con, data, callback) => {
 		if (data.email && data.password) {
 			con.query(
@@ -35,6 +27,7 @@ module.exports = {
 						});
 					}
 					// Encontro el correo y la contraseña es correcta.
+					// Enviamos mensaje y data para la sesión.
 					return callback(null, {
 						auth: true,
 						msg: 'El correo y contraseña son correctos',
@@ -50,27 +43,4 @@ module.exports = {
 			});
 		}
 	},
-
-	// create: function (con, data, callback) {
-	// 	con.query(
-	// 		`INSERT INTO admin SET
-	// 		email = '${data.email}',
-	// 		password = '${data.password}'`,
-	// 		callback
-	// 	);
-	// },
-
-	// update: function (con, data, id, callback) {
-	// 	con.query(
-	// 		`UPDATE admin SET
-	// 		email = '${data.email}',
-	// 		password = '${data.password}'
-	// 		WHERE id_admin = ${id}`,
-	// 		callback
-	// 	);
-	// },
-
-	// destroy: function (con, id, callback) {
-	// 	con.query(`DELETE FROM admin WHERE id_admin = ${id}`, callback);
-	// },
 };
