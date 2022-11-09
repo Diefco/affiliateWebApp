@@ -25,6 +25,7 @@
 					<div class="relative mt-1">
 						<input
 						type="email"
+						name="email"
 						id="email"
 						class="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
 						placeholder="Ingresa tu correo"
@@ -55,6 +56,7 @@
 					<div class="relative mt-1">
 						<input
 						type="password"
+						name="password" 
 						id="password"
 						class="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
 						placeholder="Ingresa tu contraseña"
@@ -99,6 +101,22 @@
 				</form>
 			</div>
 		</main>
+
+
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<% if(typeof alert != "undefined") { %>
+		<script>
+			Swal.fire({
+				title: '<%= alertTitle %>',
+				text: '<%= alertMessage %>',
+				icon: '<%= alertIcon %>',
+				showConfirmButton: '<%= showConfirmButton %>',
+				timer: '<%= timer %>',
+			}).then(() => {
+				window.location = '/<%= ruta %>';
+			});
+		</script>
+		<% } %>
 		
 	</body>
 </html>

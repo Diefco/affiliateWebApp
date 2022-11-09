@@ -41,14 +41,9 @@ app.set('views', path.join(__dirname, '/src/views'));
 /* Recursos estaticos (css, js, imgs, etc) */
 app.use('/assets', express.static(path.join(__dirname, '/src/assets')));
 
-/* Rutas */
-/* Home es el login para ambos tipos de usuarios*/
-app.use('/', require('./src/routes/login.js'));
-
-/* Incluir rutas admin*/
+/* Rutas admin*/
 const loginRouter = require('./src/routes/admin/loginRouter');
 
-/* routing admin */
 app.use('/admin/', loginRouter);
 
 // Puerto y lanzamiento de la app

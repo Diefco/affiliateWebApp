@@ -4,13 +4,25 @@ module.exports = {
 	index: (req, res) => {
 		res.render('admin/login');
 	},
-	validate: async (req, res) => {
-		console.log(req.body);
-		// console.log('RES________________________________');
-		// console.log(res);
-		// Admin.getByEmail(req.con, (err, rows) => {
-		// 	console.log(rows);
-		// });
+	validate: (req, res) => {
+		Admin.auth(req.con, req.body, (err, results) => {
+			console.log(results);
+			if (results.auth === false) {
+				// Fallo autenticación
+				res.render('admin/login', {
+					alert: true,
+					alertTitle: 'Ups...',
+					alertMessage: results.msg,
+					alertIcon: 'error',
+					showConfirmButton: true,
+					timer: 3000,
+					ruta: 'admin/',
+				});
+			} else {
+				// autenticación correcta
+				res.redirect('/admin/ok');
+			}
+		});
 	},
 
 	// create: (req, res) => {

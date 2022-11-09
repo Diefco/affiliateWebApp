@@ -7,8 +7,28 @@ module.exports = {
 	// 	con.query(`SELECT * FROM admin WHERE id = ${id}`, callback);
 	// },
 
-	getByEmail: function (con, email, callback) {
-		con.query(`SELECT email FROM admin WHERE email = ${email}`, callback);
+	auth: (con, data, callback) => {
+		if (data.email && data.password) {
+			con.query(
+				`SELECT * FROM admin WHERE email = '${data.email}'`,
+				(error, results, fields) => {
+					if (error) throw error;
+					if (
+						results[0] === undefined ||
+						data.password != results[0].password
+					) {
+						return callback(null, {
+							auth: false,
+							msg: 'El correo o contraseña no son correctos',
+						});
+					}
+					return callback(null, {
+						auth: true,
+						msg: 'El correo y contraseña son correctos',
+					});
+				}
+			);
+		}
 	},
 
 	// create: function (con, data, callback) {
