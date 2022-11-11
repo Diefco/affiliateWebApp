@@ -6,6 +6,7 @@ module.exports = {
 			colors: {
 				cBlue: '#233789',
 				cPink: '#E61B76',
+				cGray: '#606060',
 			},
 		},
 		container: {

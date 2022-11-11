@@ -1,22 +1,97 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-		<%- include('../templates/headMetas'); -%>
-		<title>Clientes</title>
-	</head>
-	<body>
-		<%- include('../templates/header'); -%>
 
-		<h1>clientes</h1>
-		<div class="clientes">
-			<% if (arrayClientes.length > 0) { %> 
-                <% arrayClientes.forEach(cliente => { %>
-                    <div class="nombre"><%= cliente.nombre %></div>
-                    <div class="correo"><%= cliente.correo %></div>
-                <% }) %> 
-            <% } %>
+<head>
+	<%- include('../templates/headMetas'); -%>
+	<title>Clientes</title>
+</head>
+
+<body class="cupcakes-bg">
+	<%- include('../templates/header'); -%>
+
+	<div class="content px-2 lg:px-4">
+		<div class="flex gap-4 justify-between">
+			<div>
+				<h1 class="text-3xl mb-2 font-semibold">Clientes</h1>
+				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+			</div>
+			<div>
+				<a
+				  class="inline-block rounded border border-cPink bg-cPink  mt-3 px-3 py-1 text-sm font-medium text-white hover:bg-transparent hover:text-cPink focus:outline-none focus:ring active:text-indigo-500"
+				  href="/create"
+				>
+				  <i class="fa-solid fa-user-plus mr-2"></i>
+				  Crear cliente
+				</a>
+			</div>
 		</div>
 
-		<%- include('../templates/footer'); -%>
-	</body>
+		<div id="grid-clients" class="mt-4"></div>
+	</div>
+
+	<%- include('../templates/footer'); -%>
+	<script type="module">
+		import { Grid, html } from 'https://unpkg.com/gridjs?module';
+		new Grid({
+			search: true,
+			columns: [{
+				id: 'id',
+				name: 'ID',
+				width: '7%',
+			}, {
+				id: 'name',
+				name: 'Nombre'
+			}, {
+				id: 'email',
+				name: 'Correo Electrónico'
+			}, {
+				id: 'phone',
+				name: 'Télefono'
+			}, {
+				id: 'actions',
+				name: '',
+				width: '8%',
+			}],
+			sort: true,
+			data: [
+				['1', 'John', 'john@example.com', '(353) 01 222 3333', html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['2', 'Mark', 'mark@gmail.com', '(01) 22 888 4444', html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['3', 'Eoin', 'eoin@gmail.com', '0097 22 654 00033',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['4', 'Sarah', 'sarahcdd@gmail.com', '+322 876 1233',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['5', 'Afshin', 'afshin@mail.com', '(353) 22 87 8356',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['6', 'John', 'john@example.com', '(353) 01 222 3333',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['7', 'Mark', 'mark@gmail.com', '(01) 22 888 4444',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['8', 'Eoin', 'eoin@gmail.com', '0097 22 654 00033',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['9', 'Sarah', 'sarahcdd@gmail.com', '+322 876 1233',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['10', 'Afshin', 'afshin@mail.com', '(353) 22 87 8356',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['11', 'John', 'john@example.com', '(353) 01 222 3333',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['12', 'Mark', 'mark@gmail.com', '(01) 22 888 4444',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['13', 'Eoin', 'eoin@gmail.com', '0097 22 654 00033',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['14', 'Sarah', 'sarahcdd@gmail.com', '+322 876 1233',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+				['15', 'Afshin', 'afshin@mail.com', '(353) 22 87 8356',  html('<a href="edit/1/"><i class="fa-solid fa-pen-to-square text-gray-500 hover:text-cPink mx-1"></i></a><a href="delete/1/"><i class="fa-solid fa-trash-can text-gray-500 hover:text-cPink mx-1"></i></a>')],
+			],
+			pagination: {
+				enabled: true,
+				limit: 10,
+				summary: false
+			},
+			language: {
+				'search': {
+				'placeholder': '🔍 Buscar...'
+			},
+			'pagination': {
+				'previous': 'Ant.',
+				'next': 'Sig.'
+			}, 
+			style: { 
+				table: { 
+				'white-space': 'nowrap'
+				}
+			}
+		}
+		}).render(document.getElementById('grid-clients'));
+	</script>
+
+</body>
+
 </html>
