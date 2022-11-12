@@ -33,7 +33,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `clients` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NOT NULL,`name` VARCHAR(45) NOT NULL,`phone` VARCHAR(45) NOT NULL,`address` VARCHAR(50) NOT NULL,`creationDate` DATETIME(6) NOT NULL,`password` VARCHAR(45) NOT NULL,`idAdmin` INT NOT NULL,PRIMARY KEY (`id`),FOREIGN KEY (`idAdmin`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `clients` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NOT NULL,`name` VARCHAR(45) NOT NULL,`phone` VARCHAR(45) NOT NULL,`address` VARCHAR(50) NOT NULL,`password` VARCHAR(45) NOT NULL,`idAdmin` INT NOT NULL,PRIMARY KEY (`id`),`creationDate` TIMESTAMP NOT NULL, FOREIGN KEY (`idAdmin`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
@@ -44,7 +44,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `purchases` (`id` INT NOT NULL,`idClient` VARCHAR(45) NOT NULL,`namePurchase` VARCHAR(45) NOT NULL,`description` VARCHAR(45) NOT NULL,`datePurchase` DATETIME(6) NOT NULL,`valuePurchase` DECIMAL(50) NOT NULL,`createDate` DATETIME NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `purchases` (`id` INT NOT NULL,`idClient` VARCHAR(45) NOT NULL,`namePurchase` VARCHAR(45) NOT NULL,`description` VARCHAR(45) NOT NULL,`datePurchase` DATETIME NOT NULL,`valuePurchase` DECIMAL(50) NOT NULL,`createDate` DATETIME NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
@@ -55,7 +55,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `rewards` (`id` INT NOT NULL,`nameReward` VARCHAR(45) NOT NULL,`image` TEXT NOT NULL,`pricePoints` DECIMAL(50) NOT NULL,`description` VARCHAR(280) NOT NULL,`finishDate` DATETIME(6) NOT NULL,`deliveryTime` DATETIME(6) NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `rewards` (`id` INT NOT NULL,`nameReward` VARCHAR(45) NOT NULL,`image` TEXT NOT NULL,`pricePoints` DECIMAL(50) NOT NULL,`description` VARCHAR(280) NOT NULL,`finishDate` DATETIME NOT NULL,`deliveryTime` DATETIME(6) NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 

@@ -10,8 +10,10 @@ router.get('/logout', adminController.logout);
 
 /* Clientes */
 router.get('/clientes', clientsController.index);
-
+router.get('/clientList', clientsController.getList);
 // router.get('/create', adminController.create);
+router.get('/clientes/nuevo', clientsController.newClient);
+router.post('/clientes/nuevoCliente/', clientsController.create);
 // router.post('/', adminController.store);
 // router.get('/:id/edit', adminController.edit);
 // router.put('/:id', adminController.update);

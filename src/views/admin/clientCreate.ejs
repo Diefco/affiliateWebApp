@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<%- include('../templates/headMetas'); -%>
+	<title>Cliente nuevo</title>
+</head>
+
+<body class="cupcakes-bg">
+	<%- include('../templates/header'); -%>
+
+	<div class="content">
+		<div class="flex justify-between gap-4">
+			<div>
+				<h1 class="mb-2 text-3xl font-semibold">Crear Cliente</h1>
+				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+			</div>
+            <div>
+				<a
+				  class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded inline-block3 border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring active:text-indigo-500"
+				  href="/admin/clientes"
+				>
+                    <i class="fa-solid fa-left-long"></i>				  
+				</a>
+			</div>
+	</div>
+    
+    <div class="p-4 py-12 mx-auto mt-6 text-center bg-white rounded-lg shadow-2xl">
+        <form method="POST" action="/admin/clientes/nuevoCliente" class="">
+            
+        <label for="name" class="block text-sm font-medium">Nombre <span class="text-red-600">*</span></label>
+        <input
+            type="text"
+            name="name"
+            id="name"
+            class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
+            placeholder="Nombre del cliente"
+            required
+        />   
+
+        <label for="email" class="block mt-6 text-sm font-medium">Correo Electrónico <span class="text-red-600">*</span></label>
+        <input
+        type="email"
+        name="email" 
+        id="email"
+        class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
+        placeholder="Correo electronico"
+        required
+        />
+
+
+        <label for="phone" class="block mt-6 text-sm font-medium">Telefono <span class="text-red-600">*</span></label>
+        <input
+        type="tel"
+        name="phone" 
+        id="phone"
+        class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
+        placeholder="Numero de contacto"
+        required
+        />
+        
+        <label for="address" class="block mt-6 text-sm font-medium">Direccion <span class="text-red-600">*</span></label>
+        <input
+        type="text"
+        name="address" 
+        id="address"
+        class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
+        placeholder="Direccion"
+        required
+        />
+
+        
+        <button
+        type="submit"
+        class="block py-3 m-auto mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink"
+        >
+            Crear Cliente
+        </button>
+
+        <span class="block mt-4 text-sm text-red-600">(*) Los campos con asterisco son obligatorios.</span>
+
+    </div>    
+
+
+
+	<%- include('../templates/footer'); -%>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined") { %>
+    <script>
+        Swal.fire({
+            title: '<%= alertTitle %>',
+            text: '<%= alertMessage %>',
+            icon: '<%= alertIcon %>',
+            showConfirmButton: '<%= showConfirmButton %>',
+            timer: '<%= timer %>',
+        }).then(() => {
+            window.location = '<%= ruta %>';
+        });
+    </script>
+    <% } %>
+	
+</body>
+
+</html>

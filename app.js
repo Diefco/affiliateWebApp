@@ -2,7 +2,11 @@ const express = require('express');
 const app = express();
 const path = require('path');
 let dotenv = require('dotenv');
-const cookieSession = require('cookie-session');
+const cookieSession = require('cookie-session'); // invocamos morgan
+const morgan = require('morgan');
+
+// middlewares
+app.use(morgan('dev'));
 
 /* url encoded y json */
 app.use(express.urlencoded({ extended: false })); // pasar a true con imagenes

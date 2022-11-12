@@ -22,7 +22,7 @@ module.exports = {
 					alertIcon: 'error',
 					showConfirmButton: true,
 					timer: 3000,
-					ruta: 'admin/',
+					ruta: '/admin/',
 				});
 			} else {
 				// autenticación correcta, creamos sesión
