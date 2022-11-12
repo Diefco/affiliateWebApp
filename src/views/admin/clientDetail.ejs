@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<%- include('../templates/headMetas'); -%>
+	<title>Clientes</title>
+</head>
+
+<body class="cupcakes-bg">
+	<%- include('../templates/header'); -%>
+
+	<div class="px-2 content lg:px-4">
+		<div class="flex justify-between gap-4 titles">
+			<div>
+				<h1 class="mb-2 text-3xl font-semibold">Clientes</h1>
+				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+			</div>
+			<div>
+				<a
+				  class="inline-block px-3 py-1 mt-3 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring active:text-indigo-500"
+				  href="./admin/clientes"
+				>
+                    <i class="fa-solid fa-arrow-left"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="p-4 bg-white">
+            <h2 class="mb-2 text-2xl font-semibold">Información del cliente</h2>
+            <div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+        </div>
+
+         <!-- Compras realizadas -->
+        <h2 class="mb-2 text-2xl font-semibold">Pedidos del cliente</h2>
+        <div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+        <div id="grid-clients" class="mt-4"></div>
+	</div>
+
+	<%- include('../templates/footer'); -%>
+
+    <script type="module">
+		import { Grid, html } from 'https://unpkg.com/gridjs?module';
+		new Grid({
+			search: true,
+			columns: [ {
+				id: 'date',
+				name: 'Fecha',
+                width: '18%',
+			}, {
+				id: 'orderName',
+				name: 'Nombre de la compra',
+			}, {
+				id: 'value',
+				name: 'Valor', 
+			}, {
+				id: 'Puntos gan.',
+				name: '',
+			}, {
+				id: 'actions',
+				name: '',
+				width: '6%',
+			}],
+			sort: true,
+			data: [
+				['13-11-2021', 'Pastel 4 pisos', '$450.000', '450 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+				['17-03-2022', 'Cupcakes de Cars x30', '$80.000', '80 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+                ['13-05-2022', 'Pastel de vainilla con crema chantilly', '$220.000', '220 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+                ['11-06-2022', 'Caja sorpresa de cumpleaños', '$180.000', '180 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+                ['18-11-2022', 'Pastel 2 libras arequipe y x5 Brazos de reina con crema especial', '$195.000', '195 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+			],
+			pagination: {
+				enabled: true,
+				limit: 10,
+				summary: false
+			},
+			language: {
+				'search': {
+				'placeholder': '🔍 Buscar...'
+			},
+			'pagination': {
+				'previous': 'Ant.',
+				'next': 'Sig.'
+			}, 
+			style: { 
+				table: { 
+				'white-space': 'nowrap'
+				}
+			}
+		}
+		}).render(document.getElementById('grid-clients'));
+    </script>
+
+
+</body>
+
+</html>

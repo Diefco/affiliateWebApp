@@ -14,6 +14,7 @@ router.get('/clientList', clientsController.getList);
 // router.get('/create', adminController.create);
 router.get('/clientes/nuevo', clientsController.newClient);
 router.post('/clientes/nuevoCliente/', clientsController.create);
+router.get('/clientes/edit/1/', clientsController.edit);
 // router.post('/', adminController.store);
 // router.get('/:id/edit', adminController.edit);
 // router.put('/:id', adminController.update);
