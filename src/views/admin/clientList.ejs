@@ -54,28 +54,10 @@
 				width: '10%',
 			}],
 			sort: true,
-			/*data: [
-				['1', 'John', 'john@example.com', '(353) 01 222 3333', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['2', 'Mark', 'mark@gmail.com', '(01) 22 888 4444', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['3', 'Eoin', 'eoin@gmail.com', '0097 22 654 00033',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['4', 'Sarah', 'sarahcdd@gmail.com', '+322 876 1233',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['5', 'Afshin', 'afshin@mail.com', '(353) 22 87 8356',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['6', 'John', 'john@example.com', '(353) 01 222 3333',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['7', 'Mark', 'mark@gmail.com', '(01) 22 888 4444',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['8', 'Eoin', 'eoin@gmail.com', '0097 22 654 00033',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['9', 'Sarah', 'sarahcdd@gmail.com', '+322 876 1233',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['10', 'Afshin', 'afshin@mail.com', '(353) 22 87 8356',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['11', 'John', 'john@example.com', '(353) 01 222 3333',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['12', 'Mark', 'mark@gmail.com', '(01) 22 888 4444',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['13', 'Eoin', 'eoin@gmail.com', '0097 22 654 00033',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['14', 'Sarah', 'sarahcdd@gmail.com', '+322 876 1233',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-				['15', 'Afshin', 'afshin@mail.com', '(353) 22 87 8356',  html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/1/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>')],
-			],*/
 			server: {
 				url: 'http://localhost:3018/admin/clientList',
-				then: data => data.map(client => [client.id, client.name, client.email, client.phone, html(`<a href="edit/${client.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="delete/${client.id}/"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
+				then: data => data.map(client => [client.id, client.name, client.email, client.phone, html(`<a href="/admin/clientes/edit/${client.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deleteClient(${client.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
 				handle: (res) => {
-					console.log(res)
 				// no matching records found
 				if (res.status === 404) return {data: []};
 				if (res.ok) return res.json();
@@ -104,6 +86,8 @@
 		}
 		}).render(document.getElementById('grid-clients'));
 	</script>
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 

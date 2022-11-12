@@ -1,11 +1,10 @@
 module.exports = {
 	get: function (con, callback) {
-		console.log('Ejecuta query');
 		con.query('SELECT * FROM clients', callback);
 	},
-	// getById: function (con, id, callback) {
-	// 	con.query(`SELECT * FROM clients WHERE id = ${id}`, callback);
-	// },
+	getById: function (con, id, callback) {
+		con.query(`SELECT * FROM clients WHERE id = ${id}`, callback);
+	},
 	create: function (con, data, callback) {
 		if (data.email) {
 			con.query(
@@ -60,16 +59,19 @@ module.exports = {
 			});
 		}
 	},
-	// update: function (con, data, id, callback) {
-	// 	con.query(
-	// 		`UPDATE clients SET
-	// 		email = '${data.email}',
-	// 		password = '${data.password}'
-	// 		WHERE id_clients = ${id}`,
-	// 		callback
-	// 	);
-	// },
-	// destroy: function (con, id, callback) {
-	// 	con.query(`DELETE FROM clients WHERE id_clients = ${id}`, callback);
-	// },
+
+	destroy: function (con, id, callback) {
+		console.log('entra destroy ****');
+		con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
+			if (error) throw error;
+			console.log(results);
+			callback(null, results);
+		});
+	},
+	update: function (con, data, id, callback) {
+		con.query(
+			`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
+			callback()
+		);
+	},
 };

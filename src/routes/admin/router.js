@@ -5,16 +5,26 @@ const adminController = require('../../controllers/admin/loginController');
 
 /* Login */
 router.get('/', adminController.index);
+// Validación de datos del login
 router.post('/auth', adminController.validate);
+// Destruir sesión
 router.get('/logout', adminController.logout);
 
 /* Clientes */
+// Vista listado de clientes
 router.get('/clientes', clientsController.index);
+// Api consumo lista de clientes = clientList
 router.get('/clientList', clientsController.getList);
-// router.get('/create', adminController.create);
+//vista crear clientes
 router.get('/clientes/nuevo', clientsController.newClient);
-router.post('/clientes/nuevoCliente/', clientsController.create);
-router.get('/clientes/edit/1/', clientsController.edit);
+//Consulta crear cliente
+router.post('/clientes/nuevoCliente', clientsController.create);
+// Vista editar cliente
+router.get('/clientes/edit/:id', clientsController.edit);
+//Consulta crear cliente
+router.post('/clientes/edit/:id/update', clientsController.update);
+//Eliminar cliente por id
+router.delete('/clientes/delete/:id', clientsController.destroy);
 // router.post('/', adminController.store);
 // router.get('/:id/edit', adminController.edit);
 // router.put('/:id', adminController.update);

@@ -13,7 +13,6 @@ module.exports = {
 	getList: (req, res) => {
 		if (req.session.loggedin) {
 			AdminClients.get(req.con, (err, results) => {
-				console.log(results);
 				res.send(results);
 			});
 		} else {
@@ -65,21 +64,34 @@ module.exports = {
 		}
 	},
 
-	// edit: (req, res) => {
-	// 	Admin.getById(req.con, req.params.id, (err, rows) => {
-	// 		res.render('admin/edit', { data: rows[0] });
-	// 	});
-	// },
+	destroy: (req, res) => {
+		if (req.session.loggedin) {
+			AdminClients.destroy(req.con, req.params.id, (err, results) => {
+				console.log('controllerLog', results);
+				console.log('Entra a callback de destroy en controller');
+				res.redirect('/admin/clientes');
+			});
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
+	},
 
-	// update: (req, res) => {
-	// 	Admin.update(req.con, req.body, req.params.id, (err) => {
-	// 		res.redirect('/admin');
-	// 	});
-	// },
+	edit: (req, res) => {
+		AdminClients.getById(req.con, req.params.id, (err, rows) => {
+			res.render('admin/clientDetail', { data: rows[0] });
+		});
+	},
 
-	// destroy: (req, res) => {
-	// 	Admin.destroy(req.con, req.params.id, (err) => {
-	// 		res.redirect('/admin');
-	// 	});
-	// },
+	update: (req, res) => {
+		if (req.session.loggedin) {
+			AdminClients.update(req.con, req.body, req.params.id, (err) => {
+				if (err) throw err;
+				res.redirect('/admin/clientes/');
+			});
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
+	},
 };
