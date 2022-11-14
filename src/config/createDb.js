@@ -33,7 +33,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `clients` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NOT NULL,`name` VARCHAR(45) NOT NULL,`phone` VARCHAR(45) NOT NULL,`address` VARCHAR(50) NOT NULL,`password` VARCHAR(45) NOT NULL,`idAdmin` INT NOT NULL,PRIMARY KEY (`id`),`creationDate` TIMESTAMP NOT NULL, FOREIGN KEY (`idAdmin`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `clients` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NOT NULL,`name` VARCHAR(45) NOT NULL,`phone` VARCHAR(45) NOT NULL,`address` VARCHAR(50) NOT NULL,`password` VARCHAR(45) NOT NULL,`idAdmin` INT NOT NULL,PRIMARY KEY (`id`),`points` FLOAT NOT NULL,`creationDate` TIMESTAMP NOT NULL, FOREIGN KEY (`idAdmin`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
@@ -44,7 +44,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `purchases` (`id` INT NOT NULL,`idClient` VARCHAR(45) NOT NULL,`namePurchase` VARCHAR(45) NOT NULL,`description` VARCHAR(45) NOT NULL,`datePurchase` DATETIME NOT NULL,`valuePurchase` DECIMAL(50) NOT NULL,`createDate` DATETIME NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `purchases` (`id` INT NOT NULL,`namePurchase` VARCHAR(45) NOT NULL,`description` VARCHAR(250) NOT NULL,`datePurchase` DATETIME NOT NULL,`valuePurchase` FLOAt NOT NULL,`pointsPurchases` FLOAT NOT NULL,`createDate` DATETIME NOT NULL,`idClient` INT NOT NULL,PRIMARY KEY (`id`), FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
@@ -72,17 +72,6 @@ const createDb = () => {
 
 			if (results.warningCount == 0) {
 				console.log('Tabla orders creada');
-			}
-		}
-	);
-
-	con.query(
-		'CREATE TABLE IF NOT EXISTS `points` (`id` INT NOT NULL,`points` VARCHAR(45) NOT NULL,`datePurchase` DATETIME NOT NULL,`idPurchase` INT NOT NULL,`idClient` INT NOT NULL,PRIMARY KEY (`id`), CONSTRAINT `idClient` FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT `idPurchase` FOREIGN KEY (`idPurchase`)REFERENCES `purchases` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
-		function (error, results, fields) {
-			if (error) throw error;
-
-			if (results.warningCount == 0) {
-				console.log('Tabla points creada');
 			}
 		}
 	);

@@ -20,6 +20,7 @@ module.exports = {
 								name: data.name,
 								phone: data.phone,
 								address: data.address,
+								points: 0,
 								password: Math.random()
 									.toString(36)
 									.substring(1, 9),

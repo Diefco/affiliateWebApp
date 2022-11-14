@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<%- include('../templates/headMetas'); -%>
+	<title>Compras</title>
+</head>
+
+<body class="cupcakes-bg">
+	<%- include('../templates/header'); -%>
+
+	<div class="px-2 content lg:px-4">
+		<div class="flex justify-between gap-4">
+			<div>
+				<h1 class="mb-2 text-3xl font-semibold">Compras</h1>
+				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+			</div>
+			<div>
+				<a
+				  class="inline-block px-3 py-1 mt-3 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring active:text-indigo-500"
+				  href="/admin/compras/nueva"
+				>
+				  <i class="fa-solid fa-cart-shopping"></i>
+				  Crear compra
+				</a>
+			</div>
+		</div>
+
+		<div id="grid-purchases" class="mt-4"></div>
+	</div>
+
+	<%- include('../templates/footer'); -%>
+
+	<script type="module">
+		import { Grid, html } from 'https://unpkg.com/gridjs?module';
+		new Grid({
+			search: true,
+			columns: [{
+				id: 'id',
+				name: 'ID',
+				width: '10%',
+			}, {
+				id: 'namePurchase',
+				name: 'Compra'
+			}, {
+				id: 'email',
+				name: 'Cliente'
+			}, {
+				id: 'valuePurchase',
+				name: 'Valor'
+			}, {
+                id: 'points',
+                name: 'Puntos'
+            },{
+				id: 'actions',
+				name: '',
+				width: '10%',
+			}],
+			sort: true,
+			server: {
+				url: 'http://localhost:3018/admin/comprasList',
+				then: data => data.map(compra => [compra.id, compra.namePurchase, compra.email, "$ "+compra.valuePurchase ,compra.pointsPurchases, html(`<a href="/admin/compras/edit/${compra.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i>`)] ),
+				handle: (res) => {
+				// no matching records found
+				if (res.status === 404) return {data: []};
+				if (res.ok) return res.json();
+				
+				throw Error('oh no :(');
+				},
+			}, 
+			pagination: {
+				enabled: true,
+				limit: 10,
+				summary: false
+			},
+			language: {
+				'search': {
+				'placeholder': '🔍 Buscar...'
+			},
+			'pagination': {
+				'previous': 'Ant.',
+				'next': 'Sig.'
+			}, 
+			style: { 
+				table: { 
+				'white-space': 'nowrap'
+				}
+			}
+		}
+		}).render(document.getElementById('grid-purchases'));
+	</script>
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+
+</html>
