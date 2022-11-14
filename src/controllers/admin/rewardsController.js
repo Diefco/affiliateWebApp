@@ -1,10 +1,10 @@
-const AdminClients = require('../../models/admin/clientsModel.js');
+const AdminReward = require('../../models/admin/rewardsModel.js');
 
 module.exports = {
 	index: (req, res) => {
 		// renderiza el view .ejs:
 		if (req.session.loggedin) {
-			res.render('admin/clientList');
+			res.render('admin/rewardsList');
 		} else {
 			// No tiene sesión
 			res.redirect('/admin/');
@@ -12,7 +12,7 @@ module.exports = {
 	},
 	getList: (req, res) => {
 		if (req.session.loggedin) {
-			AdminClients.get(req.con, (err, results) => {
+			AdminReward.get(req.con, (err, results) => {
 				res.send(results);
 			});
 		} else {
@@ -23,7 +23,7 @@ module.exports = {
 
 	new: (req, res) => {
 		if (req.session.loggedin) {
-			return res.render('admin/clientCreate');
+			return res.render('admin/rewardsCreate');
 		}
 
 		res.redirect('/admin/');
@@ -34,27 +34,27 @@ module.exports = {
 			// Definimidos el idAdmin para la consulta en BD.
 			req.body.idAdmin = req.session.idUser;
 
-			AdminClients.create(req.con, req.body, (err, results) => {
+			AdminReward.create(req.con, req.body, (err, results) => {
 				if (results.state === false) {
-					return res.render('admin/clientCreate', {
+					return res.render('admin/rewardsCreate', {
 						alert: true,
 						alertTitle: '¡Ups!...',
 						alertMessage: results.msg,
 						alertIcon: 'error',
 						showConfirmButton: true,
 						timer: 5000,
-						ruta: '/admin/clientes/nuevo',
+						ruta: '/admin/premios/nuevo',
 					});
 				} else {
 					// State = true
-					res.render('admin/clientCreate', {
+					res.render('admin/reawrdsCreate', {
 						alert: true,
 						alertTitle: '¡Bien! creación exitosa',
 						alertMessage: results.msg,
 						alertIcon: 'success',
 						showConfirmButton: true,
 						timer: 5000,
-						ruta: '/admin/clientes',
+						ruta: '/admin/premios',
 					});
 				}
 			});
@@ -66,10 +66,10 @@ module.exports = {
 
 	destroy: (req, res) => {
 		if (req.session.loggedin) {
-			AdminClients.destroy(req.con, req.params.id, (err, results) => {
+			AdminReward.destroy(req.con, req.params.id, (err, results) => {
 				console.log('controllerLog', results);
 				console.log('Entra a callback de destroy en controller');
-				res.redirect('/admin/clientes');
+				res.redirect('/admin/premios');
 			});
 		} else {
 			// El usuario no tiene sessión
@@ -78,16 +78,16 @@ module.exports = {
 	},
 
 	edit: (req, res) => {
-		AdminClients.getById(req.con, req.params.id, (err, rows) => {
-			res.render('admin/clientDetail', { data: rows[0] });
+		AdminReward.getById(req.con, req.params.id, (err, rows) => {
+			res.render('admin/rewardDetail', { data: rows[0] });
 		});
 	},
 
 	update: (req, res) => {
 		if (req.session.loggedin) {
-			AdminClients.update(req.con, req.body, req.params.id, (err) => {
+			AdminReward.update(req.con, req.body, req.params.id, (err) => {
 				if (err) throw err;
-				res.redirect('/admin/clientes/');
+				res.redirect('/admin/premios/');
 			});
 		} else {
 			// El usuario no tiene sessión

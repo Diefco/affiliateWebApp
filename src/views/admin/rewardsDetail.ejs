@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<%- include('../templates/headMetas'); -%>
+	<title>Premio Detalle</title>
+</head>
+
+<body class="cupcakes-bg">
+	<%- include('../templates/header'); -%>
+
+	<div class="px-2 content lg:px-4">
+		<div class="flex justify-between gap-4 titles">
+			<div>
+				<h1 class="mb-2 text-3xl font-semibold">Detalle del Premio</h1>
+				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+			</div>
+			<div>
+				<a
+				  class="inline-block px-3 py-1 mt-3 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring active:text-indigo-500"
+				  href="/admin/premios"
+				>
+                    <i class="fa-solid fa-arrow-left"></i>
+				</a>
+			</div>
+		</div>
+		
+		<section>
+			<h2 class="mt-4 mb-2 text-2xl font-semibold">Información del cliente</h2>
+			<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+
+
+			<div class="flex gap-4 mt-2 mb-4">
+				<div class="w-4/6 p-4 py-6 bg-white shadow">
+					<% if (data) {%>
+					<form method="POST" action="update" class="">
+						<div id="name" class="">
+							<strong class="block text-gray-900">Nombre:</strong>
+							<input
+								type="text"
+								name="name" 
+								id="name"
+								class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm"
+								placeholder="Nombre"
+								value="<%= data.name; %>"
+								required
+							/>
+						</div>
+						<div id="email" class="mt-4">
+							<strong class="block mt-2 text-gray-900">Correo Electrónico:</strong>
+							<input
+								type="email"
+								name="email" 
+								id="email"
+								class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm"
+								placeholder="Correo electronico"
+								value="<%= data.email; %>"
+								required
+							/>
+						
+						
+						</div>
+						<div id="phone" class="mt-4">
+							<strong class="block mt-2 text-gray-900">Télefono:</strong>
+							<input
+							type="tel"
+							name="phone" 
+							id="phone"
+							class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm"
+							placeholder="Numero de contacto"
+							value="<%= data.phone; %>"
+							required
+						/>
+						
+						
+						</div>
+						<div id="address" class="mt-4">
+							<strong class="block mt-2 text-gray-900">Dirección:</strong>
+							<input
+							type="text"
+							name="address" 
+							id="address"
+							class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm"
+							placeholder="Numero de contacto"
+							value="<%= data.address; %>"
+							required
+						/>
+						</div>
+						<button
+							type="submit"
+							class="block w-40 py-3 mt-6 font-medium text-white rounded-lg bg-cPink"
+							>
+								Actualizar
+						</button>
+					</form>
+					<% } %>
+				</div>
+				<div class="flex items-center justify-center w-2/6 p-4 py-6 bg-white shadow">		
+					<div class="text-center">
+						<i class="text-5xl fa-solid fa-trophy text-cPink"></i>
+						<strong class="block mt-2 text-black">Puntos disponibles:</strong> 
+						<span class="text-3xl text-cPink">
+							<% if(data.points) { data.points%> Puntos<%} else {%> 0 Puntos<%}%>
+						</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+         <!-- Compras realizadas -->
+		 <section>
+			<h2 class="mb-2 text-2xl font-semibold">Pedidos del cliente</h2>
+			<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+			<div id="grid-clients" class="mt-4"></div>
+		 </section>
+	</div>
+
+	<%- include('../templates/footer'); -%>
+
+    <script type="module">
+		import { Grid, html } from 'https://unpkg.com/gridjs?module';
+		new Grid({
+			search: true,
+			columns: [ {
+				id: 'date',
+				name: 'Fecha',
+                width: '18%',
+			}, {
+				id: 'orderName',
+				name: 'Nombre de la compra',
+			}, {
+				id: 'value',
+				name: 'Valor', 
+			}, {
+				id: 'Puntos gan.',
+				name: '',
+			}, {
+				id: 'actions',
+				name: '',
+				width: '6%',
+			}],
+			sort: true,
+			data: [
+				['13-11-2021', 'Pastel 4 pisos', '$450.000', '450 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+				['17-03-2022', 'Cupcakes de Cars x30', '$80.000', '80 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+                ['13-05-2022', 'Pastel de vainilla con crema chantilly', '$220.000', '220 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+                ['11-06-2022', 'Caja sorpresa de cumpleaños', '$180.000', '180 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+                ['18-11-2022', 'Pastel 2 libras arequipe y x5 Brazos de reina con crema especial', '$195.000', '195 Pts.', html('<a href="edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>')],
+			],
+			pagination: {
+				enabled: true,
+				limit: 10,
+				summary: false
+			},
+			language: {
+				'search': {
+				'placeholder': '🔍 Buscar...'
+			},
+			'pagination': {
+				'previous': 'Ant.',
+				'next': 'Sig.'
+			}, 
+			style: { 
+				table: { 
+				'white-space': 'nowrap'
+				}
+			}
+		}
+		}).render(document.getElementById('grid-clients'));
+    </script>
+
+
+</body>
+
+</html>
