@@ -13,95 +13,78 @@
 		<div class="flex justify-between gap-4">
 			<div>
 				<h1 class="mb-2 text-3xl font-semibold">Crear Nuevo Premio</h1>
-				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+				<div class="bg-cBlue h-[3px] w-28 mb-4"></div>
 			</div>
-            <div>
-				<a
-				  class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded inline-block3 border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring active:text-indigo-500"
-				  href="/admin/premios"
-				>
-                    <i class="fa-solid fa-left-long"></i>				  
+			<div>
+				<a class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded inline-block3 border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring" href="/admin/premios">
+					<i class="fa-solid fa-left-long"></i>
 				</a>
 			</div>
-	</div>
-    
-    <div class="p-4 py-12 mx-auto mt-6 text-center bg-white rounded-lg shadow-2xl">
-        <form method="POST" action="/admin/clientes/nuevoCliente" class="">
-            
-            <label for="name" class="block text-sm font-medium">Nombre <span class="text-red-600">*</span></label>
-            <input
-                type="text"
-                name="name"
-                id="name"
-                class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
-                placeholder="Nombre del cliente"
-                required
-            />   
+		</div>
+		<div class="p-4 py-12 lg:px-8 mx-auto mt-6 bg-white rounded-lg shadow-2xl">
+			<form method="POST" action="/admin/premios/nuevoPremio" class="max-w-4xl m-auto">
 
-            <label for="email" class="block mt-6 text-sm font-medium">Correo Electrónico <span class="text-red-600">*</span></label>
-            <input
-            type="email"
-            name="email" 
-            id="email"
-            class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
-            placeholder="Correo electronico"
-            required
-            />
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<div class="w-full col-span-1">
+						<label for="image" class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Sube una foto</label>
+						<input type="file" name="image" id="image" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none file:font-semibold file:p-2 file:bg-cBlue file:text-white hover:file:bg-gray-300 hover:file:text-gray-900 file:border-0 file:outline-none file:ring-0" aria-describedby="file_input_help" />
+						<p class="mt-1 text-xs text-gray-500" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
 
+						<div id="img-preview" class="border border-gray-300 p-2 mt-4">
+							<img src="/assets/img/rewards/no-photo.jpg" class="aspect-square w-full rounded object-cover">
+						</div>
+					</div>
+					<div class="w-full col-span-2">
+						<label for="name" class="block text-sm font-medium ml-1 mt-4 lg:mt-0">Nombre<span class="text-red-600">*</span></label>
+						<input type="text" name="name" id="name" class="block p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm w-full focus:ring-cBlue" placeholder="Nombre del cliente" required />
 
-            <label for="phone" class="block mt-6 text-sm font-medium">Telefono <span class="text-red-600">*</span></label>
-            <input
-            type="tel"
-            name="phone" 
-            id="phone"
-            class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
-            placeholder="Numero de contacto"
-            required
-            />
-            
-            <label for="address" class="block mt-6 text-sm font-medium">Direccion <span class="text-red-600">*</span></label>
-            <input
-            type="text"
-            name="address" 
-            id="address"
-            class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
-            placeholder="Direccion"
-            required
-            />
+						<label for="description" class="block text-sm font-medium ml-1 mt-4 ">Descripción</label>
+						<textarea name="description" id="description" class="block p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm w-full focus:ring-cBlue" rows="4" placeholder="Nombre del cliente"></textarea>
 
-            
-            <button
-            type="submit"
-            class="block py-3 m-auto mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink"
-            >
-                Crear Cliente
-            </button>
+						<label for="points" class="block text-sm font-medium ml-1 mt-4">Puntos necesarios <span class="text-red-600">*</span></label>
+						<input type="number" name="points" id="points" class="block p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm w-full focus:ring-cBlue" placeholder="Nombre del cliente" required />
 
-            <span class="block mt-4 text-sm text-red-600">(*) Los campos con asterisco son obligatorios.</span>
-        
-        </form>
+						<label for="points" class="block text-sm font-medium ml-1 mt-4">Fecha de finalización:</label>
+						<span class="block text-xs text-gray-500 ml-1 my-2">Fecha hasta la que el premio estará disponible.</span>
+						<div class="relative">
+							<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+								<svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+							</div>
+							<input datepicker type="text" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5" placeholder="Select date">
+						</div>
 
-    </div>    
+						<button type="submit" class="block py-3 mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink m-auto">
+							Crear Premio
+						</button>
+
+						<span class="block mt-3 text-sm text-red-600 w-full text-center">(*) Los campos con asterisco son obligatorios.</span>
+					</div>
+				</div>
+			</form>
+
+		</div>
 
 
 
-	<%- include('../templates/footer'); -%>
+		<%- include('../templates/footer'); -%>
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <% if(typeof alert != "undefined") { %>
-    <script>
-        Swal.fire({
-            title: '<%= alertTitle %>',
-            text: '<%= alertMessage %>',
-            icon: '<%= alertIcon %>',
-            showConfirmButton: '<%= showConfirmButton %>',
-            timer: '<%= timer %>',
-        }).then(() => {
-            window.location = '<%= ruta %>';
-        });
-    </script>
-    <% } %>
-	
+		<script src="/assets/js/datepicker.js"></script>
+
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<% if(typeof alert != "undefined") { %>
+		<script>
+			Swal.fire({
+				title: '<%= alertTitle %>',
+				text: '<%= alertMessage %>',
+				icon: '<%= alertIcon %>',
+				showConfirmButton: '<%= showConfirmButton %>',
+				timer: '<%= timer %>',
+			}).then(() => {
+				window.location = '<%= ruta %>';
+			});
+		</script>
+		<% } %>
+
 </body>
 
 </html>
