@@ -17,7 +17,7 @@
 			</div>
 			<div>
 				<a
-				  class="inline-block px-3 py-1 mt-3 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring active:text-indigo-500"
+				  class="inline-block px-3 py-1 mt-3 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring"
 				  href="/admin/clientes"
 				>
                     <i class="fa-solid fa-arrow-left"></i>
@@ -40,7 +40,7 @@
 								type="text"
 								name="name" 
 								id="name"
-								class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm"
+								class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm focus:ring-cBlue"
 								placeholder="Nombre"
 								value="<%= data.name; %>"
 								required
@@ -52,7 +52,7 @@
 								type="email"
 								name="email" 
 								id="email"
-								class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm"
+								class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm focus:ring-cBlue"
 								placeholder="Correo electronico"
 								value="<%= data.email; %>"
 								required
@@ -66,7 +66,7 @@
 							type="tel"
 							name="phone" 
 							id="phone"
-							class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm"
+							class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm focus:ring-cBlue"
 							placeholder="Numero de contacto"
 							value="<%= data.phone; %>"
 							required
@@ -80,7 +80,7 @@
 							type="text"
 							name="address" 
 							id="address"
-							class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm"
+							class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm focus:ring-cBlue"
 							placeholder="Numero de contacto"
 							value="<%= data.address; %>"
 							required
@@ -88,7 +88,7 @@
 						</div>
 						<button
 							type="submit"
-							class="block w-40 py-3 mt-6 font-medium text-white rounded-lg bg-cPink"
+							class="block w-40 py-3 mt-6 font-medium text-white rounded-lg bg-cPink focus:ring-cBlue"
 							>
 								Actualizar
 						</button>
@@ -100,7 +100,7 @@
 						<i class="text-5xl fa-solid fa-trophy text-cPink"></i>
 						<strong class="block mt-2 text-black">Puntos disponibles:</strong> 
 						<span class="text-3xl text-cPink">
-							<% if(data.points) { data.points%> Puntos<%} else {%> 0 Puntos<%}%>
+							<% if(data.points) { %> <%= data.points %> Puntos<%} else {%> 0 Puntos<%}%>
 						</span>
 					</div>
 				</div>
