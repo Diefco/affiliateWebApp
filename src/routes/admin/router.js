@@ -34,7 +34,10 @@ router.delete('/clientes/delete/:id', clientsController.destroy);
 router.get('/compras', purchasesController.index);
 // Api consumo lista de compras = comprasList
 router.get('/comprasList', purchasesController.getList);
-
+// Vista crear compra
+router.get('/compras/nueva', purchasesController.new);
+// Consulta crear compra
+router.post('/compras/nuevaCompra', purchasesController.create);
 /* PREMIOS // RECOMPENSAS */
 // Vista listado de premios
 router.get('/premios', rewardsController.index);

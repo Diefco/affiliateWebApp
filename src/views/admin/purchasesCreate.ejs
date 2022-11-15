@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<%- include('../templates/headMetas'); -%>
+	<title>Compra nueva</title>
+</head>
+
+<body class="cupcakes-bg">
+	<%- include('../templates/header'); -%>
+
+	<div class="content">
+		<div class="flex justify-between gap-4">
+			<div>
+				<h1 class="mb-2 text-3xl font-semibold">Nueva Compra</h1>
+				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+			</div>
+            <div>
+				<a
+				  class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded inline-block3 border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring"
+				  href="/admin/clientes"
+				>
+                    <i class="fa-solid fa-left-long"></i>				  
+				</a>
+			</div>
+	</div>
+    
+    <div class="p-4 py-12 mx-auto mt-6 text-center bg-white rounded-lg shadow-2xl">
+        <form method="POST" action="/admin/compras/nuevaCompra" class="">
+            
+            <label for="namePurchase" class="block text-sm font-medium">Nombre de la compra<span class="text-red-600">*</span></label>
+            <input
+                type="text"
+                name="namePurchase"
+                id="namePurchase"
+                class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
+                placeholder="Nombre de la compra"
+                required
+            />   
+
+            <label for="emailClient" class="block mt-6 text-sm font-medium">Correo Electrónico del cliente <span class="text-red-600">*</span></label>
+            <input
+            type="email"
+            name="emailClient" 
+            id="emailClient"
+            class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
+            placeholder="Correo electronico"
+            required
+            />
+
+
+            <label for="datePurchases" class="block mt-6 text-sm font-medium">Fecha de la compra <span class="text-red-600">*</span></label>
+            <input
+            type="date"
+            name="datePurchase" 
+            id="datePurchase"
+            class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
+            placeholder=""
+            required
+            />
+            
+            <label for="valuePurchase" class="block mt-6 text-sm font-medium">Valor de la compra<span class="text-red-600">*</span></label>
+            <input
+            type="number"
+            name="valuePurchase" 
+            id="valuePurchase"
+            class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
+            placeholder="Valor de la compra"
+            required
+            />
+
+            <label for="description" class="block mt-6 text-sm font-medium">Descripcion<span class="text-red-600">*</span></label>
+            <textarea
+            type="text"
+            name="description" 
+            id="description"
+            class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
+            placeholder="Descripcion de la compra"
+            required
+            ></textarea>
+
+            
+            <button
+            type="submit"
+            class="block py-3 m-auto mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink"
+            >
+                Crear Compra
+            </button>
+
+            <span class="block mt-4 text-sm text-red-600">(*) Los campos con asterisco son obligatorios.</span>
+        
+        </form>
+
+    </div>    
+
+
+
+	<%- include('../templates/footer'); -%>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined") { %>
+    <script>
+        Swal.fire({
+            title: '<%= alertTitle %>',
+            text: '<%= alertMessage %>',
+            icon: '<%= alertIcon %>',
+            showConfirmButton: '<%= showConfirmButton %>',
+            timer: '<%= timer %>',
+        }).then(() => {
+            window.location = '<%= ruta %>';
+        });
+    </script>
+    <% } %>
+	
+</body>
+
+</html>
