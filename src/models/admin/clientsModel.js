@@ -62,10 +62,8 @@ module.exports = {
 	},
 
 	destroy: function (con, id, callback) {
-		console.log('entra destroy ****');
 		con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
 			if (error) throw error;
-			console.log(results);
 			callback(null, results);
 		});
 	},

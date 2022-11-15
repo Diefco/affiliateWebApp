@@ -67,8 +67,6 @@ module.exports = {
 	destroy: (req, res) => {
 		if (req.session.loggedin) {
 			AdminClients.destroy(req.con, req.params.id, (err, results) => {
-				console.log('controllerLog', results);
-				console.log('Entra a callback de destroy en controller');
 				res.redirect('/admin/clientes');
 			});
 		} else {
@@ -79,7 +77,6 @@ module.exports = {
 
 	edit: (req, res) => {
 		AdminClients.getById(req.con, req.params.id, (err, rows) => {
-			console.log(rows);
 			res.render('admin/clientDetail', { data: rows[0] });
 		});
 	},

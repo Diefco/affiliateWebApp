@@ -31,21 +31,17 @@ module.exports = {
 							(error2, results2, fields2) => {
 								if (error2) throw error2;
 
-								// Aquí Query de ingreso de puntos al cliente.
-
-								// con.query(
-								// 	`UPDATE clients SET points ='${
-								// 		results[0].points
-								// 	}'+'${
-								// 		data.valuePurchase / 1000
-								// 	}' WHERE email = '${data.emailClient}'`,
-								// 	// 	`SELECT * FROM clients WHERE email = '${data.emailClient}'`,
-								// 	(error3, results3, fields) => {
-								// 		if (error3) throw error3;
-								// 	}
-								// );
-
-								// Continuas ejecución.
+								con.query(
+									`UPDATE clients SET points ='${
+										results[0].points
+									}'+'${
+										data.valuePurchase / 1000
+									}' WHERE email = '${data.emailClient}'`,
+									`SELECT * FROM clients WHERE email = '${data.emailClient}'`,
+									(error3, results3, fields) => {
+										if (error3) throw error3;
+									}
+								);
 
 								// Si la consulta no devuelve datos
 								if (results2 === undefined) {

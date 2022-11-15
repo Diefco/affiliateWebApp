@@ -67,8 +67,6 @@ module.exports = {
 	destroy: (req, res) => {
 		if (req.session.loggedin) {
 			AdminReward.destroy(req.con, req.params.id, (err, results) => {
-				console.log('controllerLog', results);
-				console.log('Entra a callback de destroy en controller');
 				res.redirect('/admin/premios');
 			});
 		} else {
