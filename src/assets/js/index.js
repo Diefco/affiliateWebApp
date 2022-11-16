@@ -54,6 +54,7 @@ function deleteClient(id) {
 		return response.json(); // parses JSON response into native JavaScript objects
 	}
 }
+
 function deletePurchase(id) {
 	event.preventDefault();
 
@@ -97,5 +98,15 @@ function deletePurchase(id) {
 			referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 		});
 		return response.json(); // parses JSON response into native JavaScript objects
+	}
+}
+
+/* Actualizar imagen subida por el cliente */
+
+function showPreview(event) {
+	if (event.target.files.length > 0) {
+		var src = URL.createObjectURL(event.target.files[0]);
+		var preview = document.querySelector('#img-preview img');
+		preview.src = src;
 	}
 }
