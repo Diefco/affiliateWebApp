@@ -57,4 +57,49 @@ module.exports = {
 			res.redirect('/admin/');
 		}
 	},
+
+	edit: (req, res) => {
+		AdminPurchases.getById(req.con, req.params.id, (err, rows) => {
+			res.render('admin/purchasesDetail', { data: rows[0] });
+		});
+	},
+	update: (req, res) => {
+		if (req.session.loggedin) {
+			AdminPurchases.update(req.con, req.body, req.params.id, (err) => {
+				if (err) throw err;
+				res.redirect('/admin/compras/');
+			});
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
+	},
+
+	getListByClient: (req, res) => {
+		if (req.session.loggedin) {
+			AdminPurchases.getListByClient(
+				req.con,
+				req.params.id,
+				(err, results) => {
+					res.send(results);
+				}
+			);
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
+	},
+
+	destroy: (req, res) => {
+		if (req.session.loggedin) {
+			AdminPurchases.destroy(
+				req.con,
+				req.params.id,
+				(err, results) => {}
+			);
+		} else {
+			// El usuario no tiene sessión
+			return res.redirect('/admin/');
+		}
+	},
 };

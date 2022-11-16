@@ -12,7 +12,7 @@
 	<div class="content">
 		<div class="flex justify-between gap-4">
 			<div>
-				<h1 class="mb-2 text-3xl font-semibold">Nueva Compra</h1>
+				<h1 class="mb-2 text-3xl font-semibold">Detalle Compra</h1>
 				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
 			</div>
             <div>
@@ -26,27 +26,22 @@
 	</div>
     
     <div class="p-4 py-12 mx-auto mt-6 text-center bg-white rounded-lg shadow-2xl">
-        <form method="POST" action="/admin/compras/nuevaCompra" class="">
+        <% if (data) {%>
+            <p for="emailClient" class="block text-sm">Correo electrónico del cliente asociado a esta compra</p>
+            <p class="block text-2xl font-medium text-cBlue"><%= data.email; %></p>
+
+        <form method="POST" action="update" class="">
             
-            <label for="namePurchase" class="block text-sm font-medium">Nombre de la compra<span class="text-red-600">*</span></label>
+            <label for="namePurchase" class="block mt-6 text-sm font-medium ">Nombre de la compra<span class="text-red-600">*</span></label>
             <input
                 type="text"
                 name="namePurchase"
                 id="namePurchase"
                 class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
                 placeholder="Nombre de la compra"
+                value="<%= data.namePurchase; %>"
                 required
             />   
-
-            <label for="emailClient" class="block mt-6 text-sm font-medium">Correo Electrónico del cliente <span class="text-red-600">*</span></label>
-            <input
-            type="email"
-            name="emailClient" 
-            id="emailClient"
-            class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
-            placeholder="Correo electronico"
-            required
-            />
 
 
             <label for="datePurchases" class="block mt-6 text-sm font-medium">Fecha de la compra <span class="text-red-600">*</span></label>
@@ -56,6 +51,7 @@
             id="datePurchase"
             class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
             placeholder=""
+            value="<%= data.datePurchase; %>"
             required
             />
             
@@ -66,6 +62,7 @@
             id="valuePurchase"
             class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
             placeholder="Valor de la compra"
+            value="<%= data.valuePurchase; %>"
             required
             />
 
@@ -77,20 +74,36 @@
             class="block p-2 m-auto mt-2 text-sm text-center border-gray-200 rounded-lg shadow-sm w-96"
             placeholder="Descripcion de la compra"
             required
-            ></textarea>
+            ><%= data.description; %></textarea>
+
+            <input
+                type="oldValuePurchase"
+                name="oldValuePurchase" 
+                id="oldValuePurchase"
+                class="hidden"
+                value="<%= data.valuePurchase %>"
+            />
+
+            <input
+                type="email"
+                name="email" 
+                id="email"
+                class="hidden"
+                value="<%= data.email; %>"
+            />
 
             
             <button
             type="submit"
             class="block py-3 m-auto mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink"
             >
-                Crear Compra
+                Actualizar
             </button>
 
             <span class="block mt-4 text-sm text-red-600">(*) Los campos con asterisco son obligatorios.</span>
         
         </form>
-
+        <% } %>
     </div>    
 
 

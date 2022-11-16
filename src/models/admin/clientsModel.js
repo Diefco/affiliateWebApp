@@ -70,7 +70,10 @@ module.exports = {
 	update: function (con, data, id, callback) {
 		con.query(
 			`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
-			callback()
+			(error) => {
+				if (error) throw error;
+				return callback(null);
+			}
 		);
 	},
 };

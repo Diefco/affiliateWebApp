@@ -38,6 +38,18 @@ router.get('/comprasList', purchasesController.getList);
 router.get('/compras/nueva', purchasesController.new);
 // Consulta crear compra
 router.post('/compras/nuevaCompra', purchasesController.create);
+// Vista editar compra
+router.get('/compras/edit/:id', purchasesController.edit);
+// Consulta actulizar compra
+router.post('/compras/edit/:id/update', purchasesController.update);
+// Lista de compras del cliente
+router.get(
+	'/clientes/edit/:id/comprasList',
+	purchasesController.getListByClient
+);
+//delete compra
+router.delete('/compras/delete/:id', purchasesController.destroy);
+
 /* PREMIOS // RECOMPENSAS */
 // Vista listado de premios
 router.get('/premios', rewardsController.index);

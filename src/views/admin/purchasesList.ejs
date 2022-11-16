@@ -44,7 +44,7 @@
 				name: 'Compra'
 			}, {
 				id: 'email',
-				name: 'Cliente'
+				name: 'Cliente',
 			}, {
 				id: 'valuePurchase',
 				name: 'Valor'
@@ -52,9 +52,12 @@
                 id: 'points',
                 name: 'Puntos'
             },{
+                id: 'datePurchase',
+                name: 'Fecha'
+            },{
 				id: 'actions',
 				name: '',
-				width: '10%',
+				width: '5%',
 				sort: {
 					enabled: false
 				}
@@ -62,8 +65,8 @@
 			
 			sort: true,
 			server: {
-				url: 'http://localhost:3018/admin/comprasList',
-				then: data => data.map(compra => [compra.id, compra.namePurchase, compra.email, "$ "+compra.valuePurchase, compra.pointsPurchases + " Pts.", html(`<a href="/admin/compras/edit/${compra.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i>`)] ),
+				url: '/admin/comprasList',
+				then: data => data.map(compra => [compra.id, compra.namePurchase, compra.email, "$"+compra.valuePurchase, compra.pointsPurchases + " Pts.", compra.datePurchase ,html(`<a href="/admin/compras/edit/${compra.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deletePurchase(${compra.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)] ),
 				handle: (res) => {
 				// no matching records found
 				if (res.status === 404) return {data: []};

@@ -2,10 +2,20 @@ module.exports = {
 	get: function (con, callback) {
 		con.query(
 			//'SELECT * FROM `purchases` JOIN `clients` ON `purchases`.idClient = `clients`.id',
-			'SELECT purchases.id, purchases.namePurchase, clients.email, purchases.valuePurchase, purchases.pointsPurchases FROM `purchases` JOIN `clients` ON `purchases`.idClient = `clients`.id',
+			'SELECT purchases.id, purchases.namePurchase, clients.email, purchases.valuePurchase, purchases.pointsPurchases , DATE_FORMAT(purchases.datePurchase, "%Y-%m-%d") as  datePurchase FROM `purchases` JOIN `clients` ON `purchases`.idClient = `clients`.id',
 			(error, results) => {
 				if (error) throw error;
-				console.log(results);
+
+				callback(null, results);
+			}
+		);
+	},
+	getById: function (con, id, callback) {
+		con.query(
+			`SELECT purchases.id, purchases.namePurchase, DATE_FORMAT(purchases.datePurchase, "%Y-%m-%d") as  datePurchase,purchases.description ,clients.email, purchases.valuePurchase, purchases.pointsPurchases FROM purchases JOIN clients ON purchases.idClient = clients.id WHERE purchases.id = ${id}`,
+			(error, results) => {
+				if (error) throw error;
+
 				callback(null, results);
 			}
 		);
@@ -72,5 +82,69 @@ module.exports = {
 				msg: 'La compra no pudo ser creada',
 			});
 		}
+	},
+
+	update: function (con, data, id, callback) {
+		con.query(
+			`SELECT points FROM clients WHERE email = '${data.email}'`,
+			(error, results2) => {
+				if (error) throw error;
+				const oldPointsPurchase = data.oldValuePurchase / 1000;
+				const newPointsPurchase = data.valuePurchase / 1000;
+				const calcPoints =
+					results2[0].points - oldPointsPurchase + newPointsPurchase;
+				con.query(
+					`UPDATE purchases, clients SET purchases.namePurchase ='${data.namePurchase}', purchases.valuePurchase ='${data.valuePurchase}', purchases.pointsPurchases ='${newPointsPurchase}', purchases.description='${data.description}',purchases.datePurchase='${data.datePurchase}',clients.points='${calcPoints}' WHERE purchases.id = '${id}' AND clients.email= '${data.email}'`,
+					(error, results) => {
+						if (error) throw error;
+					}
+				);
+
+				callback(null);
+			}
+		);
+	},
+
+	getListByClient: function (con, id, callback) {
+		con.query(
+			`SELECT DATE_FORMAT(purchases.datePurchase, "%Y-%m-%d") as  datePurchase, purchases.namePurchase, purchases.valuePurchase, purchases.pointsPurchases FROM purchases JOIN clients ON purchases.idClient = clients.id WHERE clients.id = ${id}`,
+			(error, results) => {
+				if (error) throw error;
+
+				callback(null, results);
+			}
+		);
+	},
+
+	destroy: function (con, id, callback) {
+		con.query(
+			`SELECT idClient, pointsPurchases FROM purchases WHERE id = ${id}`,
+			(error, results) => {
+				if (error) throw error;
+				const clientId = results[0].idClient;
+				const pointsDelete = results[0].pointsPurchases;
+				con.query(
+					`SELECT points FROM clients WHERE id = ${clientId}`,
+					(error2, results2) => {
+						if (error2) throw error2;
+						const pointsClient = results2[0].points;
+						const pointsTotals = pointsClient - pointsDelete;
+						con.query(
+							`UPDATE clients SET points= ${pointsTotals} WHERE id = ${clientId}`,
+							(error3, results3) => {
+								if (error3) throw error3;
+								con.query(
+									`DELETE FROM purchases WHERE id = ${id}`,
+									(error4, results4) => {
+										if (error4) throw error4;
+										callback(null, results4);
+									}
+								);
+							}
+						);
+					}
+				);
+			}
+		);
 	},
 };

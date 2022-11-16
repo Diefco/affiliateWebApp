@@ -20,7 +20,6 @@ module.exports = {
 			res.redirect('/admin/');
 		}
 	},
-
 	new: (req, res) => {
 		if (req.session.loggedin) {
 			return res.render('admin/clientCreate');
@@ -83,10 +82,16 @@ module.exports = {
 
 	update: (req, res) => {
 		if (req.session.loggedin) {
-			AdminClients.update(req.con, req.body, req.params.id, (err) => {
-				if (err) throw err;
-				res.redirect('/admin/clientes/');
-			});
+			AdminClients.update(
+				req.con,
+				req.body,
+				req.params.id,
+				(err, results) => {
+					if (err) throw err;
+
+					res.redirect('/admin/clientes');
+				}
+			);
 		} else {
 			// El usuario no tiene sessión
 			res.redirect('/admin/');
