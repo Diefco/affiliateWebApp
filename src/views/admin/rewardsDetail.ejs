@@ -43,7 +43,7 @@
 						<textarea name="description" id="description" value="<%= data.description; %>" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" rows="4" placeholder="Descripción"></textarea>
 
 						<label for="points" class="block mt-4 ml-1 text-sm font-medium">Puntos necesarios <span class="text-red-600">*</span></label>
-						<input type="number" name="points" id="points" value="<%= data.points; %> class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Puntos para reclamar el premio" required />
+						<input type="text" inputmode="numeric" name="points" id="points" value="<%= data.points; %> class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Puntos para reclamar el premio" required />
 
 						<label for="points" class="block mt-4 ml-1 text-sm font-medium">Fecha de finalización:</label>						
 						<span class="block my-2 ml-1 text-xs text-gray-500">Fecha hasta la que el premio estará disponible.</span>
@@ -68,21 +68,6 @@
 
 
 		<%- include('../templates/footer'); -%>
-
-		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		<% if(typeof alert != "undefined") { %>
-		<script>
-			Swal.fire({
-				title: '<%= alertTitle %>',
-				text: '<%= alertMessage %>',
-				icon: '<%= alertIcon %>',
-				showConfirmButton: '<%= showConfirmButton %>',
-				timer: '<%= timer %>',
-			}).then(() => {
-				window.location = '<%= ruta %>';
-			});
-		</script>
-		<% } %>
 
 </body>
 

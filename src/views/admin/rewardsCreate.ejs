@@ -23,7 +23,6 @@
 		</div>
 		<div class="p-4 py-12 mx-auto mt-6 bg-white rounded-lg shadow-2xl lg:px-8">
 			<form method="POST" action="/admin/premios/nuevoPremio" class="max-w-4xl m-auto">
-
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
 					<div class="w-full col-span-1">
 						<label for="image" class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Sube una foto</label>
@@ -42,7 +41,7 @@
 						<textarea name="description" id="description" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" rows="4" placeholder="Descripción"></textarea>
 
 						<label for="points" class="block mt-4 ml-1 text-sm font-medium">Puntos necesarios <span class="text-red-600">*</span></label>
-						<input type="number" name="points" id="points" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" placeholder="Puntos para reclamar el premio" required />
+						<input type="text" inputmode="numeric" name="points" id="points" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" placeholder="Puntos para reclamar el premio" required />
 
 						<label for="points" class="block mt-4 ml-1 text-sm font-medium">Fecha de finalización:</label>
 						<span class="block mt-2 ml-1 text-xs text-gray-500">Fecha hasta la que el premio estará disponible.</span>
@@ -62,29 +61,10 @@
 					</div>
 				</div>
 			</form>
-
 		</div>
 
 
-
 		<%- include('../templates/footer'); -%>
-
-		<script src="/assets/js/datepicker.js"></script>
-
-		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		<% if(typeof alert != "undefined") { %>
-		<script>
-			Swal.fire({
-				title: '<%= alertTitle %>',
-				text: '<%= alertMessage %>',
-				icon: '<%= alertIcon %>',
-				showConfirmButton: '<%= showConfirmButton %>',
-				timer: '<%= timer %>',
-			}).then(() => {
-				window.location = '<%= ruta %>';
-			});
-		</script>
-		<% } %>
 
 </body>
 

@@ -38,7 +38,7 @@
 			columns: [{
 				id: 'id',
 				name: 'ID',
-				width: '10%',
+				width: '90px',
 			}, {
 				id: 'namePurchase',
 				name: 'Compra'
@@ -53,11 +53,12 @@
                 name: 'Puntos'
             },{
                 id: 'datePurchase',
-                name: 'Fecha'
+                name: 'Fecha',
+				width: '150px',
             },{
 				id: 'actions',
 				name: '',
-				width: '5%',
+				width: '100px',
 				sort: {
 					enabled: false
 				}
@@ -66,7 +67,7 @@
 			sort: true,
 			server: {
 				url: '/admin/comprasList',
-				then: data => data.map(compra => [compra.id, compra.namePurchase, compra.email, "$"+compra.valuePurchase, compra.pointsPurchases + " Pts.", compra.datePurchase ,html(`<a href="/admin/compras/edit/${compra.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deletePurchase(${compra.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)] ),
+				then: data => data.map(compra => [compra.id, compra.namePurchase, compra.email, "$"+compra.valuePurchase, compra.pointsPurchase + " Pts.", compra.datePurchase ,html(`<a href="/admin/compras/edit/${compra.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deletePurchase(${compra.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)] ),
 				handle: (res) => {
 				// no matching records found
 				if (res.status === 404) return {data: []};
@@ -96,8 +97,6 @@
 		}
 		}).render(document.getElementById('grid-purchases'));
 	</script>
-
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 

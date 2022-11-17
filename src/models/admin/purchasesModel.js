@@ -2,7 +2,7 @@ module.exports = {
 	get: function (con, callback) {
 		con.query(
 			//'SELECT * FROM `purchases` JOIN `clients` ON `purchases`.idClient = `clients`.id',
-			'SELECT purchases.id, purchases.namePurchase, clients.email, purchases.valuePurchase, purchases.pointsPurchases , DATE_FORMAT(purchases.datePurchase, "%Y-%m-%d") as  datePurchase FROM `purchases` JOIN `clients` ON `purchases`.idClient = `clients`.id',
+			'SELECT purchases.id, purchases.namePurchase, clients.email, purchases.valuePurchase, purchases.pointsPurchase , DATE_FORMAT(purchases.datePurchase, "%d/%m/%Y") as  datePurchase FROM `purchases` JOIN `clients` ON `purchases`.idClient = `clients`.id',
 			(error, results) => {
 				if (error) throw error;
 
@@ -12,7 +12,7 @@ module.exports = {
 	},
 	getById: function (con, id, callback) {
 		con.query(
-			`SELECT purchases.id, purchases.namePurchase, DATE_FORMAT(purchases.datePurchase, "%Y-%m-%d") as  datePurchase,purchases.description ,clients.email, purchases.valuePurchase, purchases.pointsPurchases FROM purchases JOIN clients ON purchases.idClient = clients.id WHERE purchases.id = ${id}`,
+			`SELECT purchases.id, purchases.namePurchase, DATE_FORMAT(purchases.datePurchase, "%d/%m/%Y") as  datePurchase,purchases.description ,clients.email, purchases.valuePurchase, purchases.pointsPurchase FROM purchases JOIN clients ON purchases.idClient = clients.id WHERE purchases.id = ${id}`,
 			(error, results) => {
 				if (error) throw error;
 
@@ -28,6 +28,8 @@ module.exports = {
 				(error, results, fields) => {
 					if (error) throw error;
 					if (results.length > 0) {
+						data.datePurchase = new Date(data.datePurchase);
+
 						con.query(
 							'INSERT INTO purchases SET ?',
 							{
@@ -35,7 +37,7 @@ module.exports = {
 								datePurchase: data.datePurchase,
 								valuePurchase: data.valuePurchase,
 								description: data.description,
-								pointsPurchases: data.valuePurchase / 1000,
+								pointsPurchase: data.valuePurchase / 1000,
 								idClient: results[0].id, //prueba
 							},
 							(error2, results2, fields2) => {
@@ -57,12 +59,25 @@ module.exports = {
 								if (results2 === undefined) {
 									return callback(null, {
 										state: false,
-										msg: 'La compra no pudo ser creada',
+										alert: true,
+										alertTitle: '¡Ups!...',
+										alertMessage:
+											'La compra no pudo ser creada',
+										alertIcon: 'error',
+										showConfirmButton: true,
+										timer: 5000,
+										ruta: '/admin/compras/nueva',
 									});
 								} else {
 									return callback(null, {
 										state: true,
-										msg: `La compra del cliente ${data.emailClient} fue creada con exito.`,
+										alert: true,
+										alertTitle: '¡Bien! creación exitosa',
+										alertMessage: `La compra del cliente ${data.emailClient} fue creada con exito.`,
+										alertIcon: 'success',
+										showConfirmButton: true,
+										timer: 5000,
+										ruta: '/admin/compras',
 									});
 								}
 							}
@@ -70,7 +85,13 @@ module.exports = {
 					} else {
 						return callback(null, {
 							state: false,
-							msg: 'El cliente no esta registrado',
+							alert: false,
+							alertTitle: 'No encontramos el cliente',
+							alertMessage: 'El cliente no esta registrado',
+							alertIcon: 'error',
+							showConfirmButton: true,
+							timer: 5000,
+							ruta: '/admin/compras/nueva',
 						});
 					}
 				}
@@ -79,7 +100,13 @@ module.exports = {
 			// No se recibio un correo electronico para realizar la consulta
 			return callback(null, {
 				state: false,
-				msg: 'La compra no pudo ser creada',
+				alert: true,
+				alertTitle: '¡Bien! creación exitosa',
+				alertMessage: 'La compra no pudo ser creada',
+				alertIcon: 'success',
+				showConfirmButton: true,
+				timer: 5000,
+				ruta: '/admin/compras',
 			});
 		}
 	},
@@ -93,8 +120,19 @@ module.exports = {
 				const newPointsPurchase = data.valuePurchase / 1000;
 				const calcPoints =
 					results2[0].points - oldPointsPurchase + newPointsPurchase;
+
+				data.datePurchase = new Date(data.datePurchase);
+				// Se debe realizar un stringify a este date por la forma
+				// en que se pasa la variable en la consulta
+				// de lo contrario enviara este tipo de fecha:
+				// Fri Nov 25 2022 00:00:00 GMT-0500 (hora estándar de Colombia)
+				// y no sera guardada por la base de datos.
+				// Recuerda: No poner comillas simples al rededor de esta variable en la consulta
+				// ya que strinfy devuelve la variable con comillas dobles.
+				data.datePurchase = JSON.stringify(data.datePurchase); // ej: "2022-11-18T05:00:00.000Z"
+
 				con.query(
-					`UPDATE purchases, clients SET purchases.namePurchase ='${data.namePurchase}', purchases.valuePurchase ='${data.valuePurchase}', purchases.pointsPurchases ='${newPointsPurchase}', purchases.description='${data.description}',purchases.datePurchase='${data.datePurchase}',clients.points='${calcPoints}' WHERE purchases.id = '${id}' AND clients.email= '${data.email}'`,
+					`UPDATE purchases, clients SET purchases.namePurchase ='${data.namePurchase}', purchases.valuePurchase ='${data.valuePurchase}', purchases.pointsPurchase ='${newPointsPurchase}', purchases.description='${data.description}', purchases.datePurchase=${data.datePurchase}, clients.points='${calcPoints}' WHERE purchases.id = '${id}' AND clients.email= '${data.email}'`,
 					(error, results) => {
 						if (error) throw error;
 					}
@@ -107,7 +145,7 @@ module.exports = {
 
 	getListByClient: function (con, id, callback) {
 		con.query(
-			`SELECT DATE_FORMAT(purchases.datePurchase, "%Y-%m-%d") as  datePurchase, purchases.namePurchase, purchases.valuePurchase, purchases.pointsPurchases FROM purchases JOIN clients ON purchases.idClient = clients.id WHERE clients.id = ${id}`,
+			`SELECT purchases.id, DATE_FORMAT(purchases.datePurchase, "%d/%m/%Y") as  datePurchase, purchases.namePurchase, purchases.valuePurchase, purchases.pointsPurchase FROM purchases JOIN clients ON purchases.idClient = clients.id WHERE clients.id = ${id}`,
 			(error, results) => {
 				if (error) throw error;
 
@@ -118,11 +156,11 @@ module.exports = {
 
 	destroy: function (con, id, callback) {
 		con.query(
-			`SELECT idClient, pointsPurchases FROM purchases WHERE id = ${id}`,
+			`SELECT idClient, pointsPurchase FROM purchases WHERE id = ${id}`,
 			(error, results) => {
 				if (error) throw error;
 				const clientId = results[0].idClient;
-				const pointsDelete = results[0].pointsPurchases;
+				const pointsDelete = results[0].pointsPurchase;
 				con.query(
 					`SELECT points FROM clients WHERE id = ${clientId}`,
 					(error2, results2) => {
@@ -135,9 +173,8 @@ module.exports = {
 								if (error3) throw error3;
 								con.query(
 									`DELETE FROM purchases WHERE id = ${id}`,
-									(error4, results4) => {
+									(error4) => {
 										if (error4) throw error4;
-										callback(null, results4);
 									}
 								);
 							}

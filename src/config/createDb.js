@@ -44,7 +44,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `purchases` (`id` INT NOT NULL AUTO_INCREMENT,`namePurchase` VARCHAR(45) NOT NULL,`description` VARCHAR(250) NOT NULL,`datePurchase` TIMESTAMP NOT NULL,`valuePurchase` FLOAt NOT NULL,`pointsPurchases` FLOAT NOT NULL,`createDate` DATETIME NOT NULL,`idClient` INT NOT NULL,PRIMARY KEY (`id`), FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `purchases` (`id` INT NOT NULL AUTO_INCREMENT,`namePurchase` VARCHAR(45) NOT NULL,`description` VARCHAR(250) NOT NULL,`datePurchase` DATETIME NOT NULL,`valuePurchase` FLOAT NOT NULL,`pointsPurchase` FLOAT NOT NULL,`createDate` TIMESTAMP NOT NULL,`idClient` INT NOT NULL,PRIMARY KEY (`id`), FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
@@ -55,7 +55,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `rewards` (`id` INT NOT NULL AUTO_INCREMENT,`nameReward` VARCHAR(45) NOT NULL,`image` TEXT NOT NULL,`pricePoints` DECIMAL(50) NOT NULL,`description` VARCHAR(280) NOT NULL,`finishDate` DATETIME NOT NULL,`deliveryTime` DATETIME(6) NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `rewards` (`id` INT NOT NULL AUTO_INCREMENT,`nameReward` VARCHAR(45) NOT NULL,`image` TEXT NOT NULL,`pricePoints` DECIMAL(50) NOT NULL,`description` VARCHAR(280) NOT NULL,`finishDate` DATETIME NOT NULL,`deliveryTime` DATETIME NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 

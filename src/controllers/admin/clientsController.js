@@ -35,38 +35,11 @@ module.exports = {
 
 			AdminClients.create(req.con, req.body, (err, results) => {
 				if (results.state === false) {
-					return res.render('admin/clientCreate', {
-						alert: true,
-						alertTitle: '¡Ups!...',
-						alertMessage: results.msg,
-						alertIcon: 'error',
-						showConfirmButton: true,
-						timer: 5000,
-						ruta: '/admin/clientes/nuevo',
-					});
+					return res.render('admin/clientCreate', results);
 				} else {
 					// State = true
-					res.render('admin/clientCreate', {
-						alert: true,
-						alertTitle: '¡Bien! creación exitosa',
-						alertMessage: results.msg,
-						alertIcon: 'success',
-						showConfirmButton: true,
-						timer: 5000,
-						ruta: '/admin/clientes',
-					});
+					res.render('admin/clientCreate', results);
 				}
-			});
-		} else {
-			// El usuario no tiene sessión
-			res.redirect('/admin/');
-		}
-	},
-
-	destroy: (req, res) => {
-		if (req.session.loggedin) {
-			AdminClients.destroy(req.con, req.params.id, (err, results) => {
-				res.redirect('/admin/clientes');
 			});
 		} else {
 			// El usuario no tiene sessión
@@ -92,6 +65,15 @@ module.exports = {
 					res.redirect('/admin/clientes');
 				}
 			);
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
+	},
+
+	destroy: (req, res) => {
+		if (req.session.loggedin) {
+			AdminClients.destroy(req.con, req.params.id);
 		} else {
 			// El usuario no tiene sessión
 			res.redirect('/admin/');

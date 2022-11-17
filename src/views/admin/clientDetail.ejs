@@ -105,9 +105,9 @@
 
          <!-- Compras realizadas -->
 		 <section>
-			<h2 class="mb-2 text-2xl font-semibold">Pedidos del cliente</h2>
+			<h2 class="mt-8 mb-2 text-2xl font-semibold">Pedidos del cliente</h2>
 			<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
-			<div id="grid-clients" class="mt-4"></div>
+			<div id="gridClientsPurchase" class="mt-4"></div>
 		 </section>
 	</div>
 
@@ -129,11 +129,18 @@
 			}, {
 				id: 'points',
 				name: 'Puntos'
+			},{
+				id: 'actions',
+				name: '',
+				width: '100px',
+				sort: {
+					enabled: false
+				}
 			}],
 			sort: true,
 			server: {
 				url: 'comprasList',
-				then: data => data.map(compra => [compra.datePurchase, compra.namePurchase, "$"+compra.valuePurchase, compra.pointsPurchases + " Pts."]),
+				then: data => data.map(compra => [compra.datePurchase, compra.namePurchase, "$"+compra.valuePurchase, compra.pointsPurchase + " Pts.", html(`<a href="/admin/compras/edit/${compra.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deletePurchase(${compra.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
 				handle: (res) => {
 				// no matching records found
 				if (res.status === 404) return {data: []};
@@ -161,7 +168,7 @@
 				}
 			}
 		}
-		}).render(document.getElementById('grid-clients'));
+		}).render(document.getElementById('gridClientsPurchase'));
     </script>
 
 </body>

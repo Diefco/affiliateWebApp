@@ -36,26 +36,10 @@ module.exports = {
 
 			AdminReward.create(req.con, req.body, (err, results) => {
 				if (results.state === false) {
-					return res.render('admin/rewardsCreate', {
-						alert: true,
-						alertTitle: '¡Ups!...',
-						alertMessage: results.msg,
-						alertIcon: 'error',
-						showConfirmButton: true,
-						timer: 5000,
-						ruta: '/admin/premios/nuevo',
-					});
+					return res.render('admin/rewardsCreate', results);
 				} else {
 					// State = true
-					res.render('admin/reawrdsCreate', {
-						alert: true,
-						alertTitle: '¡Bien! creación exitosa',
-						alertMessage: results.msg,
-						alertIcon: 'success',
-						showConfirmButton: true,
-						timer: 5000,
-						ruta: '/admin/premios',
-					});
+					res.render('admin/reawrdsCreate', results);
 				}
 			});
 		} else {

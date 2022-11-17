@@ -32,14 +32,27 @@ module.exports = {
 								if (!results2) {
 									return callback(null, {
 										state: false,
-										msg: 'El usuario no pudo ser creado',
+										alert: true,
+										alertTitle: '¡Ups!...',
+										alertMessage:
+											'El usuario no pudo ser creado',
+										alertIcon: 'error',
+										showConfirmButton: true,
+										timer: 5000,
+										ruta: '/admin/clientes/nuevo',
 									});
 								}
 
 								// Si la consulta devuelve datos
 								return callback(null, {
 									state: true,
-									msg: `El cliente ${data.name} fue creado con exito.`,
+									alert: true,
+									alertTitle: `El cliente ${data.name} fue creado con exito.`,
+									alertMessage: results.msg,
+									alertIcon: 'success',
+									showConfirmButton: true,
+									timer: 5000,
+									ruta: '/admin/clientes',
 								});
 							}
 						);
@@ -47,7 +60,14 @@ module.exports = {
 						// El correo electronico ya existe
 						return callback(null, {
 							state: false,
-							msg: 'Ya existe un usuario con este correo',
+							alert: true,
+							alertTitle: '¡Ups!...',
+							alertMessage:
+								'Ya existe un usuario con este correo',
+							alertIcon: 'error',
+							showConfirmButton: true,
+							timer: 5000,
+							ruta: '/admin/clientes/nuevo',
 						});
 					}
 				}
@@ -60,13 +80,6 @@ module.exports = {
 			});
 		}
 	},
-
-	destroy: function (con, id, callback) {
-		con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
-			if (error) throw error;
-			callback(null, results);
-		});
-	},
 	update: function (con, data, id, callback) {
 		con.query(
 			`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
@@ -75,5 +88,10 @@ module.exports = {
 				return callback(null);
 			}
 		);
+	},
+	destroy: function (con, id) {
+		con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
+			if (error) throw error;
+		});
 	},
 };

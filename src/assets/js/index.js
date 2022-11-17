@@ -60,7 +60,7 @@ function deletePurchase(id) {
 
 	Swal.fire({
 		title: '¿Quieres borrar la compra?',
-		text: 'Si borras una compra, no podras recuperarl ¿Estas seguro?',
+		text: 'Si borras una compra, no podras recuperarla ¿Estas seguro?',
 		showDenyButton: true,
 		showCancelButton: false,
 		confirmButtonText: 'Si, borrar',
@@ -110,3 +110,16 @@ function showPreview(event) {
 		preview.src = src;
 	}
 }
+
+/* set date en datepicker */
+function setDatepicker() {
+	const dateInput = document.querySelector('.datepicker');
+	if (dateInput) {
+		const dateValue = dateInput.getAttribute('data-value');
+		setTimeout(() => {
+			dateInput.value = dateValue;
+		}, 300);
+	}
+}
+
+setDatepicker();

@@ -29,28 +29,7 @@ module.exports = {
 	create: (req, res) => {
 		if (req.session.loggedin) {
 			AdminPurchases.create(req.con, req.body, (err, results) => {
-				if (results.state === false) {
-					return res.render('admin/purchasesCreate', {
-						alert: true,
-						alertTitle: '¡Ups!...',
-						alertMessage: results.msg,
-						alertIcon: 'error',
-						showConfirmButton: true,
-						timer: 5000,
-						ruta: '/admin/compras/nueva',
-					});
-				} else {
-					// State = true
-					res.render('admin/purchasesCreate', {
-						alert: true,
-						alertTitle: '¡Bien! creación exitosa',
-						alertMessage: results.msg,
-						alertIcon: 'success',
-						showConfirmButton: true,
-						timer: 5000,
-						ruta: '/admin/compras',
-					});
-				}
+				res.render('admin/purchasesCreate', results);
 			});
 		} else {
 			// El usuario no tiene sessión
@@ -92,11 +71,7 @@ module.exports = {
 
 	destroy: (req, res) => {
 		if (req.session.loggedin) {
-			AdminPurchases.destroy(
-				req.con,
-				req.params.id,
-				(err, results) => {}
-			);
+			AdminPurchases.destroy(req.con, req.params.id);
 		} else {
 			// El usuario no tiene sessión
 			return res.redirect('/admin/');
