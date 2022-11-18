@@ -29,7 +29,7 @@ module.exports = {
 	create: (req, res) => {
 		if (req.session.loggedin) {
 			AdminPurchases.create(req.con, req.body, (err, results) => {
-				res.render('admin/purchasesCreate', results);
+				res.render('admin/purchasesList', results);
 			});
 		} else {
 			// El usuario no tiene sessión
