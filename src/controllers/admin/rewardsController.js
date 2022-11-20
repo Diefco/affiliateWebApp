@@ -30,20 +30,16 @@ module.exports = {
 	},
 
 	create: (req, res) => {
-		console.log('file de create controller');
-		console.log(req.file);
-		console.log('body de create controller');
-		console.log(req.body);
 		if (req.session.loggedin) {
 			// Definimidos el idAdmin para la consulta en BD.
 			req.body.idAdmin = req.session.idUser;
 
-			AdminReward.create(req.con, req.body, req.file, (err, results) => {
+			AdminReward.create(req.con, req, (err, results) => {
 				if (results.state === false) {
 					return res.render('admin/rewardsCreate', results);
 				} else {
 					// State = true
-					res.render('admin/reawrdsCreate', results);
+					res.render('admin/rewardsCreate', results);
 				}
 			});
 		} else {

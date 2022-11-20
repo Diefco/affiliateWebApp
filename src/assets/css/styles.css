@@ -824,6 +824,10 @@ select {
   margin-top: 1rem;
 }
 
+.mt-8 {
+  margin-top: 2rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -838,10 +842,6 @@ select {
 
 .ml-1 {
   margin-left: 0.25rem;
-}
-
-.mt-8 {
-  margin-top: 2rem;
 }
 
 .ml-3 {
