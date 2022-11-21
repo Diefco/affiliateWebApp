@@ -33,14 +33,8 @@ module.exports = {
 		if (req.session.loggedin) {
 			// Definimidos el idAdmin para la consulta en BD.
 			req.body.idAdmin = req.session.idUser;
-
 			AdminReward.create(req.con, req, (err, results) => {
-				if (results.state === false) {
-					return res.render('admin/rewardsCreate', results);
-				} else {
-					// State = true
-					res.render('admin/rewardsCreate', results);
-				}
+				return res.render('admin/rewardsCreate', results);
 			});
 		} else {
 			// El usuario no tiene sessión
@@ -61,11 +55,13 @@ module.exports = {
 
 	edit: (req, res) => {
 		AdminReward.getById(req.con, req.params.id, (err, rows) => {
-			res.render('admin/rewardDetail', { data: rows[0] });
+			console.log(rows[0]);
+			res.render('admin/rewardsDetail', { data: rows[0] });
 		});
 	},
 
 	update: (req, res) => {
+		console.log(req.body);
 		if (req.session.loggedin) {
 			AdminReward.update(req.con, req.body, req.params.id, (err) => {
 				if (err) throw err;

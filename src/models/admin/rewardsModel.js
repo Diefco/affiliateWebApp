@@ -5,12 +5,19 @@ module.exports = {
 		con.query('SELECT * FROM rewards', callback);
 	},
 	getById: function (con, id, callback) {
-		// con.query(`SELECT * FROM clients WHERE id = ${id}`, callback);
+		con.query(
+			`SELECT id, nameReward, image, pricePoints, description, DATE_FORMAT(finishDate, "%d/%m/%Y") as finishDate FROM rewards WHERE id = ${id}`,
+			(error, results) => {
+				if (error) throw error;
+
+				callback(null, results);
+			}
+		);
 	},
 	create: function (con, data, callback) {
 		// console.log('data models', data);
-
 		uploadFile(data, (fileName) => {
+			// Guardamos como fecha
 			data.body.fechaFinalizacion = new Date(data.body.fechaFinalizacion);
 
 			con.query(
@@ -53,15 +60,24 @@ module.exports = {
 			);
 		});
 	},
-	// update: function (con, data, id, callback) {
-	// 	// con.query(
-	// 	// 	`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
-	// 	// 	(error) => {
-	// 	// 		if (error) throw error;
-	// 	// 		return callback(null);
-	// 	// 	}
-	// 	// );
-	// },
+	update: function (con, data, id, callback) {
+		// uploadFile(data, (fileName, fechaFinalizacion) => {
+		// Guardamos como fecha
+		console.log(data);
+
+		data.fechaFinalizacion = new Date(data.fechaFinalizacion);
+		data.fechaFinalizacion = JSON.stringify(data.fechaFinalizacion);
+		console.log(data.fechaFinalizacion);
+
+		con.query(
+			`UPDATE rewards SET nameReward ='${data.name}', description ='${data.description}', pricePoints ='${data.points}', finishDate=${data.fechaFinalizacion} WHERE id = ${id}`,
+			(error) => {
+				if (error) throw error;
+				return callback(null);
+			}
+		);
+		// });
+	},
 	// destroy: function (con, id) {
 	// 	// con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
 	// 	// 	if (error) throw error;

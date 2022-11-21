@@ -25,14 +25,14 @@
 			<form method="POST" enctype="multipart/form-data" action="/admin/premios/nuevoPremio" class="max-w-4xl m-auto">
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
 					<div class="w-full col-span-1">
-						<label for="image" class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Sube una foto</label>
-						<input type="file" name="image" id="image" onchange="showPreview(event);" accept="image/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:font-semibold file:p-2 file:bg-cBlue file:text-white hover:file:bg-gray-300 hover:file:text-gray-900 file:border-0 file:outline-none file:ring-0" aria-describedby="file_input_help" />
+						<label for="image" class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Sube una foto<span class="text-red-600">*</span></label>
+						<input type="file" name="image" id="image" onchange="showPreview(event);" accept="image/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:font-semibold file:p-2 file:bg-cBlue file:text-white hover:file:bg-gray-300 hover:file:text-gray-900 file:border-0 file:outline-none file:ring-0" aria-describedby="file_input_help" required/>
 						<p class="mt-1 text-xs text-gray-500" id="file_input_help">SVG, PNG, JPG or GIF.</p>
 
 						<div id="img-preview" class="p-2 mt-4 border border-gray-300">
 							<img src="/assets/img/uploads/no-photo.jpg" class="object-cover w-full rounded aspect-square">
 						</div>
-					</div>
+					</div> 
 					<div class="w-full col-span-2">
 						<label for="name" class="block mt-4 ml-1 text-sm font-medium lg:mt-0">Nombre<span class="text-red-600">*</span></label>
 						<input type="text" name="name" id="name" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" placeholder="Nombre del premio" required />

@@ -24,7 +24,7 @@ const upload = multer({
 
 function checkFileType(file, cb) {
 	// Extensiones a recibir
-	const filetypes = /jpeg|jpg|png|gif/;
+	const filetypes = /jpeg|jpg|png|gif|webp|svg/;
 	// Revisar extension
 	var extname = filetypes.test(
 		path.extname(file.originalname).toLocaleLowerCase()
@@ -38,13 +38,14 @@ function checkFileType(file, cb) {
 }
 
 function uploadFile(req, callback) {
+	console.log('llego al uploadfile');
 	upload(req, callback, (err) => {
 		if (err) {
 			console.log(err);
 			//res.send(err);
 		} else {
 			console.log('Imagen subida correctamente');
-			callback(req.file.filename);
+			callback(req.file.filename, req.body.fechaFinalizacion);
 		}
 	});
 }
