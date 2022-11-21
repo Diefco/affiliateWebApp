@@ -123,3 +123,51 @@ function setDatepicker() {
 }
 
 setDatepicker();
+
+const adminPedidoCart = [];
+function toggleCart(id) {
+	const inputCart = document.querySelector('#cart');
+	const reward = document.querySelector(`#addCart-${id}`);
+	const rewardIcon = reward.querySelector('i');
+
+	const inCart = reward.getAttribute('data-incart');
+
+	if (inCart === 'false') {
+		// el premio no se ha añadido.
+		reward.classList.remove('border-cBlue');
+		reward.classList.remove('hover:text-cBlue');
+		reward.classList.remove('bg-cBlue');
+		rewardIcon.classList.remove('fa-plus');
+
+		reward.classList.add('border-cPink');
+		reward.classList.add('hover:text-cPink');
+		reward.classList.add('bg-cPink');
+		rewardIcon.classList.add('fa-minus');
+
+		reward.setAttribute('data-incart', 'true');
+
+		adminPedidoCart.push(id);
+	} else {
+		// El premio esta en el "carrito"
+		reward.classList.remove('border-cPink');
+		reward.classList.remove('hover:text-cPink');
+		reward.classList.remove('bg-cPink');
+		rewardIcon.classList.remove('fa-minus');
+
+		reward.classList.add('border-cBlue');
+		reward.classList.add('hover:text-cBlue');
+		reward.classList.add('bg-cBlue');
+		rewardIcon.classList.add('fa-plus');
+
+		reward.setAttribute('data-incart', 'false');
+
+		for (let i = 0; i < adminPedidoCart.length; i++) {
+			actualItem = adminPedidoCart[i];
+			if (actualItem === id) {
+				adminPedidoCart.splice(i, 1);
+			}
+		}
+	}
+
+	inputCart.setAttribute('value', adminPedidoCart);
+}

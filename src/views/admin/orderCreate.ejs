@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<%- include('../templates/headMetas'); -%>
+	<title>Pedido - Nuevo</title>
+</head>
+
+<body class="cupcakes-bg">
+	<%- include('../templates/header'); -%>
+
+	<section class="content">
+		<div class="flex justify-between gap-4">
+			<div>
+				<h1 class="mb-2 text-3xl font-semibold">Crear Nuevo Pedido</h1>
+				<div class="bg-cBlue h-[3px] w-28 mb-4"></div>
+			</div>
+			<div>
+				<a class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded inline-block3 border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring-cPink" href="/admin/pedidos">
+					<i class="fa-solid fa-left-long"></i>
+				</a>
+			</div>
+		</div>
+		<div class="p-4 py-12 mx-auto mt-6 bg-white rounded-lg shadow-2xl lg:px-8">
+			<form method="POST" action="update" class="max-w-4xl m-auto">
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+					<div class="w-full col-span-1">
+						<h2 class="mt-4 mb-2 text-2xl font-semibold">Información del cliente</h2>
+						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+						<label for="name" class="block mt-4 ml-1 text-sm font-medium">Correo del cliente<span class="text-red-600">*</span></label>
+						<input type="email" name="email" id="email" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="correo del cliente" required/>		
+						
+						<h2 class="mt-6 mb-2 text-2xl font-semibold">Información de entrega</h2>
+						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>			
+						<p class="my-1 text-sm">A continuación especifique los datos de <b>quien recibira el premio.</b></p>
+						
+						<label for="receiverName" class="block mt-4 ml-1 text-sm font-medium">Nombre<span class="text-red-600">*</span></label>
+						<input type="text" name="receiverName" id="receiverName" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Nombre del receptor" required/>						
+
+						<label for="receiverPhone" class="block mt-4 ml-1 text-sm font-medium">Teléfono<span class="text-red-600">*</span></label>
+						<input type="text" inputmode="numeric" name="receiverPhone" id="receiverPhone" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Teléfono del receptor" required/>						
+
+						<label for="receiverDate" class="block mt-4 ml-1 text-sm font-medium">Fecha de entrega <span class="text-red-600">*</span></label>
+						<div class="relative">
+							<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+								<svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+							</div>
+							<input datepicker type="text" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5" placeholder="Seleciona una fecha" required>
+						</div>
+
+						<label for="receiverHour" class="block mt-4 ml-1 text-sm font-medium">Hora de entrega<span class="text-red-600">*</span></label>
+						<input type="text" name="receiverHour" id="receiverHour" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
+
+						<label for="receiverAddress" class="block mt-4 ml-1 text-sm font-medium">Dirección de entrega<span class="text-red-600">*</span></label>
+						<input type="text" name="receiverAddress" id="receiverAddress" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
+
+						<label for="description" class="block mt-4 ml-1 text-sm font-medium ">Información adicional</label>
+						<textarea name="description" id="description" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" rows="4" placeholder="Escribe un mensaje o datos adicionales."></textarea>
+						
+						<label for="inCart" class="hidden">Dirección de entrega</label>
+						<input type="text" name="inCart" id="inCart" class="hidden"/>
+
+					</div>
+					<div class="w-full col-span-1">
+						<div id="premios-list" class="text-sm"></div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+		<%- include('../templates/footer'); -%>
+
+	<script type="module">
+		import { Grid, html } from 'https://unpkg.com/gridjs?module';
+		new Grid({
+			search: true,
+			columns: [{
+				id: 'id',
+				name: 'ID',
+				width: '70px',
+			}, {
+				id: 'name',
+				name: 'Premio'
+			}, {
+				id: 'value',
+				name: 'Valor'
+			}, {
+				id: 'actions',
+				name: '',
+				width: '70px',
+			}],
+			sort:false,
+			data: [
+				[
+					1,
+					'Especial Cupcakes de Crema Acida con Galleta x6',
+					'4500 Pts',
+					html(`<span onClick="toggleCart(1)" id="addCart-1" reward-id="1" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue" href="/admin/pedidos">
+							<i class="fa-solid fa-plus"></i>
+						</span>`)
+				],[
+					2,
+					'Especial Cupcakes de Crema Acida con Galleta x6',
+					'4500 Pts',
+					html(`<span onClick="toggleCart(2)" id="addCart-2" reward-id="2" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue" href="/admin/pedidos">
+							<i class="fa-solid fa-plus"></i>
+						</span>`)
+				],[
+					3,
+					'Especial Cupcakes de Crema Acida con Galleta x6',
+					'4500 Pts',
+					html(`<span onClick="toggleCart(3)" id="addCart-3" reward-id="3" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue" href="/admin/pedidos">
+							<i class="fa-solid fa-plus"></i>
+						</span>`)
+				]			
+			],
+			// server: {
+			// 	url: 'http://localhost:3018/admin/rewardList',
+			// 	then: data => data.map(reward => [reward.id, reward.name, reward.email, reward.phone,
+		    //         html(`<a href="/admin/premios/edit/${reward.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>
+		    //               <a href="" onClick="deletePremio(${reward.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
+			// 	handle: (res) => {
+			// 	// no matching records found
+			// 	if (res.status === 404) return {data: []};
+			// 	if (res.ok) return res.json();
+
+			// 	throw Error('oh no :(');
+			// 	},
+			// }, 
+			pagination: {
+				enabled: true,
+				limit: 10,
+				summary: false
+			},
+			language: {
+				'search': {
+				'placeholder': '🔍 Buscar...'
+			},
+			'pagination': {
+				'previous': 'Ant.',
+				'next': 'Sig.'
+			}, 
+			style: { 
+				table: { 
+				'white-space': 'nowrap'
+				}
+			}
+		}
+		}).render(document.getElementById('premios-list'));
+	</script>
+
+</body>
+
+</html>

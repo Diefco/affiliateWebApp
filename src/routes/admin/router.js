@@ -3,6 +3,7 @@ const adminController = require('../../controllers/admin/loginController');
 const clientsController = require('../../controllers/admin/clientsController');
 const purchasesController = require('../../controllers/admin/purchasesController');
 const rewardsController = require('../../controllers/admin/rewardsController');
+const ordersController = require('../../controllers/admin/ordersController');
 
 const router = express.Router();
 
@@ -65,6 +66,24 @@ router.get('/premios/edit/:id', rewardsController.edit);
 router.post('/premios/edit/:id/update', rewardsController.update);
 // Eliminar premio por id
 router.delete('/premios/delete/:id', rewardsController.destroy);
+
+/* PEDIDOS */
+// Vista listado de pedidos
+router.get('/pedidos', ordersController.index);
+// Api consumo lista de pedidos = pedidosList
+router.get('/orderList', ordersController.getList);
+// Vista crear pedido
+router.get('/pedidos/nuevo', ordersController.new);
+// Consulta crear pedido
+router.post('/pedidos/nuevoPedido', ordersController.create);
+// Vista editar pedido
+router.get('/pedidos/edit/:id', ordersController.edit);
+// Consulta actulizar pedido
+router.post('/pedidos/edit/:id/update', ordersController.update);
+// Lista de pedidos del cliente
+router.get('/pedidos/edit/:id/comprasList', ordersController.getListByClient);
+//delete pedido
+router.delete('/pedidos/delete/:id', purchasesController.destroy);
 
 // router.post('/', adminController.store);
 // router.get('/:id/edit', adminController.edit);
