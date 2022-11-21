@@ -25,14 +25,14 @@
 			<form method="POST" enctype="multipart/form-data" action="/admin/premios/nuevoPremio" class="max-w-4xl m-auto">
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
 					<div class="w-full col-span-1">
-						<label for="image" class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Sube una foto</label>
-						<input type="file" name="image" id="image" onchange="showPreview(event);" accept="image/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:font-semibold file:p-2 file:bg-cBlue file:text-white hover:file:bg-gray-300 hover:file:text-gray-900 file:border-0 file:outline-none file:ring-0" aria-describedby="file_input_help" />
+						<label for="image" class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Sube una foto<span class="text-red-600">*</span></label>
+						<input type="file" name="image" id="image" onchange="showPreview(event);" accept="image/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:font-semibold file:p-2 file:bg-cBlue file:text-white hover:file:bg-gray-300 hover:file:text-gray-900 file:border-0 file:outline-none file:ring-0" aria-describedby="file_input_help" required/>
 						<p class="mt-1 text-xs text-gray-500" id="file_input_help">SVG, PNG, JPG or GIF.</p>
 
 						<div id="img-preview" class="p-2 mt-4 border border-gray-300">
-							<img src="/assets/img/rewards/no-photo.jpg" class="object-cover w-full rounded aspect-square">
+							<img src="/assets/img/uploads/no-photo.jpg" class="object-cover w-full rounded aspect-square">
 						</div>
-					</div>
+					</div> 
 					<div class="w-full col-span-2">
 						<label for="name" class="block mt-4 ml-1 text-sm font-medium lg:mt-0">Nombre<span class="text-red-600">*</span></label>
 						<input type="text" name="name" id="name" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" placeholder="Nombre del premio" required />
@@ -43,14 +43,14 @@
 						<label for="points" class="block mt-4 ml-1 text-sm font-medium">Puntos necesarios <span class="text-red-600">*</span></label>
 						<input type="text" inputmode="numeric" name="points" id="points" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" placeholder="Puntos para reclamar el premio" required />
 
-						<label for="points" class="block mt-4 ml-1 text-sm font-medium">Fecha de finalización:</label>
+						<label for="fechaFinalizacion" class="block mt-4 ml-1 text-sm font-medium">Fecha de finalización:</label>
 						<span class="block mt-2 ml-1 text-xs text-gray-500">Fecha hasta la que el premio estará disponible.</span>
 						<span class="block mb-2 ml-1 text-xs text-gray-500">Deja el campo vacio si no tiene un limite de tiempo.</span>
 						<div class="relative">
 							<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 								<svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
 							</div>
-							<input datepicker type="text" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5" placeholder="Seleciona una fecha">
+							<input datepicker type="text" name="fechaFinalizacion" id="fechaFinalizacion" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5" placeholder="Seleciona una fecha">
 						</div>
 
 						<button type="submit" class="block py-3 m-auto mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink">

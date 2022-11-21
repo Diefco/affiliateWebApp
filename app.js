@@ -4,16 +4,9 @@ const path = require('path');
 let dotenv = require('dotenv');
 const cookieSession = require('cookie-session'); // invocamos morgan
 const morgan = require('morgan');
-const multer = require('multer');
 
 // middlewares
 app.use(morgan('dev'));
-
-app.use(
-	multer({
-		dest: path.join(__dirname, '/src/assets/img/uploads/'),
-	}).single('image')
-);
 
 /* url encoded y json */
 app.use(express.urlencoded({ extended: true })); // pasar a true con imagenes

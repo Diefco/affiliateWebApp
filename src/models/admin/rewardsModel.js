@@ -1,66 +1,83 @@
+const uploadFile = require('../../../uploadFile.js');
+
 module.exports = {
 	get: function (con, callback) {
 		con.query('SELECT * FROM rewards', callback);
 	},
 	getById: function (con, id, callback) {
-		// con.query(`SELECT * FROM clients WHERE id = ${id}`, callback);
-	},
-	create: function (con, data, dataImg, callback) {
-		console.log('data que llega al model en el body');
-		console.log(data);
-		console.log('data que llega al model en el dataImg');
-		console.log(dataImg.filename);
-		con.query('INSERT INTO rewards SET ?', {
-			nameReward: data.name,
-			image: dataImg.filename,
-			description: data.description,
-			pricePoints: data.points,
-		}),
-			(error2, results2, fields2) => {
-				if (error2) throw error2;
-				// 						// Si la consulta no devuelve datos
-				if (!results2) {
-					return callback(null, {
-						state: false,
-						alert: true,
-						alertTitle: '¡Ups!...',
-						alertMessage: 'La compra no pudo ser creado',
-						alertIcon: 'error',
-						showConfirmButton: true,
-						timer: 5000,
-						ruta: '/admin/clientes/nuevo',
-					});
-				}
-				// Si la consulta devuelve datos
-				return callback(null, {
-					state: true,
-					alert: true,
-					alertTitle: `La compra ${data.name} fue creado con exito.`,
-					alertMessage: results.msg,
-					alertIcon: 'success',
-					showConfirmButton: true,
-					timer: 5000,
-					ruta: '/admin/clientes',
-				});
-			};
+		con.query(
+			`SELECT id, nameReward, image, pricePoints, description, DATE_FORMAT(finishDate, "%d/%m/%Y") as finishDate FROM rewards WHERE id = ${id}`,
+			(error, results) => {
+				if (error) throw error;
 
-		// } else {
-		// 	// No se recibio un correo electronico para realizar la consulta
-		// 	return callback(null, {
-		// 		state: false,
-		// 		msg: 'El usuario no pudo ser creado',
-		// 	});
-		// }
+				callback(null, results);
+			}
+		);
 	},
-	// update: function (con, data, id, callback) {
-	// 	// con.query(
-	// 	// 	`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
-	// 	// 	(error) => {
-	// 	// 		if (error) throw error;
-	// 	// 		return callback(null);
-	// 	// 	}
-	// 	// );
-	// },
+	create: function (con, data, callback) {
+		// console.log('data models', data);
+		uploadFile(data, (fileName) => {
+			// Guardamos como fecha
+			data.body.fechaFinalizacion = new Date(data.body.fechaFinalizacion);
+
+			con.query(
+				'INSERT INTO rewards SET ?',
+				{
+					nameReward: data.body.name,
+					image: fileName,
+					description: data.body.description,
+					pricePoints: data.body.points,
+					finishDate: data.body.fechaFinalizacion,
+				},
+				(error, results, fields) => {
+					if (error) throw error;
+					// Si la consulta no devuelve datos
+					if (!results) {
+						return callback(null, {
+							state: false,
+							alert: true,
+							alertTitle: '¡Ups!...',
+							alertMessage: 'El premio no pudo ser creada',
+							alertIcon: 'error',
+							showConfirmButton: true,
+							timer: 5000,
+							ruta: '/admin/premios/nuevo',
+						});
+					} else {
+						// Si la consulta devuelve datos
+						return callback(null, {
+							state: true,
+							alert: true,
+							alertTitle: `El premio ${data.body.name} fue creado con exito.`,
+							alertMessage: '',
+							alertIcon: 'success',
+							showConfirmButton: true,
+							timer: 5000,
+							ruta: '/admin/premios',
+						});
+					}
+				}
+			);
+		});
+	},
+	update: function (con, data, id, callback) {
+		// uploadFile(data, (fileName, fechaFinalizacion) => {
+		// Guardamos como fecha
+		console.log(data);
+
+		data.fechaFinalizacion = new Date(data.fechaFinalizacion);
+		data.fechaFinalizacion = JSON.stringify(data.fechaFinalizacion);
+		console.log(data.fechaFinalizacion);
+
+		con.query(
+			`UPDATE rewards SET nameReward ='${data.name}', description ='${data.description}', pricePoints ='${data.points}', finishDate=${data.fechaFinalizacion} WHERE id = ${id}`,
+			(error) => {
+				if (error) throw error;
+				return callback(null);
+			}
+		);
+		// });
+	},
 	// destroy: function (con, id) {
 	// 	// con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
 	// 	// 	if (error) throw error;

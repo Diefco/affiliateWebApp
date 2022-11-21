@@ -23,7 +23,7 @@
 			</div>
 		</div>
 
-		<section id="grid-rewards" class="mt-2"></section>
+		<section id="grid-uploads" class="mt-2"></section>
 	</div>
 
 	<%- include('../templates/footer'); -%>
@@ -50,8 +50,8 @@
 				id: 'value',
 				name: 'Valor'
 			}, {
-				id: 'state',
-				name: 'Estado'
+				id: 'description',
+				name: 'Descripcion'
 			}, {
 				id: 'actions',
 				name: '',
@@ -61,50 +61,19 @@
 				}
 			}],
 			sort: true,
-			data: [
-				[
-					html(`<img src="/assets/img/rewards/1.jpg" class="object-cover w-full rounded aspect-square">`),
-					1,
-					'Especial Cupcakes de Crema Acida con Galleta x6',
-					'4500 Pts',
-					'Activo', 
-					html(`<a href="/admin/premios/edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deletePremio(1)"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)
-				],[
-					html(`<img src="/assets/img/rewards/2.jpg" class="object-cover w-full rounded aspect-square">`),
-					2,
-					'Red Velvet con Frosting de Crema de Queso y Fresas',
-					'9500 Pts',
-					'Activo', 
-					html(`<a href="/admin/premios/edit/2/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deletePremio(2)"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)
-				],[
-					html(`<img src="/assets/img/rewards/3.jpg" class="object-cover w-full rounded aspect-square">`),
-					3,
-					'Pastel de Vainilla Y Fresa',
-					'9500 Pts',
-					'Activo', 
-					html(`<a href="/admin/premios/edit/3/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deletePremio(3)"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)
-				],[
-					html(`<img src="/assets/img/rewards/no-photo.jpg" class="object-cover w-full rounded aspect-square">`),
-					4,
-					'Pastel Ferrero cubierto con Chocolate',
-					'0 Pts',
-					'Desactivado', 
-					html(`<a href="/admin/premios/edit/4/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deletePremio(4)"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)
-				]				
-			],
-			// server: {
-			// 	url: 'http://localhost:3018/admin/rewardList',
-			// 	then: data => data.map(reward => [reward.id, reward.name, reward.email, reward.phone,
-		    //         html(`<a href="/admin/premios/edit/${reward.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>
-		    //               <a href="" onClick="deletePremio(${reward.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
-			// 	handle: (res) => {
-			// 	// no matching records found
-			// 	if (res.status === 404) return {data: []};
-			// 	if (res.ok) return res.json();
+			server: {
+				url: 'http://localhost:3018/admin/rewardList',
+				then: data => data.map(reward => [html(`<img src="/assets/img/uploads/${reward.image}" class="object-cover w-full rounded aspect-square">`),reward.id, reward.nameReward, reward.pricePoints+" Pts.", reward.description,
+		            html(`<a href="/admin/premios/edit/${reward.id}"/><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>
+		               <a href="" onClick="deletePremio(${reward.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
+			 	handle: (res) => {
+				// no matching records found
+			 	if (res.status === 404) return {data: []};
+			 	if (res.ok) return res.json();
 
-			// 	throw Error('oh no :(');
-			// 	},
-			// }, 
+			 	throw Error('oh no :(');
+			 	},
+			}, 
 			pagination: {
 				enabled: true,
 				limit: 10,
@@ -124,7 +93,7 @@
 				}
 			}
 		}
-		}).render(document.getElementById('grid-rewards'));
+		}).render(document.getElementById('grid-uploads'));
 	</script>
 
 </body>
