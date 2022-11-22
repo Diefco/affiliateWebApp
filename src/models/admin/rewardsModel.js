@@ -1,4 +1,6 @@
 const uploadFile = require('../../../uploadFile.js');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
 	get: function (con, callback) {
@@ -61,22 +63,77 @@ module.exports = {
 		});
 	},
 	update: function (con, data, id, callback) {
-		// uploadFile(data, (fileName, fechaFinalizacion) => {
-		// Guardamos como fecha
-		console.log(data);
-
-		data.fechaFinalizacion = new Date(data.fechaFinalizacion);
-		data.fechaFinalizacion = JSON.stringify(data.fechaFinalizacion);
-		console.log(data.fechaFinalizacion);
-
 		con.query(
-			`UPDATE rewards SET nameReward ='${data.name}', description ='${data.description}', pricePoints ='${data.points}', finishDate=${data.fechaFinalizacion} WHERE id = ${id}`,
-			(error) => {
+			`SELECT image FROM rewards WHERE id = ${id}`,
+			(error, results) => {
 				if (error) throw error;
-				return callback(null);
+				let imageName = results[0].image;
+				if (results === 'no-photo.jpg') {
+					uploadFile(data, (fileName, fechaFinalizacion) => {
+						// Guardamos como fecha
+						fechaFinalizacion = new Date(fechaFinalizacion);
+						fechaFinalizacion = JSON.stringify(fechaFinalizacion);
+
+						con.query(
+							`UPDATE rewards SET image='${fileName}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}', finishDate=${fechaFinalizacion} WHERE id = ${id}`,
+							(error) => {
+								if (error) throw error;
+								return callback(null);
+							}
+						);
+					});
+				} else {
+					uploadFile(data, (filename, fechaFinalizacion) => {
+						// Guardamos como fecha
+						if (filename === 'no-photo.jpg') {
+							fechaFinalizacion = new Date(fechaFinalizacion);
+							fechaFinalizacion =
+								JSON.stringify(fechaFinalizacion);
+
+							con.query(
+								`UPDATE rewards SET image='${imageName}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}', finishDate=${fechaFinalizacion} WHERE id = ${id}`,
+								(error) => {
+									if (error) throw error;
+									return callback(null);
+								}
+							);
+						} else {
+							if (imageName === 'no-photo.jpg') {
+								fechaFinalizacion = new Date(fechaFinalizacion);
+								fechaFinalizacion =
+									JSON.stringify(fechaFinalizacion);
+
+								con.query(
+									`UPDATE rewards SET image='${filename}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}', finishDate=${fechaFinalizacion} WHERE id = ${id}`,
+									(error) => {
+										if (error) throw error;
+										return callback(null);
+									}
+								);
+							} else {
+								fs.unlinkSync(
+									path.join(
+										__dirname,
+										'../../assets/img/uploads/' + imageName
+									)
+								);
+								fechaFinalizacion = new Date(fechaFinalizacion);
+								fechaFinalizacion =
+									JSON.stringify(fechaFinalizacion);
+
+								con.query(
+									`UPDATE rewards SET image='${filename}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}', finishDate=${fechaFinalizacion} WHERE id = ${id}`,
+									(error) => {
+										if (error) throw error;
+										return callback(null);
+									}
+								);
+							}
+						}
+					});
+				}
 			}
 		);
-		// });
 	},
 	// destroy: function (con, id) {
 	// 	// con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
