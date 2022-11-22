@@ -60,9 +60,22 @@ module.exports = {
 	},
 
 	edit: (req, res) => {
-		AdminOrder.getById(req.con, req.params.id, (err, rows) => {
-			res.render('admin/orderDetail', { data: rows[0] });
+		//AdminOrder.getById(req.con, req.params.id, (err, rows) => {
+		res.render('admin/orderDetail', {
+			data: {
+				emailClient: 'email@test.com',
+				receiverPhone: '3004448484',
+				datePurchase: '13/15/2022',
+				receiverHour: '19:30',
+				receiverAddress:
+					'Calle Larga Test #152-47 Conjunto Residencial Prueba T1 APTO 1008',
+				receiverName: 'Pedrita Molina',
+				description:
+					'Este pedido debe marcar el producto 1,3 y 4 (no existe)',
+				inCart: '1,3,4',
+			},
 		});
+		//});
 	},
 
 	getListByClient: (req, res) => {
