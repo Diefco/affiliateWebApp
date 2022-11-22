@@ -135,9 +135,22 @@ module.exports = {
 			}
 		);
 	},
-	// destroy: function (con, id) {
-	// 	// con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
-	// 	// 	if (error) throw error;
-	// 	// });
-	// },
+	destroy: function (con, id) {
+		con.query(
+			`SELECT image FROM rewards WHERE id = ${id}`,
+			(error, results) => {
+				if (error) throw error;
+				let imageName = results[0].image;
+				fs.unlinkSync(
+					path.join(
+						__dirname,
+						'../../assets/img/uploads/' + imageName
+					)
+				);
+				con.query(`DELETE FROM rewards WHERE id = ${id}`, (error) => {
+					if (error) throw error;
+				});
+			}
+		);
+	},
 };
