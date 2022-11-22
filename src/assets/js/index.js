@@ -171,3 +171,30 @@ function toggleCart(id) {
 
 	inputCart.setAttribute('value', adminPedidoCart);
 }
+
+function loadCart() {
+	const inputCart = document.querySelector('#inCart');
+	const inputCartValue = inputCart.getAttribute('value');
+	const inputCartArray = inputCartValue.split(',');
+
+	setTimeout(() => {
+		inputCartArray.forEach((id) => {
+			const reward = document.querySelector(`#addCart-${id}`);
+			if (reward) {
+				const rewardIcon = reward.querySelector('i');
+
+				reward.classList.remove('border-cBlue');
+				reward.classList.remove('hover:text-cBlue');
+				reward.classList.remove('bg-cBlue');
+				rewardIcon.classList.remove('fa-plus');
+
+				reward.classList.add('border-cPink');
+				reward.classList.add('hover:text-cPink');
+				reward.classList.add('bg-cPink');
+				rewardIcon.classList.add('fa-minus');
+
+				reward.setAttribute('data-incart', 'true');
+			}
+		});
+	}, 1000);
+}
