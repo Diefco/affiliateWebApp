@@ -12,7 +12,7 @@
 	<section class="content">
 		<div class="flex justify-between gap-4">
 			<div>
-				<h1 class="mb-2 text-3xl font-semibold">Crear Nuevo Pedido</h1>
+				<h1 class="mb-2 text-3xl font-semibold">Detalles del pedido</h1>
 				<div class="bg-cBlue h-[3px] w-28 mb-4"></div>
 			</div>
 			<div>
@@ -57,12 +57,20 @@
 						<label for="description" class="block mt-4 ml-1 text-sm font-medium ">Información adicional</label>
 						<textarea name="description" id="description" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" rows="4" placeholder="Escribe un mensaje o datos adicionales."><%= data.description; %></textarea>
 						
-						<label for="inCart" class="hidden">Dirección de entrega</label>
+						<label for="inCart" class="hidden">Premios solicitados</label>
 						<input type="text" name="inCart" id="inCart" value="<%= data.inCart; %>" class="hidden"/>
-
 					</div>
 					<div class="w-full col-span-1">
-						<div id="premios-list" class="text-sm"></div>
+						<label for="countries" class="block mb-2 text-sm font-medium">Estado del pedido</label>
+						<select id="countries" class="block w-full p-3 text-sm text-gray-900 border border-gray-200 rounded-lg focus:ring-cBlue focus:border-cBlue">
+							<option value="1" selected>Pendiente</option>
+							<option value="2">En proceso</option>
+							<option value="3">Enviado</option>
+							<option value="4">Completado</option>
+							<option value="5">Cancelado</option>
+						</select>
+
+						<div id="premios-list" class="mt-4 text-sm"></div>
 					</div>
 				</div>
 			</form>
