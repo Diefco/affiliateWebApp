@@ -55,15 +55,13 @@ module.exports = {
 
 	edit: (req, res) => {
 		AdminReward.getById(req.con, req.params.id, (err, rows) => {
-			console.log(rows[0]);
 			res.render('admin/rewardsDetail', { data: rows[0] });
 		});
 	},
 
 	update: (req, res) => {
-		console.log(req.body);
 		if (req.session.loggedin) {
-			AdminReward.update(req.con, req.body, req.params.id, (err) => {
+			AdminReward.update(req.con, req, req.params.id, (err) => {
 				if (err) throw err;
 				res.redirect('/admin/premios/');
 			});

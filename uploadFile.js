@@ -38,14 +38,22 @@ function checkFileType(file, cb) {
 }
 
 function uploadFile(req, callback) {
-	console.log('llego al uploadfile');
 	upload(req, callback, (err) => {
-		if (err) {
-			console.log(err);
-			//res.send(err);
+		if (req.file === undefined) {
+			const filename = 'no-photo.jpg';
+			if (err) {
+				console.log(err);
+				//res.send(err);
+			} else {
+				callback(filename, req.body.fechaFin);
+			}
 		} else {
-			console.log('Imagen subida correctamente');
-			callback(req.file.filename, req.body.fechaFinalizacion);
+			if (err) {
+				console.log(err);
+				//res.send(err);
+			} else {
+				callback(req.file.filename);
+			}
 		}
 	});
 }

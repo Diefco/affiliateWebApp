@@ -55,7 +55,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `rewards` (`id` INT NOT NULL AUTO_INCREMENT,`nameReward` VARCHAR(45) NOT NULL,`image` TEXT NULL,`pricePoints` DECIMAL(50) NOT NULL,`description` VARCHAR(280) NOT NULL,`finishDate` DATETIME NOT NULL,`createDate` TIMESTAMP  NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `rewards` (`id` INT NOT NULL AUTO_INCREMENT,`nameReward` VARCHAR(45) NOT NULL,`image` TEXT NULL,`pricePoints` DECIMAL(50) NOT NULL,`description` VARCHAR(280) NOT NULL,`createDate` TIMESTAMP  NOT NULL,PRIMARY KEY (`id`)) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 

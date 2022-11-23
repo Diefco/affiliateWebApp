@@ -1,4 +1,6 @@
 const uploadFile = require('../../../uploadFile.js');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
 	get: function (con, callback) {
@@ -6,7 +8,7 @@ module.exports = {
 	},
 	getById: function (con, id, callback) {
 		con.query(
-			`SELECT id, nameReward, image, pricePoints, description, DATE_FORMAT(finishDate, "%d/%m/%Y") as finishDate FROM rewards WHERE id = ${id}`,
+			`SELECT id, nameReward, image, pricePoints, description FROM rewards WHERE id = ${id}`,
 			(error, results) => {
 				if (error) throw error;
 
@@ -18,7 +20,6 @@ module.exports = {
 		// console.log('data models', data);
 		uploadFile(data, (fileName) => {
 			// Guardamos como fecha
-			data.body.fechaFinalizacion = new Date(data.body.fechaFinalizacion);
 
 			con.query(
 				'INSERT INTO rewards SET ?',
@@ -27,7 +28,6 @@ module.exports = {
 					image: fileName,
 					description: data.body.description,
 					pricePoints: data.body.points,
-					finishDate: data.body.fechaFinalizacion,
 				},
 				(error, results, fields) => {
 					if (error) throw error;
@@ -61,26 +61,93 @@ module.exports = {
 		});
 	},
 	update: function (con, data, id, callback) {
-		// uploadFile(data, (fileName, fechaFinalizacion) => {
-		// Guardamos como fecha
-		console.log(data);
-
-		data.fechaFinalizacion = new Date(data.fechaFinalizacion);
-		data.fechaFinalizacion = JSON.stringify(data.fechaFinalizacion);
-		console.log(data.fechaFinalizacion);
-
 		con.query(
-			`UPDATE rewards SET nameReward ='${data.name}', description ='${data.description}', pricePoints ='${data.points}', finishDate=${data.fechaFinalizacion} WHERE id = ${id}`,
-			(error) => {
+			`SELECT image FROM rewards WHERE id = ${id}`,
+			(error, results) => {
 				if (error) throw error;
-				return callback(null);
+				let imageName = results[0].image;
+				if (results === 'no-photo.jpg') {
+					uploadFile(data, (fileName) => {
+						// Guardamos como fecha
+
+						con.query(
+							`UPDATE rewards SET image='${fileName}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}' WHERE id = ${id}`,
+							(error) => {
+								if (error) throw error;
+								return callback(null);
+							}
+						);
+					});
+				} else {
+					uploadFile(data, (filename) => {
+						// Guardamos como fecha
+						if (filename === 'no-photo.jpg') {
+							con.query(
+								`UPDATE rewards SET image='${imageName}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}' WHERE id = ${id}`,
+								(error) => {
+									if (error) throw error;
+									return callback(null);
+								}
+							);
+						} else {
+							if (imageName === 'no-photo.jpg') {
+								con.query(
+									`UPDATE rewards SET image='${filename}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}' WHERE id = ${id}`,
+									(error) => {
+										if (error) throw error;
+										return callback(null);
+									}
+								);
+							} else {
+								fs.unlinkSync(
+									path.join(
+										__dirname,
+										'../../assets/img/uploads/' + imageName
+									)
+								);
+
+								con.query(
+									`UPDATE rewards SET image='${filename}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}' WHERE id = ${id}`,
+									(error) => {
+										if (error) throw error;
+										return callback(null);
+									}
+								);
+							}
+						}
+					});
+				}
 			}
 		);
-		// });
 	},
-	// destroy: function (con, id) {
-	// 	// con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
-	// 	// 	if (error) throw error;
-	// 	// });
-	// },
+	destroy: function (con, id) {
+		con.query(
+			`SELECT image FROM rewards WHERE id = ${id}`,
+			(error, results) => {
+				if (error) throw error;
+				let imageName = results[0].image;
+				if (imageName == 'no-photo.jpg') {
+					con.query(
+						`DELETE FROM rewards WHERE id = ${id}`,
+						(error) => {
+							if (error) throw error;
+						}
+					);
+				} else {
+					fs.unlinkSync(
+						path.join(
+							__dirname,
+							'../../assets/img/uploads/' + imageName
+						)
+					);
+					con.query(
+						`DELETE FROM rewards WHERE id = ${id}`,
+						(error) => {
+							if (error) throw error;
+						}
+					);
+				}
+			}
+		);
+	},
 };

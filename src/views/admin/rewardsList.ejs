@@ -65,7 +65,7 @@
 				url: 'http://localhost:3018/admin/rewardList',
 				then: data => data.map(reward => [html(`<img src="/assets/img/uploads/${reward.image}" class="object-cover w-full rounded aspect-square">`),reward.id, reward.nameReward, reward.pricePoints+" Pts.", reward.description,
 		            html(`<a href="/admin/premios/edit/${reward.id}"/><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>
-		               <a href="" onClick="deletePremio(${reward.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
+		               <a href="" onClick="deleteRewards(${reward.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
 			 	handle: (res) => {
 				// no matching records found
 			 	if (res.status === 404) return {data: []};
