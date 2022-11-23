@@ -8,7 +8,7 @@ module.exports = {
 	},
 	getById: function (con, id, callback) {
 		con.query(
-			`SELECT id, nameReward, image, pricePoints, description, DATE_FORMAT(finishDate, "%d/%m/%Y") as finishDate FROM rewards WHERE id = ${id}`,
+			`SELECT id, nameReward, image, pricePoints, description FROM rewards WHERE id = ${id}`,
 			(error, results) => {
 				if (error) throw error;
 
@@ -20,7 +20,6 @@ module.exports = {
 		// console.log('data models', data);
 		uploadFile(data, (fileName) => {
 			// Guardamos como fecha
-			data.body.fechaFinalizacion = new Date(data.body.fechaFinalizacion);
 
 			con.query(
 				'INSERT INTO rewards SET ?',
@@ -29,7 +28,6 @@ module.exports = {
 					image: fileName,
 					description: data.body.description,
 					pricePoints: data.body.points,
-					finishDate: data.body.fechaFinalizacion,
 				},
 				(error, results, fields) => {
 					if (error) throw error;
@@ -69,13 +67,11 @@ module.exports = {
 				if (error) throw error;
 				let imageName = results[0].image;
 				if (results === 'no-photo.jpg') {
-					uploadFile(data, (fileName, fechaFinalizacion) => {
+					uploadFile(data, (fileName) => {
 						// Guardamos como fecha
-						fechaFinalizacion = new Date(fechaFinalizacion);
-						fechaFinalizacion = JSON.stringify(fechaFinalizacion);
 
 						con.query(
-							`UPDATE rewards SET image='${fileName}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}', finishDate=${fechaFinalizacion} WHERE id = ${id}`,
+							`UPDATE rewards SET image='${fileName}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}' WHERE id = ${id}`,
 							(error) => {
 								if (error) throw error;
 								return callback(null);
@@ -83,15 +79,11 @@ module.exports = {
 						);
 					});
 				} else {
-					uploadFile(data, (filename, fechaFinalizacion) => {
+					uploadFile(data, (filename) => {
 						// Guardamos como fecha
 						if (filename === 'no-photo.jpg') {
-							fechaFinalizacion = new Date(fechaFinalizacion);
-							fechaFinalizacion =
-								JSON.stringify(fechaFinalizacion);
-
 							con.query(
-								`UPDATE rewards SET image='${imageName}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}', finishDate=${fechaFinalizacion} WHERE id = ${id}`,
+								`UPDATE rewards SET image='${imageName}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}' WHERE id = ${id}`,
 								(error) => {
 									if (error) throw error;
 									return callback(null);
@@ -99,12 +91,8 @@ module.exports = {
 							);
 						} else {
 							if (imageName === 'no-photo.jpg') {
-								fechaFinalizacion = new Date(fechaFinalizacion);
-								fechaFinalizacion =
-									JSON.stringify(fechaFinalizacion);
-
 								con.query(
-									`UPDATE rewards SET image='${filename}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}', finishDate=${fechaFinalizacion} WHERE id = ${id}`,
+									`UPDATE rewards SET image='${filename}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}' WHERE id = ${id}`,
 									(error) => {
 										if (error) throw error;
 										return callback(null);
@@ -117,12 +105,9 @@ module.exports = {
 										'../../assets/img/uploads/' + imageName
 									)
 								);
-								fechaFinalizacion = new Date(fechaFinalizacion);
-								fechaFinalizacion =
-									JSON.stringify(fechaFinalizacion);
 
 								con.query(
-									`UPDATE rewards SET image='${filename}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}', finishDate=${fechaFinalizacion} WHERE id = ${id}`,
+									`UPDATE rewards SET image='${filename}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}' WHERE id = ${id}`,
 									(error) => {
 										if (error) throw error;
 										return callback(null);
@@ -141,15 +126,27 @@ module.exports = {
 			(error, results) => {
 				if (error) throw error;
 				let imageName = results[0].image;
-				fs.unlinkSync(
-					path.join(
-						__dirname,
-						'../../assets/img/uploads/' + imageName
-					)
-				);
-				con.query(`DELETE FROM rewards WHERE id = ${id}`, (error) => {
-					if (error) throw error;
-				});
+				if (imageName == 'no-photo.jpg') {
+					con.query(
+						`DELETE FROM rewards WHERE id = ${id}`,
+						(error) => {
+							if (error) throw error;
+						}
+					);
+				} else {
+					fs.unlinkSync(
+						path.join(
+							__dirname,
+							'../../assets/img/uploads/' + imageName
+						)
+					);
+					con.query(
+						`DELETE FROM rewards WHERE id = ${id}`,
+						(error) => {
+							if (error) throw error;
+						}
+					);
+				}
 			}
 		);
 	},

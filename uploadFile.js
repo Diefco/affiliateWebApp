@@ -45,14 +45,14 @@ function uploadFile(req, callback) {
 				console.log(err);
 				//res.send(err);
 			} else {
-				callback(filename, req.body.fechaFinalizacion);
+				callback(filename, req.body.fechaFin);
 			}
 		} else {
 			if (err) {
 				console.log(err);
 				//res.send(err);
 			} else {
-				callback(req.file.filename, req.body.fechaFinalizacion);
+				callback(req.file.filename);
 			}
 		}
 	});
