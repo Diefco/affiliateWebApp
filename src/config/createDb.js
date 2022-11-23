@@ -66,7 +66,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `orders` (`id` INT NOT NULL AUTO_INCREMENT,`phoneContact` VARCHAR(45) NOT NULL,`orderDate` DATETIME NOT NULL,`pricePoints` VARCHAR(45) NOT NULL,`deliveryAddress` VARCHAR(45) NOT NULL,`deliveryDate` VARCHAR(45) NOT NULL,`scheduleAvailable` TIME NOT NULL,`deliveryMessage` VARCHAR(280) NULL,`idReward` INT NOT NULL,PRIMARY KEY (`id`),CONSTRAINT `idreward`FOREIGN KEY (`idReward`) REFERENCES `rewards` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `orders` (`id` INT NOT NULL AUTO_INCREMENT,`phoneContact` VARCHAR(45) NOT NULL,`orderDate` DATETIME NOT NULL,`pricePoints` VARCHAR(45) NOT NULL,`deliveryAddress` VARCHAR(45) NOT NULL,`deliveryDate` VARCHAR(45) NOT NULL,`scheduleAvailable` TIME NOT NULL,`deliveryMessage` VARCHAR(280) NULL,`idReward` INT NOT NULL,PRIMARY KEY (`id`),CONSTRAINT `idreward`FOREIGN KEY (`idReward`) REFERENCES `rewards` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,`idClient` INT NOT NULL, FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
@@ -77,12 +77,22 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `orderState` (`id` INT NOT NULL AUTO_INCREMENT,`stateName` VARCHAR(45) NOT NULL,`idClient` INT NOT NULL,`idorder` INT NOT NULL,PRIMARY KEY (`id`),FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`)ON DELETE NO ACTION ON UPDATE NO ACTION, FOREIGN KEY (`idOrder`)REFERENCES `orders` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `orderState` (`id` INT NOT NULL AUTO_INCREMENT,`stateName` VARCHAR(45) NOT NULL,PRIMARY KEY (`id`))',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
 				console.log('Tabla orderState creada');
+				con.query(
+					'INSERT IGNORE INTO orderState (id, stateName) VALUES(1, "Pendiente"),(2, "En proceso"),(3, "Enviado"),(4, "Completado"),(5, "Cancelado")',
+					function (error, results, fields) {
+						if (error) throw error;
+
+						if (results.warningCount == 0) {
+							console.log('Estados creados');
+						}
+					}
+				);
 			}
 		}
 	);
