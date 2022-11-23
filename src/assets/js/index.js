@@ -126,7 +126,7 @@ setDatepicker();
 
 const adminPedidoCart = [];
 function toggleCart(id) {
-	const inputCart = document.querySelector('#cart');
+	const inputCart = document.querySelector('#inCart');
 	const reward = document.querySelector(`#addCart-${id}`);
 	const rewardIcon = reward.querySelector('i');
 
