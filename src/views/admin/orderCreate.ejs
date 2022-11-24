@@ -22,7 +22,7 @@
 			</div>
 		</div>
 		<div class="p-4 py-12 mx-auto mt-6 bg-white rounded-lg shadow-2xl lg:px-8">
-			<form method="POST" action="update" class="max-w-4xl m-auto">
+			<form method="POST" action="/admin/pedidos/nuevoPedido" class="max-w-4xl m-auto">
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<div class="w-full col-span-1">
 						<h2 class="mt-4 mb-2 text-2xl font-semibold">Información del cliente</h2>
@@ -45,20 +45,30 @@
 							<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 								<svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
 							</div>
-							<input datepicker type="text" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5" placeholder="Seleciona una fecha" required>
+							<input datepicker name="receiverDate" id="receiverDate" type="text" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5" placeholder="Seleciona una fecha" required>
 						</div>
 
 						<label for="receiverHour" class="block mt-4 ml-1 text-sm font-medium">Hora de entrega<span class="text-red-600">*</span></label>
-						<input type="text" name="receiverHour" id="receiverHour" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
+						<input type="time" name="receiverHour" id="receiverHour" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
 
 						<label for="receiverAddress" class="block mt-4 ml-1 text-sm font-medium">Dirección de entrega<span class="text-red-600">*</span></label>
-						<input type="text" name="receiverAddress" id="receiverAddress" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
+						<input type="text" name="receiverAddress" id="receiverAddress" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Direccion de entrega" required/>
 
 						<label for="description" class="block mt-4 ml-1 text-sm font-medium ">Información adicional</label>
 						<textarea name="description" id="description" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" rows="4" placeholder="Escribe un mensaje o datos adicionales."></textarea>
 						
 						<label for="inCart" class="hidden">Premios solicitados</label>
 						<input type="text" name="inCart" id="inCart" class="hidden"/>
+
+						<button
+						type="submit"
+						class="block py-3 m-auto mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink"
+						>
+							Crear Compra
+						</button>
+			
+						<span class="block mt-4 text-sm text-red-600">(*) Los campos con asterisco son obligatorios.</span>
+					
 
 					</div>
 					<div class="w-full col-span-1">
@@ -91,43 +101,20 @@
 				width: '70px',
 			}],
 			sort:false,
-			data: [
-				[
-					1,
-					'Especial Cupcakes de Crema Acida con Galleta x6',
-					'4500 Pts',
-					html(`<span onClick="toggleCart(1)" id="addCart-1" reward-id="1" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue">
+			 server: {
+				url: 'http://localhost:3018/admin/rewardList',
+		 		then: data => data.map(reward => [reward.id, reward.nameReward, reward.pricePoints,
+				 html(`<span onClick="toggleCart(${reward.id})" id="addCart-${reward.id}" reward-id="${reward.id}" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue">
 							<i class="fa-solid fa-plus"></i>
-						</span>`)
-				],[
-					2,
-					'Especial Cupcakes de Crema Acida con Galleta x6',
-					'4500 Pts',
-					html(`<span onClick="toggleCart(2)" id="addCart-2" reward-id="2" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue">
-							<i class="fa-solid fa-plus"></i>
-						</span>`)
-				],[
-					3,
-					'Especial Cupcakes de Crema Acida con Galleta x6',
-					'4500 Pts',
-					html(`<span onClick="toggleCart(3)" id="addCart-3" reward-id="3" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue">
-							<i class="fa-solid fa-plus"></i>
-						</span>`)
-				]			
-			],
-			// server: {
-			// 	url: 'http://localhost:3018/admin/rewardList',
-			// 	then: data => data.map(reward => [reward.id, reward.name, reward.email, reward.phone,
-		    //         html(`<a href="/admin/premios/edit/${reward.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>
-		    //               <a href="" onClick="deletePremio(${reward.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
-			// 	handle: (res) => {
-			// 	// no matching records found
-			// 	if (res.status === 404) return {data: []};
-			// 	if (res.ok) return res.json();
+						</span>`)]),
+			 	handle: (res) => {
+			 	// no matching records found
+			 	if (res.status === 404) return {data: []};
+				if (res.ok) return res.json();
 
-			// 	throw Error('oh no :(');
-			// 	},
-			// }, 
+			 	throw Error('oh no :(');
+			 	},
+			 }, 
 			pagination: {
 				enabled: true,
 				limit: 10,

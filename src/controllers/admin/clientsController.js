@@ -61,8 +61,14 @@ module.exports = {
 				req.params.id,
 				(err, results) => {
 					if (err) throw err;
-
-					res.redirect('/admin/clientes');
+					if (results.state === false) {
+						console.log(results.id);
+						return res.render('admin/clientList', results);
+					} else {
+						// State = true
+						res.render('admin/clientList', results);
+					}
+					// res.redirect('/admin/clientes');
 				}
 			);
 		} else {

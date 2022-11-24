@@ -66,17 +66,6 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `orders` (`id` INT NOT NULL AUTO_INCREMENT,`phoneContact` VARCHAR(45) NOT NULL,`orderDate` DATETIME NOT NULL,`pricePoints` VARCHAR(45) NOT NULL,`deliveryAddress` VARCHAR(45) NOT NULL,`deliveryDate` VARCHAR(45) NOT NULL,`scheduleAvailable` TIME NOT NULL,`deliveryMessage` VARCHAR(280) NULL,`idReward` INT NOT NULL,PRIMARY KEY (`id`),CONSTRAINT `idreward`FOREIGN KEY (`idReward`) REFERENCES `rewards` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,`idClient` INT NOT NULL, FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
-		function (error, results, fields) {
-			if (error) throw error;
-
-			if (results.warningCount == 0) {
-				console.log('Tabla orders creada');
-			}
-		}
-	);
-
-	con.query(
 		'CREATE TABLE IF NOT EXISTS `orderState` (`id` INT NOT NULL AUTO_INCREMENT,`stateName` VARCHAR(45) NOT NULL,PRIMARY KEY (`id`))',
 		function (error, results, fields) {
 			if (error) throw error;
@@ -93,6 +82,17 @@ const createDb = () => {
 						}
 					}
 				);
+			}
+		}
+	);
+
+	con.query(
+		'CREATE TABLE IF NOT EXISTS `orders` (`id` INT NOT NULL AUTO_INCREMENT,`phoneContact` VARCHAR(45) NOT NULL,`orderDate` DATETIME NOT NULL,`pricePoints` VARCHAR(45) NOT NULL,`deliveryAddress` VARCHAR(45) NOT NULL,`deliveryDate` VARCHAR(45) NOT NULL,`scheduleAvailable` TIME NOT NULL,`deliveryMessage` VARCHAR(280) NULL,`idOrderState` INT NOT NULL,FOREIGN KEY (`idOrderState`) REFERENCES `orderstate` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,`idReward`  VARCHAR(250) NOT NULL,PRIMARY KEY (`id`),`idClient` INT NOT NULL, FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
+		function (error, results, fields) {
+			if (error) throw error;
+
+			if (results.warningCount == 0) {
+				console.log('Tabla orders creada');
 			}
 		}
 	);

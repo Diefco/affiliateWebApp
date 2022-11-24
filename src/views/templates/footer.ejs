@@ -9,8 +9,25 @@
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<% if(typeof alert != "undefined") { %>
+<% if(typeof toast != "undefined") { %>
 <script>
+    
+        Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: '<%= timer %>',
+            timerProgressBar: true,
+    }).fire({
+        icon: '<%= alertIcon %>',
+        text: '<%= alertMessage %>'
+    }); 
+    </script>
+
+    
+<% } else if(typeof alert != "undefined") { %>
+   <script>
+    console.log(typeof '<%= alertTitle %>')
     Swal.fire({
         title: '<%= alertTitle %>',
         text: '<%= alertMessage %>',
@@ -18,10 +35,11 @@
         showConfirmButton: '<%= showConfirmButton %>',
         timer: '<%= timer %>',
     }).then(() => {
-        window.location = '<%= ruta %>';
-    });
-</script>
-<% } %>
+         window.location = '<%= ruta %>';
+     });
+
+</script> 
+<% }  %>
 
 
 <script src="/assets/js/index.js"></script>
