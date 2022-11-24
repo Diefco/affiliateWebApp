@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-let dotenv = require('dotenv');
+const dotenv = require('dotenv');
 const cookieSession = require('cookie-session'); // invocamos morgan
 const morgan = require('morgan');
 
