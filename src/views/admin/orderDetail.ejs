@@ -3,7 +3,7 @@
 
 <head>
 	<%- include('../templates/headMetas'); -%>
-	<title>Pedido - Nuevo</title>
+	<title>Pedido - Detalle</title>
 </head>
 
 <body class="cupcakes-bg">
@@ -22,58 +22,72 @@
 			</div>
 		</div>
 		<div class="p-4 py-12 mx-auto mt-6 bg-white rounded-lg shadow-2xl lg:px-8">
+			<% if (data) {%>
 			<form method="POST" action="update" class="max-w-4xl m-auto">
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<div class="w-full col-span-1">
 						<h2 class="mt-4 mb-2 text-2xl font-semibold">Información del cliente</h2>
 						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
-						<label for="name" class="block mt-4 ml-1 text-sm font-medium">Correo del cliente<span class="text-red-600">*</span></label>
-						<input type="email" name="email" id="email" value="<%= data.emailClient; %>" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="correo del cliente" required/>		
-						
+						<p for="emailClient" class="block text-sm">Correo electrónico del cliente asociado a este pedido</p>
+            			<p class="block text-2xl font-medium text-cBlue"><%= data.email; %></p>
+						<input
+								type="text"
+								name="emailClient" 
+								id="emailClient"
+								class="hidden"
+								placeholder="esto deberia estar oculto"
+								value="<%= data.email; %>"/>
+
 						<h2 class="mt-6 mb-2 text-2xl font-semibold">Información de entrega</h2>
 						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>			
-						<p class="my-1 text-sm">A continuación especifique los datos de <b>quien recibira el premio.</b></p>
+						<p class="my-1 text-sm">A continuación estan los datos de <b>quien recibirá el premio.</b></p>
 						
 						<label for="receiverName" class="block mt-4 ml-1 text-sm font-medium">Nombre<span class="text-red-600">*</span></label>
-						<input type="text" name="receiverName" id="receiverName" value="<%= data.receiverName; %>" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Nombre del receptor" required/>						
+						<input type="text" name="receiverName" id="receiverName" value="<%= data.nameContact; %>" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Nombre del receptor" required/>						
 
 						<label for="receiverPhone" class="block mt-4 ml-1 text-sm font-medium">Teléfono<span class="text-red-600">*</span></label>
-						<input type="text" inputmode="numeric" name="receiverPhone" value="<%= data.receiverPhone; %>" id="receiverPhone" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Teléfono del receptor" required/>						
+						<input type="text" inputmode="numeric" name="receiverPhone" value="<%= data.phoneContact; %>" id="receiverPhone" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Teléfono del receptor" required/>						
 
 						<label for="receiverDate" class="block mt-4 ml-1 text-sm font-medium">Fecha de entrega <span class="text-red-600">*</span></label>
 						<div class="relative">
 							<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 								<svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
 							</div>
-							<input datepicker type="text" data-value="<%= data.datePurchase; %>" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5 datepicker" placeholder="Seleciona una fecha" required>
+							<input datepicker name="receiverDate" id="receiverDate" type="text" data-value="<%= data.deliveryDate; %>" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5 datepicker" placeholder="Seleciona una fecha" required>
 						</div>
 
 						<label for="receiverHour" class="block mt-4 ml-1 text-sm font-medium">Hora de entrega<span class="text-red-600">*</span></label>
-						<input type="text" name="receiverHour" id="receiverHour" value="<%= data.receiverHour; %>" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
+						<input type="time" name="receiverHour" id="receiverHour" value="<%= data.scheduleAvailable; %>" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
 
 						<label for="receiverAddress" class="block mt-4 ml-1 text-sm font-medium">Dirección de entrega<span class="text-red-600">*</span></label>
-						<input type="text" name="receiverAddress" id="receiverAddress" value="<%= data.receiverAddress; %>" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
+						<input type="text" name="receiverAddress" id="receiverAddress" value="<%= data.deliveryAddress; %>" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
 
 						<label for="description" class="block mt-4 ml-1 text-sm font-medium ">Información adicional</label>
-						<textarea name="description" id="description" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" rows="4" placeholder="Escribe un mensaje o datos adicionales."><%= data.description; %></textarea>
-						
+						<textarea name="description" id="description" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" rows="4" placeholder="Escribe un mensaje o datos adicionales."><%= data.deliveryMessage; %></textarea>
+						<button
+						type="submit"
+						class="block py-3 m-auto mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink"
+						>
+							Actualizar
+						</button>
 						<label for="inCart" class="hidden">Premios solicitados</label>
-						<input type="text" name="inCart" id="inCart" value="<%= data.inCart; %>" class="hidden"/>
+						<input type="text" name="inCart" id="inCart" value="<%= data.idReward; %>" class="hidden"/>
 					</div>
 					<div class="w-full col-span-1">
-						<label for="countries" class="block mb-2 text-sm font-medium">Estado del pedido</label>
-						<select id="countries" class="block w-full p-3 text-sm text-gray-900 border border-gray-200 rounded-lg focus:ring-cBlue focus:border-cBlue">
-							<option value="1" selected>Pendiente</option>
-							<option value="2">En proceso</option>
-							<option value="3">Enviado</option>
-							<option value="4">Completado</option>
-							<option value="5">Cancelado</option>
+						<label for="orderState" class="block mb-2 text-sm font-medium">Estado del pedido</label>
+						<select id="orderState" name="orderState" class="block w-full p-3 text-sm text-gray-900 border border-gray-200 rounded-lg focus:ring-cBlue focus:border-cBlue">
+							<option value=1 <% if (data.idOrderState == 1) {%> selected <% } %> >Pendiente</option>
+							<option value=2 <% if (data.idOrderState == 2) {%> selected <% } %> >En proceso</option>
+							<option value=3 <% if (data.idOrderState == 3) {%> selected <% } %> >Enviado</option>
+							<option value=4 <% if (data.idOrderState == 4) {%> selected <% } %> >Completado</option>
+							<option value=5 <% if (data.idOrderState == 5) {%> selected <% } %> >Cancelado</option>
 						</select>
 
 						<div id="premios-list" class="mt-4 text-sm"></div>
 					</div>
 				</div>
 			</form>
+			<% } %>
 		</div>
 	</section>
 
@@ -88,46 +102,26 @@
 				name: 'ID',
 				width: '70px',
 			}, {
+				id: 'photo',
+				name: 'Foto',
+				width: '100px',
+			}
+			, {
 				id: 'name',
 				name: 'Premio'
 			}, {
 				id: 'value',
 				name: 'Valor'
-			}, {
-				id: 'actions',
-				name: '',
-				width: '70px',
 			}],
-			sort:false,
-			// data: [
-			// 	[
-			// 		1,
-			// 		'Especial Cupcakes de Crema Acida con Galleta x6',
-			// 		'4500 Pts',
-			// 		html(`<span onClick="toggleCart(1)" id="addCart-1" reward-id="1" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue" href="/admin/pedidos">
-			// 				<i class="fa-solid fa-plus"></i>
-			// 			</span>`)
-			// 	],[
-			// 		2,
-			// 		'Especial Cupcakes de Crema Acida con Galleta x6',
-			// 		'4500 Pts',
-			// 		html(`<span onClick="toggleCart(2)" id="addCart-2" reward-id="2" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue" href="/admin/pedidos">
-			// 				<i class="fa-solid fa-plus"></i>
-			// 			</span>`)
-			// 	],[
-			// 		3,
-			// 		'Especial Cupcakes de Crema Acida con Galleta x6',
-			// 		'4500 Pts',
-			// 		html(`<span onClick="toggleCart(3)" id="addCart-3" reward-id="3" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue" href="/admin/pedidos">
-			// 				<i class="fa-solid fa-plus"></i>
-			// 			</span>`)
-			// 	]			
-			// ],
+			sort:true,
 			server: {
-				url: 'http://localhost:3018/admin/rewardList',
-			 	then: data => data.map(reward => [reward.id, reward.name, reward.email, reward.phone,
-		             html(`<a href="/admin/premios/edit/${reward.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>
-		                   <a href="" onClick="deletePremio(${reward.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
+				url: 'orderListByRewards',
+				// then: data => data.map(reward => [reward.id, reward.nameReward, reward.pricePoints,
+				//  html(`<span onClick="toggleCart(${reward.id})" id="addCart-${reward.id}" reward-id="${reward.id}" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue">
+				// 			<i class="fa-solid fa-plus"></i>
+				// 		</span>`)]),
+				// <img src="/assets/img/uploads/${reward.image}" class="object-cover w-full rounded aspect-square">
+				 then: data => data.map(reward => [reward.id, html(`<img src="/assets/img/uploads/${reward.image}" class="object-cover w-full rounded aspect-square"/>`), reward.nameReward, reward.pricePoints]),
 			 	handle: (res) => {
 			 	// no matching records found
 			 	if (res.status === 404) return {data: []};
@@ -154,7 +148,6 @@
 				'white-space': 'nowrap'
 				}
 			},
-			console: console.log('hola'),
 		}
 		}).render(document.getElementById('premios-list'));
 

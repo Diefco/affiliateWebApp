@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const dotenv = require('dotenv');
-const cookieSession = require('cookie-session'); // invocamos morgan
+let dotenv = require('dotenv');
+const cookieSession = require('cookie-session');
+// invocamos morgan
 const morgan = require('morgan');
 
 // middlewares

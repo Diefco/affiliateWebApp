@@ -82,19 +82,15 @@ module.exports = {
 	update: function (con, data, id, callback) {
 		// update: function (con, data, id) {
 		if (data.email) {
-			console.log(data);
-			console.log(id);
 			con.query(
 				`SELECT id, email FROM clients WHERE email = "${data.email}"`,
 				(error, results, fields) => {
 					if (error) throw error;
-					console.log(results);
-					console.log(results.length);
+
 					if (results.length > 0) {
-						console.log('el correo esta en BD ');
 						if (results[0].id == data.idClient) {
 							// se pueden guardar cambios (nombre y demas)
-							console.log('es el mismo correo que ya tenia');
+
 							con.query(
 								`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
 								(error) => {
@@ -113,9 +109,7 @@ module.exports = {
 							);
 						} else {
 							// error
-							console.log(
-								'ese correo esta en BD y le pertenece a otro'
-							);
+
 							return callback(null, {
 								toast: true,
 								state: false,
@@ -130,7 +124,7 @@ module.exports = {
 						}
 					} else {
 						// se deja actualizar totalmente
-						console.log('el correo no esta en BD');
+
 						con.query(
 							`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
 							(error) => {

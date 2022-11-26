@@ -38,18 +38,23 @@
 				width: '90px',
 			},{
 				id: 'orderDate',
-				name: 'Fecha',
-				width: '120px',
+				name: 'F. creación',
+				width: '170px',
+			},{
+				id: 'deliveryDate',
+				name: 'F. de entrega',
+				width: '170px',
 			}, {
 				id: 'client',
 				name: 'Cliente'
 			}, {
 				id: 'state',
-				name: 'Estado'
+				name: 'Estado',
+				width: '120px',
 			}, {
 				id: 'actions',
 				name: '',
-				width: '150px',
+				width: '75px',
 				sort: {
 					enabled: false
 				}
@@ -66,9 +71,8 @@
 			// ],
 			 server: {
 			 	url: 'http://localhost:3018/admin/orderList',
-			 	then: data => data.map(order => [order.id, order.deliveryDate, order.email, order.stateName,
-		             html(`<a href="/admin/pedidos/edit/${order.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>
-		                   <a href="" onClick="deletePremio(${order.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
+			 	then: data => data.map(order => [order.orderId, order.orderDate, order.deliveryDate, order.email, order.stateName,
+		             html(`<a href="/admin/pedidos/edit/${order.orderId}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>`)]),
 			 	handle: (res) => {
 			 	// no matching records found
 			 	if (res.status === 404) return {data: []};

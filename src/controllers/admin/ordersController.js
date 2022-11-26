@@ -20,6 +20,20 @@ module.exports = {
 			res.redirect('/admin/');
 		}
 	},
+	getListByRewards: (req, res) => {
+		if (req.session.loggedin) {
+			AdminOrder.getListByRewards(
+				req.con,
+				req.params.id,
+				(err, results) => {
+					res.send(results);
+				}
+			);
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
+	},
 
 	new: (req, res) => {
 		if (req.session.loggedin) {
@@ -60,22 +74,9 @@ module.exports = {
 	},
 
 	edit: (req, res) => {
-		//AdminOrder.getById(req.con, req.params.id, (err, rows) => {
-		res.render('admin/orderDetail', {
-			data: {
-				emailClient: 'email@test.com',
-				receiverPhone: '3004448484',
-				datePurchase: '13/15/2022',
-				receiverHour: '19:30',
-				receiverAddress:
-					'Calle Larga Test #152-47 Conjunto Residencial Prueba T1 APTO 1008',
-				receiverName: 'Pedrita Molina',
-				description:
-					'Este pedido debe marcar el producto 1,3 y 4 (no existe)',
-				inCart: '1,3,4',
-			},
+		AdminOrder.getById(req.con, req.params.id, (err, rows) => {
+			res.render('admin/orderDetail', { data: rows[0] });
 		});
-		//});
 	},
 
 	getListByClient: (req, res) => {
@@ -95,10 +96,16 @@ module.exports = {
 
 	update: (req, res) => {
 		if (req.session.loggedin) {
-			AdminOrder.update(req.con, req.body, req.params.id, (err) => {
-				if (err) throw err;
-				res.redirect('/admin/pedidos/');
-			});
+			AdminOrder.update(
+				req.con,
+				req.body,
+				req.params.id,
+				(err, results) => {
+					if (err) throw err;
+					console.log(results);
+					res.render(`admin/orderDetail`, results);
+				}
+			);
 		} else {
 			// El usuario no tiene sessión
 			res.redirect('/admin/');
