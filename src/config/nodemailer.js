@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config({ path: './src/config/.env' });
 
 // async..await is not allowed in global scope, must use a wrapper
-async function main() {
+module.exports = async function nodemailerSend(client, subject, contentHtml) {
 	// create reusable transporter object using the default SMTP transport
 
 	const transporter = nodemailer.createTransport({
@@ -17,16 +17,22 @@ async function main() {
 	});
 
 	// send mail with defined transport object
+	// let info = await transporter.sendMail({
+	// 	from: '"Susy Reposteria" <no-reply@susyreposteria.com>', // sender address
+	// 	to: 'diefco.web@gmail.com', // list of receivers
+	// 	subject: '¡Hola! 👋 ¿Conoces tus puntos?', // Subject line
+	// 	text: 'Mensaje de prueba', // plain text body
+	// 	html: '<b>Tienes 5000 puntos</b>', // html body
+	// });
+
 	let info = await transporter.sendMail({
 		from: '"Susy Reposteria" <no-reply@susyreposteria.com>', // sender address
-		to: 'diefco.web@gmail.com', // list of receivers
-		subject: '¡Hola! 👋 ¿Conoces tus puntos?', // Subject line
-		text: 'Mensaje de prueba', // plain text body
-		html: '<b>Tienes 5000 puntos</b>', // html body
+		to: client, // list of receivers
+		subject: subject, // Subject line
+		html: contentHtml, // html body
 	});
 
+	console.log('Correo de recuperación enviado a:', client);
 	console.log('Message sent: %s', info.messageId);
-	// Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-}
-
-main().catch(console.error);
+	//Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+};

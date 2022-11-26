@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const dotenv = require('dotenv');
+let dotenv = require('dotenv');
 const cookieSession = require('cookie-session'); // invocamos morgan
 const morgan = require('morgan');
 
@@ -44,9 +44,12 @@ app.set('views', path.join(__dirname, '/src/views'));
 app.use('/assets', express.static(path.join(__dirname, '/src/assets')));
 
 /* Rutas admin*/
-const loginRouter = require('./src/routes/admin/router');
+const adminRouter = require('./src/routes/admin/router');
+const clientRouter = require('./src/routes/router');
 const { allowedNodeEnvironmentFlags } = require('process');
-app.use('/admin/', loginRouter);
+
+app.use('/admin/', adminRouter);
+app.use('/', clientRouter);
 
 // Puerto y lanzamiento de la app
 app.set('port', process.env.PORT || 3000);
