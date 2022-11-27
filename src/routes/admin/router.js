@@ -77,7 +77,7 @@ router.get('/pedidos', ordersController.index);
 router.get('/orderList', ordersController.getList);
 // Api get list por premio
 router.get(
-	'/clientes/edit/:id/orderListByRewards',
+	'/pedidos/edit/:id/orderListByRewards',
 	ordersController.getListByRewards
 );
 // Vista crear pedido

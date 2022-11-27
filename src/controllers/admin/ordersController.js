@@ -26,6 +26,7 @@ module.exports = {
 				req.con,
 				req.params.id,
 				(err, results) => {
+					console.log(results);
 					res.send(results);
 				}
 			);

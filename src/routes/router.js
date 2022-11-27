@@ -3,7 +3,7 @@ const loginController = require('../controllers/loginController');
 const clientsController = require('../controllers/clientsController');
 const purchasesController = require('../controllers/purchasesController');
 const rewardsController = require('../controllers/rewardsController');
-// const ordersController = require('../controllers/ordersController');
+const ordersController = require('../controllers/ordersController');
 
 const router = express.Router();
 
@@ -40,12 +40,12 @@ router.get('/premios', rewardsController.index);
 // Vista crear pedido
 // router.get('/premios/solicitar', ordersController.new);
 
-// /* PEDIDOS */
-// // Vista listado de pedidos
-// router.get('/pedidos', ordersController.index);
-// // Api consumo lista de pedidos = pedidosList
-// router.get('/orderList', ordersController.getList);
-// // Consulta actulizar pedido
-// router.post('/pedidos/create', ordersController.update);
+/* PEDIDOS */
+// Vista listado de pedidos
+router.get('/pedidos', ordersController.index);
+// Api consumo lista de pedidos = pedidosList
+router.get('/orderList', ordersController.getListById);
+// Consulta actulizar pedido
+// router.post('/pedidos/:id', ordersController.update);
 
 module.exports = router;

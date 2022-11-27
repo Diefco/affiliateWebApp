@@ -18,9 +18,9 @@
 		</div>
 
 		<section>
-			<div class="flex gap-4 mt-2 mb-4">				
-				<div class="w-full md:w-4/6">
-					<% if (data) {%>
+			<div class="flex gap-4 mt-2 mb-4">
+				<% if (data[0]) {%>		
+					<div class="w-full md:w-4/6">
 						<div class="grid grid-cols-1 mt-4 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
 							<% for( let index = 0; index < data.length; index++ ) { %>
 								<article class="block text-center bg-white shadow cursor-pointer">
@@ -40,29 +40,31 @@
 								</article>
 							<% } %>
 						</div>
-					<% } %>	
-				</div>
+					</div>
 				
-				<div class="w-full md:w-2/6">
-					<div class="w-full p-4 py-6 mt-4 text-xl text-center bg-white shadow">
-						<i class="text-3xl fa-solid fa-trophy text-cPink"></i>
-						<span class="block mt-2 text-black">Puntos disponibles:</span>
-						<strong class="block text-cPink">
-							<% if(data[0].points) { %> <%= data[0].points %> Puntos<%} else {%> 0 Puntos<%}%>
-						</strong>
-					</div>
-	
-					<div class="p-4 mt-8 bg-white shadow">
-						<h2 class="mb-2 text-2xl font-semibold">Premios a solicitar</h2>
-						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
-						<p class="mt-2">Los siguientes productos fueron agregados para tu pedido de premios.</p>
-						<div id="rewardCart" class="my-6">
-							<p class="p-2 text-sm font-bold">No has selecionado ningún premio aún.</p>
-							<p class="p-2 text-sm">Muffins De Crema de Limón Con Galleta x6. 
-								<strong class="">10000 pts.</strong></p>
+					<div class="w-full md:w-2/6">
+						<div class="w-full p-4 py-6 mt-4 text-xl text-center bg-white shadow">
+							<i class="text-3xl fa-solid fa-trophy text-cPink"></i>
+							<span class="block mt-2 text-black">Puntos disponibles:</span>
+							<strong class="block text-cPink">
+								<% if(data[0].points) { %> <%= data[0].points %> Puntos<%} else {%> 0 Puntos<%}%>	
+							</strong>
 						</div>
-					</div>
-				</div>
+		
+						<div class="p-4 mt-8 bg-white shadow">
+							<h2 class="mb-2 text-2xl font-semibold">Premios a solicitar</h2>
+							<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+							<p class="mt-2">Los siguientes productos fueron agregados para tu pedido de premios.</p>
+							<div id="rewardCart" class="my-6">
+								<p class="p-2 text-sm font-bold">No has selecionado ningún premio aún.</p>
+								<p class="p-2 text-sm">Muffins De Crema de Limón Con Galleta x6. 
+									<strong class="">10000 pts.</strong></p>
+							</div>
+						</div>
+					</div>				
+				<% } else {%>	
+					<h2 class="mb-2 text-2xl font-semibold">En este momento no existen premios para reclamar.</h2>
+				<% } %>	
 			</div>
 		</section>
 	</div>
