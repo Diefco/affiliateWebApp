@@ -1,5 +1,8 @@
 module.exports = {
-	get: function (con, callback) {
-		con.query('SELECT * FROM rewards', callback);
+	get: function (con, id, callback) {
+		con.query(
+			`SELECT rewards.*,clients.points  FROM rewards JOIN clients WHERE clients.id=${id}`,
+			callback
+		);
 	},
 };

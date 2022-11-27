@@ -3,7 +3,7 @@ const AdminRewards = require('../models/rewardsModel.js');
 module.exports = {
 	index: (req, res) => {
 		if (req.session.loggedin) {
-			AdminRewards.get(req.con, (error, results) => {
+			AdminRewards.get(req.con, req.session.idUser, (error, results) => {
 				if (error) throw error;
 				console.log(results);
 				res.render('rewards', { data: results });

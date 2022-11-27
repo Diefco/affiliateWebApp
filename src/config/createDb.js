@@ -36,9 +36,18 @@ const createDb = () => {
 		'CREATE TABLE IF NOT EXISTS `clients` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NOT NULL,`name` VARCHAR(45) NOT NULL,`phone` VARCHAR(45) NOT NULL,`address` VARCHAR(50) NOT NULL,`password` VARCHAR(60) NOT NULL,`idAdmin` INT NOT NULL,PRIMARY KEY (`id`),`points` FLOAT NOT NULL,`creationDate` TIMESTAMP NOT NULL, FOREIGN KEY (`idAdmin`) REFERENCES `admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
-
 			if (results.warningCount == 0) {
 				console.log('Tabla clients creada');
+				con.query(
+					`INSERT INTO clients (email, name, phone, address, password, idAdmin, points) VALUES ("admin@admin.com","admin","123","admin","$2a$10$EFtp6DTl7L93qrI/IsblX.aGEARq7Mqw3u08WkRBq9dg/aJ.g3cY6","1","0")`,
+					function (error, results, fields) {
+						if (error) throw error;
+
+						if (results.warningCount == 0) {
+							console.log('Administrador en clientes creado');
+						}
+					}
+				);
 			}
 		}
 	);
