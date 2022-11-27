@@ -11,8 +11,7 @@ module.exports = {
 				`SELECT * FROM clients WHERE email = '${data.email}'`,
 				(error, results, fields) => {
 					if (error) throw error;
-
-					if (!results.length > 0) {
+					if (results.length == 0) {
 						con.query(
 							'INSERT INTO clients SET ?',
 							{
@@ -81,17 +80,79 @@ module.exports = {
 		}
 	},
 	update: function (con, data, id, callback) {
-		con.query(
-			`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
-			(error) => {
-				if (error) throw error;
-				return callback(null);
-			}
-		);
+		// update: function (con, data, id) {
+		if (data.email) {
+			con.query(
+				`SELECT id, email FROM clients WHERE email = "${data.email}"`,
+				(error, results, fields) => {
+					if (error) throw error;
+
+					if (results.length > 0) {
+						if (results[0].id == data.idClient) {
+							// se pueden guardar cambios (nombre y demas)
+
+							con.query(
+								`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
+								(error) => {
+									if (error) throw error;
+									return callback(null, {
+										toast: true,
+										state: false,
+										alert: true,
+										alertMessage: 'Usuario actualizado',
+										alertIcon: 'success',
+										showConfirmButton: true,
+										timer: 5000,
+										ruta: '/admin/clientes',
+									});
+								}
+							);
+						} else {
+							// error
+
+							return callback(null, {
+								toast: true,
+								state: false,
+								alert: true,
+								alertMessage:
+									'El correo ya esta siendo usado...',
+								alertIcon: 'error',
+								showConfirmButton: true,
+								timer: 5000,
+								ruta: '/admin/clientes',
+							});
+						}
+					} else {
+						// se deja actualizar totalmente
+
+						con.query(
+							`UPDATE clients SET email ='${data.email}', name ='${data.name}', phone ='${data.phone}', address ='${data.address}' WHERE id = ${id}`,
+							(error) => {
+								if (error) throw error;
+								return callback(null, {
+									toast: true,
+									state: false,
+									alert: true,
+									alertMessage: 'Usuario actualizado',
+									alertIcon: 'success',
+									showConfirmButton: true,
+									timer: 5000,
+									ruta: '/admin/clientes',
+								});
+							}
+						);
+					}
+				}
+			);
+		}
 	},
 	destroy: function (con, id) {
 		con.query(`DELETE FROM clients WHERE id = ${id}`, (error, results) => {
 			if (error) throw error;
 		});
+	},
+	logout: (req, res) => {
+		req.session = null;
+		res.redirect(homeAdmin);
 	},
 };

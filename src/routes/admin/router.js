@@ -72,6 +72,11 @@ router.delete('/premios/delete/:id', rewardsController.destroy);
 router.get('/pedidos', ordersController.index);
 // Api consumo lista de pedidos = pedidosList
 router.get('/orderList', ordersController.getList);
+// Api get list por premio
+router.get(
+	'/pedidos/edit/:id/orderListByRewards',
+	ordersController.getListByRewards
+);
 // Vista crear pedido
 router.get('/pedidos/nuevo', ordersController.new);
 // Consulta crear pedido

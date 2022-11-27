@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<%- include('templates/headMetas'); -%>
+	<title> Mi cuenta - Susy Reposteria.com</title>
+</head>
+
+<body class="cupcakes-bg">
+	<%- include('templates/headerCliente'); -%>
+
+	<div class="px-2 content lg:px-4">
+		<div class="flex justify-between gap-4 titles">
+			<div>
+				<h1 class="mb-2 text-3xl font-semibold">¡Bienvenido a tu cuenta!</h1>
+				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+			</div>
+		</div>
+		
+		<section>
+			<div class="flex gap-4 mt-2 mb-4">
+				<div class="w-4/6 p-4 py-6 bg-white shadow">
+					<% if (data) {%>						
+					<p class="mt-4">
+						<span class="block mt-2 text-gray-900">Correo Electrónico:</span>
+						<strong class="block text-xl font-bold text-cBlue"><%= data.email; %></strong>	
+					</p>
+					<form method="POST" action="/mi-cuenta/update" class="">
+						<div class="mt-4">
+							<strong class="block text-gray-900">Nombre:</strong>
+							<input
+								type="text"
+								name="name" 
+								id="name"
+								class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm focus:ring-cBlue"
+								placeholder="Nombre"
+								value="<%= data.name; %>"
+								required
+							/>
+						</div>
+						<div class="mt-4">
+							<strong class="block mt-2 text-gray-900">Télefono:</strong>
+							<input
+							type="tel"
+							name="phone" 
+							id="phone"
+							class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm focus:ring-cBlue"
+							placeholder="Numero de contacto"
+							value="<%= data.phone; %>"
+							required
+						/>
+						</div>
+						<div class="mt-4">
+							<strong class="block mt-2 text-gray-900">Dirección:</strong>
+							<input
+							type="text"
+							name="address" 
+							id="address"
+							class="block w-full p-2 mt-2 border-gray-200 rounded-lg shadow-sm focus:ring-cBlue"
+							placeholder="Numero de contacto"
+							value="<%= data.address; %>"
+							required
+						/>
+						</div>						
+						<div>
+							<input
+								type="text"
+								name="idClient" 
+								id="idClient"
+								class="hidden"
+								style="display: none;"
+								value="<%= data.id; %>"
+							/>
+						</div>
+						<button
+							type="submit"
+							class="block w-40 py-3 mt-6 font-medium bg-white border rounded-lg text-cPink border-cPink hover:bg-cPink hover:text-white focus:ring-cBlue"
+							>
+								Actualizar
+						</button>
+					</form>
+					<% } %>
+				</div>
+				<div class="flex items-center justify-center w-2/6 p-4 py-6 bg-white shadow">		
+					<div class="text-center">
+						<i class="text-5xl fa-solid fa-trophy text-cPink"></i>
+						<strong class="block mt-2 text-black">Puntos ganados:</strong> 
+						<span class="text-3xl text-cPink">
+							<% if(data.points) { %> <%= data.points %> Puntos<%} else {%> 0 Puntos<%}%>
+						</span>
+						<a
+						class="block px-3 py-2 mt-8 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring"
+						href="/premios"
+						>
+							<i class="fa-solid fa-trophy"></i> Ver premios
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<%- include('templates/footer'); -%>
+
+</body>
+
+</html>

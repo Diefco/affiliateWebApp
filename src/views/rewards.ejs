@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<%- include('templates/headMetas'); -%>
+	<title> Mi cuenta - Susy Reposteria.com</title>
+</head>
+
+<body class="cupcakes-bg">
+	<%- include('templates/headerCliente'); -%>
+
+	<div class="px-2 content lg:px-4">
+		<div class="flex justify-between gap-4 titles">
+			<div>
+				<h1 class="mb-2 text-3xl font-semibold">¡Bienvenido a tu cuenta!</h1>
+				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
+			</div>
+		</div>
+
+		<section>
+			<div class="flex gap-4 mt-2 mb-4">				
+				<div class="w-full md:w-4/6">
+					<% if (data) {%>
+						<div class="grid grid-cols-1 mt-4 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
+							<% for( let index = 0; index < data.length; index++ ) { %>
+								<article class="block text-center bg-white shadow cursor-pointer">
+									<img
+									alt="Trainer"
+									src="/assets/img/uploads/<%= data[index].image %>"
+									class="object-cover w-full"
+									/>
+									
+									<div class="p-4">
+										<h3 class="block min-h-[56px] mt-4 text-xl font-bold capitalize text-cBlue">
+											<%= data[index].nameReward %>
+										</h3>
+										<p class="mt-2 text-xs"><%= data[index].description %></p>
+										<p class="mt-4 text-lg font-bold"><%= data[index].pricePoints %> pts</p>	
+									</div>	
+								</article>
+							<% } %>
+						</div>
+					<% } %>	
+				</div>
+				
+				<div class="w-full md:w-2/6">
+					<div class="w-full p-4 py-6 mt-4 text-xl text-center bg-white shadow">
+						<i class="text-3xl fa-solid fa-trophy text-cPink"></i>
+						<span class="block mt-2 text-black">Puntos disponibles:</span>
+						<strong class="block text-cPink">
+							<% if(data.points) { %> <%= data.points %> Puntos<%} else {%> 0 Puntos<%}%>
+						</strong>
+					</div>
+	
+					<div id="rewardCart" class="p-4 mt-8 text-xl bg-white shadow">
+						<h2 class="mb-2 text-2xl font-semibold">Premios a solicitar</h2>
+						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<%- include('templates/footer'); -%>
+
+</body>
+
+</html>

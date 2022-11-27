@@ -16,19 +16,20 @@ module.exports = async function nodemailerSend(client, subject, contentHtml) {
 		},
 	});
 
-	// send mail with defined transport object
-	// let info = await transporter.sendMail({
-	// 	from: '"Susy Reposteria" <no-reply@susyreposteria.com>', // sender address
-	// 	to: 'diefco.web@gmail.com', // list of receivers
-	// 	subject: '¡Hola! 👋 ¿Conoces tus puntos?', // Subject line
-	// 	text: 'Mensaje de prueba', // plain text body
-	// 	html: '<b>Tienes 5000 puntos</b>', // html body
+	// transporter.verify(function (error, success) {
+	// 	if (error) {
+	// 		console.log(error);
+	// 	} else {
+	// 		console.log('Server is ready to take our messages');
+	// 	}
 	// });
 
+	//send mail with defined transport object
 	let info = await transporter.sendMail({
 		from: '"Susy Reposteria" <no-reply@susyreposteria.com>', // sender address
 		to: client, // list of receivers
 		subject: subject, // Subject line
+		//text: 'Mensaje de prueba', // plain text body
 		html: contentHtml, // html body
 	});
 

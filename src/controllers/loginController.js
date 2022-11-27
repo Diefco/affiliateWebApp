@@ -7,7 +7,7 @@ module.exports = {
 	index: (req, res) => {
 		// Renderiza el view .ejs:
 		if (req.session.loggedin) {
-			return res.redirect(homeClient);
+			res.redirect(homeClient);
 		} else {
 			res.render('login');
 		}
@@ -28,11 +28,11 @@ module.exports = {
 			}
 		});
 	},
-	password: (req, res) => {
+	forgotPassword: (req, res) => {
 		res.render('forgotPassword');
 	},
-	passwordAuth: (req, res) => {
-		ClientLogin.passwordAuth(req.con, req.body, (err, results) => {
+	forgotPasswordAuth: (req, res) => {
+		ClientLogin.forgotPasswordAuth(req.con, req.body, (err, results) => {
 			if (results.auth === false) {
 				// Fallo autenticación, renderiza el view .ejs:
 				res.render('forgotPassword', results);
@@ -46,6 +46,21 @@ module.exports = {
 				res.redirect(homeClient);
 			}
 		});
+	},
+	resetPassword: (req, res) => {
+		ClientLogin.resetPassword(req.con, req.params, (err, results) => {
+			res.render('resetPassword', results);
+		});
+	},
+	resetPasswordAuth: (req, res) => {
+		ClientLogin.resetPasswordAuth(
+			req.con,
+			req.params,
+			req.body,
+			(err, results) => {
+				res.render('resetPassword', results);
+			}
+		);
 	},
 	logout: (req, res) => {
 		req.session = null;

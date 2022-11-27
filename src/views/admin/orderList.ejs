@@ -18,7 +18,7 @@
 			<div>
 				<a class="inline-block px-3 py-1 mt-3 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring active:text-indigo-500" href="/admin/pedidos/nuevo">
 					<i class="mr-2 fa-solid fa-award"></i>
-					Crear Premio
+					Crear nuevo pedido
 				</a>
 			</div>
 		</div>
@@ -38,45 +38,49 @@
 				width: '90px',
 			},{
 				id: 'orderDate',
-				name: 'Fecha',
-				width: '120px',
+				name: 'F. creación',
+				width: '170px',
+			},{
+				id: 'deliveryDate',
+				name: 'F. de entrega',
+				width: '170px',
 			}, {
 				id: 'client',
 				name: 'Cliente'
 			}, {
 				id: 'state',
-				name: 'Estado'
+				name: 'Estado',
+				width: '120px',
 			}, {
 				id: 'actions',
 				name: '',
-				width: '150px',
+				width: '75px',
 				sort: {
 					enabled: false
 				}
 			}],
 			sort: true,
-			data: [
-				[
-					1,
-					'17/11/2022',
-					'juanito.perez@emailcorreo.com',
-					'Pendiente',
-					html(`<a href="/admin/pedidos/edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-eye hover:text-cPink"></i> <span class="text-sm underline">Detalle</span></a>`)
-				]				
-			],
-			// server: {
-			// 	url: 'http://localhost:3018/admin/rewardList',
-			// 	then: data => data.map(reward => [reward.id, reward.name, reward.email, reward.phone,
-		    //         html(`<a href="/admin/pedidos/edit/${reward.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>
-		    //               <a href="" onClick="deletePremio(${reward.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
-			// 	handle: (res) => {
-			// 	// no matching records found
-			// 	if (res.status === 404) return {data: []};
-			// 	if (res.ok) return res.json();
+			// data: [
+			// 	[
+			// 		1,
+			// 		'17/11/2022',
+			// 		'juanito.perez@emailcorreo.com',
+			// 		'Pendiente',
+			// 		html(`<a href="/admin/pedidos/edit/1/"><i class="mx-1 text-gray-500 fa-solid fa-eye hover:text-cPink"></i> <span class="text-sm underline">Detalle</span></a>`)
+			// 	]				
+			// ],
+			 server: {
+			 	url: 'http://localhost:3018/admin/orderList',
+			 	then: data => data.map(order => [order.orderId, order.orderDate, order.deliveryDate, order.email, order.stateName,
+		             html(`<a href="/admin/pedidos/edit/${order.orderId}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>`)]),
+			 	handle: (res) => {
+			 	// no matching records found
+			 	if (res.status === 404) return {data: []};
+			 	if (res.ok) return res.json();
 
-			// 	throw Error('oh no :(');
-			// 	},
-			// }, 
+			 	throw Error('oh no :(');
+			 	},
+			}, 
 			pagination: {
 				enabled: true,
 				limit: 10,
