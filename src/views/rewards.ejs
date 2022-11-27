@@ -48,13 +48,19 @@
 						<i class="text-3xl fa-solid fa-trophy text-cPink"></i>
 						<span class="block mt-2 text-black">Puntos disponibles:</span>
 						<strong class="block text-cPink">
-							<% if(data.points) { %> <%= data.points %> Puntos<%} else {%> 0 Puntos<%}%>
+							<% if(data[0].points) { %> <%= data[0].points %> Puntos<%} else {%> 0 Puntos<%}%>
 						</strong>
 					</div>
 	
-					<div id="rewardCart" class="p-4 mt-8 text-xl bg-white shadow">
+					<div class="p-4 mt-8 bg-white shadow">
 						<h2 class="mb-2 text-2xl font-semibold">Premios a solicitar</h2>
 						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+						<p class="mt-2">Los siguientes productos fueron agregados para tu pedido de premios.</p>
+						<div id="rewardCart" class="my-6">
+							<p class="p-2 text-sm font-bold">No has selecionado ningún premio aún.</p>
+							<p class="p-2 text-sm">Muffins De Crema de Limón Con Galleta x6. 
+								<strong class="">10000 pts.</strong></p>
+						</div>
 					</div>
 				</div>
 			</div>
