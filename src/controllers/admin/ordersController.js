@@ -81,7 +81,7 @@ module.exports = {
 
 	getListByClient: (req, res) => {
 		if (req.session.loggedin) {
-			AdminPurchases.getListByClient(
+			AdminOrder.getListByClient(
 				req.con,
 				req.params.id,
 				(err, results) => {

@@ -48,6 +48,9 @@ router.get(
 	'/clientes/edit/:id/comprasList',
 	purchasesController.getListByClient
 );
+// Lista de las ordenes de premios del cliente
+router.get('/clientes/edit/:id/orderList', ordersController.getListByClient);
+
 //delete compra
 router.delete('/compras/delete/:id', purchasesController.destroy);
 
@@ -74,7 +77,7 @@ router.get('/pedidos', ordersController.index);
 router.get('/orderList', ordersController.getList);
 // Api get list por premio
 router.get(
-	'/pedidos/edit/:id/orderListByRewards',
+	'/clientes/edit/:id/orderListByRewards',
 	ordersController.getListByRewards
 );
 // Vista crear pedido
