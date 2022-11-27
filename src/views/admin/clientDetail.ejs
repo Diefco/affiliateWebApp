@@ -114,10 +114,16 @@
 
          <!-- Compras realizadas -->
 		 <section>
-			<h2 class="mt-8 mb-2 text-2xl font-semibold">Pedidos del cliente</h2>
+			<h2 class="mt-8 mb-2 text-2xl font-semibold">Compras del cliente</h2>
 			<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
 			<div id="gridClientsPurchase" class="mt-4"></div>
 		 </section>
+
+		 <section>
+			<h2 class="mt-8 mb-2 text-2xl font-semibold">Premios solicitados</h2>
+			<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+			<div id="gridClientsOrders" class="mt-4"></div>
+		</section>
 	</div>
 
 	<%- include('../templates/footer'); -%>
@@ -179,6 +185,71 @@
 		}
 		}).render(document.getElementById('gridClientsPurchase'));
     </script>
+
+	
+
+	<script type="module">
+		import { Grid, html } from 'https://unpkg.com/gridjs?module';
+		new Grid({
+			search: true,
+			columns: [ {
+				id: 'id',
+				name: 'ID',
+				width: '90px',
+			},{
+				id: 'orderDate',
+				name: 'F. creación',
+				width: '170px',
+			},{
+				id: 'deliveryDate',
+				name: 'F. de entrega',
+				width: '170px',
+			},{
+				id: 'state',
+				name: 'Estado',
+				width: '120px',
+			}, {
+				id: 'actions',
+				name: '',
+				width: '75px',
+				sort: {
+					enabled: false
+				}
+			}],
+			sort: true,
+			server: {
+				url: 'orderList',
+				then: data => data.map(order => [order.id, order.orderDate, order.deliveryDate, order.stateName,
+		             html(`<a href="/admin/pedidos/edit/${order.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>`)]),
+				handle: (res) => {
+				// no matching records found
+				if (res.status === 404) return {data: []};
+				if (res.ok) return res.json();
+				
+				throw Error('oh no :(');
+				},
+			},
+			pagination: {
+				enabled: true,
+				limit: 10,
+				summary: false
+			},
+			language: {
+				'search': {
+				'placeholder': '🔍 Buscar...'
+			},
+			'pagination': {
+				'previous': 'Ant.',
+				'next': 'Sig.'
+			}, 
+			style: { 
+				table: { 
+				'white-space': 'nowrap'
+				}
+			}
+		}
+		}).render(document.getElementById('gridClientsOrders'));
+	</script>
 
 </body>
 
