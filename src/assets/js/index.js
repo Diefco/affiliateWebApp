@@ -244,3 +244,97 @@ function loadCart() {
 		});
 	}, 1000);
 }
+
+/* Carrito premios cliente */
+let pointsAvailable;
+let selectedReward = [];
+
+window.addEventListener('load', () => {
+	document.querySelectorAll('.reward-button').forEach((element) => {
+		element.classList.remove('invisible');
+	});
+	const puntos = document
+		.querySelector('#points')
+		.getAttribute('data-points');
+	return (pointsAvailable = parseInt(puntos));
+});
+
+function toggleCart(id) {
+	/* Zona carrito */
+	const pointsDiv = document.querySelector('#points');
+	const noRewardCart = document.querySelector('#no-rewards');
+	const rewardCart = document.querySelector('#rewardCart');
+	const rewardCartList = document.querySelector('#cartList');
+	/* Article del premio */
+	const rewardButton = document.querySelector(`#addCart-${id}`);
+	const inCart = rewardButton.getAttribute('data-incart');
+	const reward = document.querySelector(`#reward-${id}`);
+	const rewardTitle = reward.querySelector('.reward-title').textContent;
+	const rewardPoints = parseInt(
+		reward.querySelector('.reward-points').getAttribute('data-points')
+	);
+
+	if (inCart === 'false') {
+		if (pointsAvailable > rewardPoints) {
+			// el premio no se ha añadido.
+			rewardButton.innerHTML = 'Quitar premio';
+			rewardButton.setAttribute('data-incart', 'true');
+			noRewardCart.classList.add('hidden');
+			rewardCart.classList.remove('hidden');
+
+			// Agregamos los rewards al carrito
+			rewardCartList.innerHTML += `<li class="for-reward-${id} p-2 text-sm">
+					<span class="text-cPink">+</span> 
+					${rewardTitle} 
+					<strong class="">${rewardPoints}</strong>
+				</li>`;
+
+			// restamos los puntos disponibles
+			pointsAvailable = pointsAvailable - rewardPoints;
+			pointsDiv.innerHTML = pointsAvailable;
+
+			// agregamos al array del id reward
+			selectedReward.push(id);
+		} else {
+			Swal.fire({
+				title: 'No tienes puntos suficientes',
+				text: 'Parece que no tienes los puntos necesarios para agregar este premio al carrito.',
+				alertIcon: 'info',
+				showConfirmButton: true,
+				confirmButtonColor: '#233789',
+				timer: 2000,
+			});
+		}
+	} else {
+		// El premio esta en el "carrito"
+		rewardButton.innerHTML = 'Agregar premio';
+		rewardButton.setAttribute('data-incart', 'false');
+
+		// restamos los puntos disponibles
+		pointsAvailable = pointsAvailable + rewardPoints;
+		pointsDiv.innerHTML = pointsAvailable;
+
+		// borramos el <li> del carrito carrito
+		document.querySelector(`.for-reward-${id}`).remove();
+
+		// recorremos el array en busca del id para borrar su posicion
+		for (let i = 0; i < selectedReward.length; i++) {
+			let actualItem = selectedReward[i];
+			if (actualItem === id) {
+				selectedReward.splice(i, 1);
+			}
+		}
+
+		// Validamos si el carrito queda vacio
+		if (selectedReward.length === 0) {
+			noRewardCart.classList.remove('hidden');
+			rewardCart.classList.add('hidden');
+		}
+	}
+	console.log(selectedReward);
+}
+
+function sendCart() {
+	conso;
+	console.log('Enviar carrito');
+}

@@ -5,7 +5,6 @@ module.exports = {
 		if (req.session.loggedin) {
 			AdminRewards.get(req.con, req.session.idUser, (error, results) => {
 				if (error) throw error;
-				console.log(results);
 				res.render('rewards', { data: results });
 			});
 		} else {
