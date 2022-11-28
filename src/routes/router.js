@@ -46,6 +46,11 @@ router.get('/pedidos', ordersController.index);
 // Api consumo lista de pedidos = pedidosList
 router.get('/orderList', ordersController.getListById);
 // Consulta actulizar pedido
-// router.post('/pedidos/:id', ordersController.update);
+router.get('/pedidos/:id', ordersController.getDetailOrders);
+// consulta de rewards
+router.get(
+	'/pedidos/:id/orderListByRewards',
+	ordersController.getListByRewards
+);
 
 module.exports = router;
