@@ -253,10 +253,11 @@ window.addEventListener('load', () => {
 	document.querySelectorAll('.reward-button').forEach((element) => {
 		element.classList.remove('invisible');
 	});
-	const puntos = document
-		.querySelector('#points')
-		.getAttribute('data-points');
-	return (pointsAvailable = parseInt(puntos));
+	const puntosDiv = document.querySelector('#points');
+	if (puntosDiv) {
+		const puntos = puntosDiv.getAttribute('data-points');
+		return (pointsAvailable = parseInt(puntos));
+	}
 });
 
 function toggleCart(id) {
@@ -299,7 +300,7 @@ function toggleCart(id) {
 			Swal.fire({
 				title: 'No tienes puntos suficientes',
 				text: 'Parece que no tienes los puntos necesarios para agregar este premio al carrito.',
-				alertIcon: 'info',
+				icon: 'info',
 				showConfirmButton: true,
 				confirmButtonColor: '#233789',
 				timer: 2000,
@@ -334,7 +335,16 @@ function toggleCart(id) {
 	console.log(selectedReward);
 }
 
-function sendCart() {
-	conso;
-	console.log('Enviar carrito');
+function sendCart(element) {
+	console.log('hola');
+	console.log(element);
+	Swal.fire({
+		title: 'En desarrollo',
+		text: 'Pronto podras realizar el pedido de tu premio.',
+		icon: 'info',
+		showConfirmButton: true,
+		confirmButtonColor: '#233789',
+		timer: 3000,
+	});
+	element.setAttribute('disabled');
 }

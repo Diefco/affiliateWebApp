@@ -64,7 +64,7 @@
 									</div>
 									<div id="rewardCart">
 										<ul id="cartList"></ul>
-										<button onclick="sendCart()" class="block px-3 py-2 m-auto mt-4 mb-2 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring">
+										<button onclick="sendCart(this)" class="block px-3 py-2 m-auto mt-4 mb-2 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring">
 											<i class="fa-solid fa-trophy"></i> Hacer pedido
 										</button>
 									</div>
@@ -79,10 +79,6 @@
 		</section>
 	</div>
 	<%- include('templates/footer'); -%>
-	
-	<div id="dFancyBox"></div>
-	<link rel="/assets/css/dfancybox.css" rel="stylesheet" />
-	<script src="/assets/js/dfancybox.js"></script>
 </body>
 
 </html>

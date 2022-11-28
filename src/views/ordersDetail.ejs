@@ -16,7 +16,7 @@
 				<div class="bg-cBlue h-[3px] w-28 mb-4"></div>
 			</div>
 			<div>
-				<a class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded inline-block3 border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring-cPink" href="/admin/pedidos">
+				<a class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded inline-block3 border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring-cPink" href="/pedidos">
 					<i class="fa-solid fa-left-long"></i>
 				</a>
 			</div>
@@ -28,8 +28,8 @@
 					<div class="w-full col-span-1">
 						<h2 class="mt-4 mb-2 text-2xl font-semibold">Información del cliente</h2>
 						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
-						<p for="emailClient" class="block text-sm">Correo electrónico del cliente asociado a este pedido</p>
-            			<p class="block text-2xl font-medium text-cBlue"><%= data.email; %></p>
+						<p class="block ">Correo electrónico del cliente asociado a este pedido</p>
+            			<p class="block font-medium"><%= data.email; %></p>
 						<input
 								type="text"
 								name="emailClient" 
@@ -40,45 +40,46 @@
 
 						<h2 class="mt-6 mb-2 text-2xl font-semibold">Información de entrega</h2>
 						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>			
-						<p class="my-1 text-sm">A continuación estan los datos de <b>quien recibirá el premio.</b></p>
+						<p class="my-1">A continuación estan los datos de <b>quien recibirá el premio.</b></p>
 						
-						<label for="receiverName" class="block mt-4 ml-1 text-sm font-medium">Nombre<span class="text-red-600">*</span></label>
-						<p class="block text-2xl font-medium text-cBlue"><%= data.nameContact; %></p>
+						<p class="block mt-4">Nombre:</p>
+						<p class="block font-medium"><%= data.nameContact; %></p>
                         
-						<label for="receiverPhone" class="block mt-4 ml-1 text-sm font-medium">Teléfono<span class="text-red-600">*</span></label>
-						<p class="block text-2xl font-medium text-cBlue"><%= data.phoneContact; %></p>
+						<p class="block mt-4">Teléfono:</p>
+						<p class="block font-medium"><%= data.phoneContact; %></p>
                         
-						<label for="receiverDate" class="block mt-4 ml-1 text-sm font-medium">Fecha de entrega <span class="text-red-600">*</span></label>
+						<p class="block mt-4">Fecha de entrega :</p>
 						<div class="relative">
-                            <p class="block text-2xl font-medium text-cBlue"><%= data.deliveryDate; %></p>
+                            <p class="block font-medium"><%= data.deliveryDate; %></p>
 						</div>
 
-						<label for="receiverHour" class="block mt-4 ml-1 text-sm font-medium">Hora de entrega<span class="text-red-600">*</span></label>
-						<p class="block text-2xl font-medium text-cBlue"><%= data.scheduleAvailable; %></p>
+						<p class="block mt-4">Hora de entrega:</p>
+						<p class="block font-medium"><%= data.scheduleAvailable; %></p>
 						
-						<label for="receiverAddress" class="block mt-4 ml-1 text-sm font-medium">Dirección de entrega<span class="text-red-600">*</span></label>
-						<p class="block text-2xl font-medium text-cBlue"><%= data.deliveryAddress; %></p>
+						<p class="block mt-4">Dirección de entrega:</p>
+						<p class="block font-medium"><%= data.deliveryAddress; %></p>
             
-						<label for="description" class="block mt-4 ml-1 text-sm font-medium ">Información adicional</label>
-
-						<p class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm whitespace-nowrap focus:ring-cBlue" ><%= data.deliveryMessage; %></p>
-
-                        
+						<p class="block mt-4 ">Información adicional:</p>
+						<p class="block font-medium" ><%= data.deliveryMessage; %></p>        
 						
-						<label for="inCart" class="hidden">Premios solicitados</label>
+						<p class="hidden">Premios solicitados</p>
 						<input type="text" name="inCart" id="inCart" value="<%= data.idReward; %>" class="hidden"/>
 					</div>
 					<div class="w-full col-span-1">
-						<label for="orderState" class="block mb-2 text-sm font-medium">Estado del pedido</label>
-						<P id="orderState" name="orderState" class="block text-2xl font-medium text-cBlue">
+						<h2 class="mt-4 mb-2 text-2xl font-semibold">Premios selecionados</h2>
+						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+						<div id="premios-list" class="mt-4 text-sm"></div>
+
+						
+						<h2 class="mt-4 mb-2 text-2xl font-semibold">Estado del pedido</h2>
+						<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+						<P id="orderState" name="orderState" class="block mt-2 font-medium">
 							<% if (data.idOrderState == 1) {%> Pendiente <% } %> 
 							<% if (data.idOrderState == 2) {%> En proceso <% } %> 
 							<% if (data.idOrderState == 3) {%> Enviado <% } %> 
 							<% if (data.idOrderState == 4) {%> Completado <% } %> 
 							<% if (data.idOrderState == 5) {%> Cancelado <% } %> 
                         </p>
-
-						<div id="premios-list" class="mt-4 text-sm"></div>
 					</div>
 				</div>
 			</form>
