@@ -12,7 +12,7 @@
 	<div class="px-2 content lg:px-4">
 		<div class="flex justify-between gap-4 titles">
 			<div>
-				<h1 class="mb-2 text-3xl font-semibold">¡Bienvenido a tu cuenta!</h1>
+				<h1 class="mb-2 text-3xl font-semibold">Premios</h1>
 				<div class="bg-cBlue h-[3px] w-20 mb-4"></div>
 			</div>
 		</div>
@@ -23,7 +23,7 @@
 					<div class="w-full md:w-4/6">
 						<div class="grid grid-cols-1 mt-4 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
 							<% for( let index = 0; index < data.length; index++ ) { %>
-								<article class="block text-center bg-white shadow cursor-pointer">
+								<article id="reward-<%= data[index].id %>" class="block text-center bg-white shadow">
 									<img
 									alt="Trainer"
 									src="/assets/img/uploads/<%= data[index].image %>"
@@ -31,34 +31,44 @@
 									/>
 									
 									<div class="p-4">
-										<h3 class="block min-h-[56px] mt-4 text-xl font-bold capitalize text-cBlue">
-											<%= data[index].nameReward %>
-										</h3>
+										<h3 class="block mt-4 text-xl font-bold capitalize text-cBlue reward-title"><%= data[index].nameReward %></h3>
+										<div class="bg-cBlue h-[3px] w-8 my-4  m-auto"></div>
 										<p class="mt-2 text-xs"><%= data[index].description %></p>
-										<p class="mt-4 text-lg font-bold"><%= data[index].pricePoints %> pts</p>	
+										<p class="mt-4 text-lg font-bold reward-points" data-points="<%= data[index].pricePoints %>"><%= data[index].pricePoints %> pts.</p>
+										<button id="addCart-<%= data[index].id %>" data-incart="false" onclick="toggleCart('<%= data[index].id %>')" class="invisible block px-3 py-2 m-auto mt-4 mb-2 text-sm font-medium text-white border rounded border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring disabled:opacity-75 disabled:hover:bg-cBlue disabled:hover:text-white reward-button" <% if (data[index].pricePoints >= data[0].points) {%>disabled<% } %> >
+											Agregar premio
+										</button>
 									</div>	
 								</article>
 							<% } %>
 						</div>
 					</div>
 				
-					<div class="w-full md:w-2/6">
-						<div class="w-full p-4 py-6 mt-4 text-xl text-center bg-white shadow">
-							<i class="text-3xl fa-solid fa-trophy text-cPink"></i>
-							<span class="block mt-2 text-black">Puntos disponibles:</span>
-							<strong class="block text-cPink">
-								<% if(data[0].points) { %> <%= data[0].points %> Puntos<%} else {%> 0 Puntos<%}%>	
-							</strong>
-						</div>
-		
-						<div class="p-4 mt-8 bg-white shadow">
-							<h2 class="mb-2 text-2xl font-semibold">Premios a solicitar</h2>
-							<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
-							<p class="mt-2">Los siguientes productos fueron agregados para tu pedido de premios.</p>
-							<div id="rewardCart" class="my-6">
-								<p class="p-2 text-sm font-bold">No has selecionado ningún premio aún.</p>
-								<p class="p-2 text-sm">Muffins De Crema de Limón Con Galleta x6. 
-									<strong class="">10000 pts.</strong></p>
+					<div class="relative w-full md:w-2/6">
+						<div class="sticky top-0">
+							<div class="w-full p-4 py-6 mt-4 text-xl text-center bg-white shadow">
+								<i class="text-3xl fa-solid fa-trophy text-cPink"></i>
+								<span class="block mt-2 text-black">Puntos disponibles:</span>
+								<strong class="block text-cPink" id="points" data-points="<%= data[0].points %>">
+									<% if(data[0].points) { %> <%= data[0].points %> Puntos<%} else {%> 0 Puntos<%}%>	
+								</strong>
+							</div>
+			
+							<div class="p-4 mt-8 bg-white shadow top-30">
+								<h2 class="mb-2 text-2xl font-semibold">Premios a solicitar</h2>
+								<div class="bg-cBlue h-[3px] w-12 mb-4"></div>
+								<p class="hidden mt-2 md:block">Los siguientes productos fueron agregados para tu pedido de premios.</p>
+								<div class="my-6">
+									<div id="no-rewards">								
+										<p class="p-2 text-sm font-bold">No has selecionado ningún premio aún.</p>
+									</div>
+									<div id="rewardCart">
+										<ul id="cartList"></ul>
+										<button onclick="sendCart()" class="block px-3 py-2 m-auto mt-4 mb-2 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring">
+											<i class="fa-solid fa-trophy"></i> Hacer pedido
+										</button>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>				
@@ -69,7 +79,10 @@
 		</section>
 	</div>
 	<%- include('templates/footer'); -%>
-
+	
+	<div id="dFancyBox"></div>
+	<link rel="/assets/css/dfancybox.css" rel="stylesheet" />
+	<script src="/assets/js/dfancybox.js"></script>
 </body>
 
 </html>
