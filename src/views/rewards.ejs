@@ -35,7 +35,7 @@
 										<div class="bg-cBlue h-[3px] w-8 my-4  m-auto"></div>
 										<p class="mt-2 text-xs"><%= data[index].description %></p>
 										<p class="mt-4 text-lg font-bold reward-points" data-points="<%= data[index].pricePoints %>"><%= data[index].pricePoints %> pts.</p>
-										<button id="addCart-<%= data[index].id %>" data-incart="false" onclick="toggleCartClient('<%= data[index].id %>')" class="invisible block px-3 py-2 m-auto mt-4 mb-2 text-sm font-medium text-white border rounded border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring disabled:opacity-75 disabled:hover:bg-cBlue disabled:hover:text-white reward-button" <% if (data[index].pricePoints >= data[0].points) {%>disabled<% } %> >
+										<button id="addCart-<%= data[index].id %>" data-incart="false" onclick="toggleCartClient('<%= data[index].id %>')" class="invisible block px-3 py-2 m-auto mt-4 mb-2 text-sm font-medium text-white border rounded border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring disabled:opacity-75 disabled:hover:bg-cBlue disabled:hover:text-white reward-button" <% if (data[index].pricePoints > data[0].points) {%>disabled<% } %> >
 											Agregar premio
 										</button>
 									</div>	
@@ -79,8 +79,8 @@
 		</section>
 	</div>
 
-	<div id="modal-info"  class="fixed top-0 left-0 z-50 items-center justify-center w-full h-full py-8 overflow-scroll md:p-0 md:overflow-auto hidden" data-visible="false" style="background-color: #0000009e;">
-		<div id="modal-info-close" class="absolute text-lg text-slate-100 top-4 right-3 md:top-4 md:right-8 md:text-xl cursor-pointer" onclick="closeModal()">X</div>
+	<div id="modal-info"  class="fixed top-0 left-0 z-50 items-center justify-center hidden w-full h-full py-8 overflow-scroll md:p-0 md:overflow-auto" data-visible="false" style="background-color: #0000009e;">
+		<div id="modal-info-close" class="absolute text-lg cursor-pointer text-slate-100 top-4 right-3 md:top-4 md:right-8 md:text-xl" onclick="closeModal()">X</div>
 		<div class="relative max-w-4xl p-6 m-6 bg-white rounded shadow md:p-10 top-8 md:top-auto">
 			<h2 class="mt-2 mb-2 text-2xl font-semibold">Información de entrega</h2>
 			<div class="bg-cBlue h-[3px] w-12 mb-4"></div>			
