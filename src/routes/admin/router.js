@@ -29,6 +29,8 @@ router.get('/clientes/edit/:id', clientsController.edit);
 router.post('/clientes/edit/:id/update', clientsController.update);
 // Eliminar cliente por id
 router.delete('/clientes/delete/:id', clientsController.destroy);
+//Enviar correo
+router.get('/clientes/edit/:id/email', clientsController.emailPoints);
 
 /* COMPRAS */
 // Vista listado de compras

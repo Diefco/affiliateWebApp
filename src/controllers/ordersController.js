@@ -52,4 +52,25 @@ module.exports = {
 			res.redirect('/admin/');
 		}
 	},
+
+	create: (req, res) => {
+		if (req.session.loggedin) {
+			// Definimidos el idAdmin para la consulta en BD.
+			req.body.idAdmin = req.session.idUser;
+
+			AdminOrders.create(req.con, req.body, (err, results) => {
+				console.log('results del create controller orders');
+				if (results.state === false) {
+					console.log('entra al error');
+					return res.render('orders', results);
+				} else {
+					// State = true
+					res.render('orders', results);
+				}
+			});
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
+	},
 };

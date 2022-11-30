@@ -276,7 +276,7 @@ function toggleCartClient(id) {
 	);
 
 	if (inCart === 'false') {
-		if (pointsAvailable > rewardPoints) {
+		if (pointsAvailable >= rewardPoints) {
 			// el premio no se ha añadido.
 			rewardButton.innerHTML = 'Quitar premio';
 			rewardButton.setAttribute('data-incart', 'true');

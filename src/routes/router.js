@@ -38,7 +38,7 @@ router.get('/purchasesList', purchasesController.getList);
 // Vista listado de premios
 router.get('/premios', rewardsController.index);
 // Vista crear pedido
-// router.get('/premios/solicitar', ordersController.new);
+router.post('/premios/newOrderClient', ordersController.create);
 
 /* PEDIDOS */
 // Vista listado de pedidos
