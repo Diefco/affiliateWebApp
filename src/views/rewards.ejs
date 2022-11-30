@@ -19,7 +19,7 @@
 
 		<section>
 			<div class="flex gap-4 mt-2 mb-4">
-				<% if (data[0]) { console.log(data[0])%>		
+				<% if (data[0]) {%>		
 					<div class="w-full md:w-4/6">
 						<div class="grid grid-cols-1 mt-4 gap-x-4 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
 							<% for( let index = 0; index < data.length; index++ ) { %>
@@ -87,13 +87,7 @@
 			<p class="my-1 text-sm">A continuación especifique los datos de <b>quien recibira el premio.</b></p>
 
 			<form method="POST" action="/premios/newOrderClient">	
-				<input
-                type="email"
-                name="email" 
-                id="email"
-                class="hidden"
-                value="<%= data[0].email %>"
-            	/>		
+					
 				<label for="receiverName" class="block mt-4 ml-1 text-sm font-medium">Nombre<span class="text-red-600">*</span></label>
 				<input type="text" name="receiverName" id="receiverName" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Nombre del receptor" required/>						
 
@@ -118,7 +112,8 @@
 				<textarea name="description" id="description" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" rows="4" placeholder="Escribe un mensaje o datos adicionales."></textarea>
 
 				<input name="inOrder" id="inOrder" type="text" class="hidden"/>
-
+				<input type="email" name="email"  id="email" class="hidden" value="<%= data[0].email %>" />	
+				
 				<button
 				type="submit"
 				class="block py-3 m-auto mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink"

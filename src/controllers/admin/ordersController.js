@@ -48,14 +48,8 @@ module.exports = {
 		if (req.session.loggedin) {
 			// Definimidos el idAdmin para la consulta en BD.
 			req.body.idAdmin = req.session.idUser;
-
 			AdminOrder.create(req.con, req.body, (err, results) => {
-				if (results.state === false) {
-					return res.render('admin/orderCreate', results);
-				} else {
-					// State = true
-					res.render('admin/orderCreate', results);
-				}
+				return res.render('admin/orderCreate', results);
 			});
 		} else {
 			// El usuario no tiene sessión

@@ -159,14 +159,10 @@ module.exports = {
 	},
 
 	emailPoints: (con, data, callback) => {
-		console.log(data);
-
 		con.query(
 			`SELECT * FROM clients WHERE id = '${data}'`,
 			(error, results) => {
 				if (error) throw error;
-
-				console.log(results);
 
 				const mailSubject = '¡Mira cuantos puntos!';
 
