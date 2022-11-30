@@ -75,14 +75,14 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `orderState` (`id` INT NOT NULL AUTO_INCREMENT,`stateName` VARCHAR(45) NOT NULL,PRIMARY KEY (`id`))',
+		'CREATE TABLE IF NOT EXISTS `orderstate` (`id` INT NOT NULL AUTO_INCREMENT,`stateName` VARCHAR(45) NOT NULL,PRIMARY KEY (`id`))',
 		function (error, results, fields) {
 			if (error) throw error;
 
 			if (results.warningCount == 0) {
-				console.log('Tabla orderState creada');
+				console.log('Tabla orderstate creada');
 				con.query(
-					'INSERT IGNORE INTO orderState (id, stateName) VALUES(1, "Pendiente"),(2, "En proceso"),(3, "Enviado"),(4, "Completado"),(5, "Cancelado")',
+					'INSERT IGNORE INTO orderstate (id, stateName) VALUES(1, "Pendiente"),(2, "En proceso"),(3, "Enviado"),(4, "Completado"),(5, "Cancelado")',
 					function (error, results, fields) {
 						if (error) throw error;
 
@@ -96,7 +96,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `orders` (`id` INT NOT NULL AUTO_INCREMENT,`phoneContact` VARCHAR(45) NOT NULL,`nameContact` VARCHAR(45) NOT NULL ,`orderDate` TIMESTAMP NOT NULL,`pricePoints` VARCHAR(45) NOT NULL,`deliveryAddress` VARCHAR(45) NOT NULL,`deliveryDate` VARCHAR(45) NOT NULL,`scheduleAvailable` TIME NOT NULL,`deliveryMessage` VARCHAR(280) NULL,`idorderState` INT NOT NULL, `idClient` INT NOT NULL ,`idReward`  VARCHAR(250) NOT NULL,PRIMARY KEY (`id`),FOREIGN KEY (`idOrderSta	te`) REFERENCES `orderState` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `orders` (`id` INT NOT NULL AUTO_INCREMENT,`phoneContact` VARCHAR(45) NOT NULL,`nameContact` VARCHAR(45) NOT NULL ,`orderDate` TIMESTAMP NOT NULL,`pricePoints` VARCHAR(45) NOT NULL,`deliveryAddress` VARCHAR(45) NOT NULL,`deliveryDate` VARCHAR(45) NOT NULL,`scheduleAvailable` TIME NOT NULL,`deliveryMessage` VARCHAR(280) NULL,`idOrderState` INT NOT NULL,FOREIGN KEY (`idOrderState`) REFERENCES `orderstate` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,`idReward`  VARCHAR(250) NOT NULL,PRIMARY KEY (`id`),`idClient` INT NOT NULL, FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 
