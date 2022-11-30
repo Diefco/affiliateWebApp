@@ -87,12 +87,9 @@ module.exports = {
 	},
 
 	emailPoints: (req, res) => {
-		console.log();
-
 		if (req.session.loggedin) {
 			AdminClients.emailPoints(req.con, req.params.id, (err, results) => {
 				if (err) throw err;
-				console.log(results);
 				return res.render('admin/clientList', results);
 			});
 		} else {
