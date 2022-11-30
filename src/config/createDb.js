@@ -96,7 +96,7 @@ const createDb = () => {
 	);
 
 	con.query(
-		'CREATE TABLE IF NOT EXISTS `orders` (`id` INT NOT NULL AUTO_INCREMENT,`phoneContact` VARCHAR(45) NOT NULL,`nameContact` VARCHAR(45) NOT NULL ,`orderDate` TIMESTAMP NOT NULL,`pricePoints` VARCHAR(45) NOT NULL,`deliveryAddress` VARCHAR(45) NOT NULL,`deliveryDate` VARCHAR(45) NOT NULL,`scheduleAvailable` TIME NOT NULL,`deliveryMessage` VARCHAR(280) NULL,`idOrderState` INT NOT NULL,FOREIGN KEY (`idOrderState`) REFERENCES `orderstate` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,`idReward`  VARCHAR(250) NOT NULL,PRIMARY KEY (`id`),`idClient` INT NOT NULL, FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
+		'CREATE TABLE IF NOT EXISTS `orders` (`id` INT NOT NULL AUTO_INCREMENT,`phoneContact` VARCHAR(45) NOT NULL,`nameContact` VARCHAR(45) NOT NULL ,`orderDate` TIMESTAMP NOT NULL,`pricePoints` VARCHAR(45) NOT NULL,`deliveryAddress` VARCHAR(45) NOT NULL,`deliveryDate` VARCHAR(45) NOT NULL,`scheduleAvailable` TIME NOT NULL,`deliveryMessage` VARCHAR(280) NULL,`idorderState` INT NOT NULL, `idClient` INT NOT NULL ,`idReward`  VARCHAR(250) NOT NULL,PRIMARY KEY (`id`),FOREIGN KEY (`idOrderSta	te`) REFERENCES `orderState` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`idClient`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;',
 		function (error, results, fields) {
 			if (error) throw error;
 

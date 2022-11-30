@@ -1,3 +1,5 @@
+const nodemailerSend = require('../../config/nodemailer');
+
 module.exports = {
 	get: function (con, callback) {
 		con.query('SELECT * FROM clients', callback);
@@ -154,5 +156,48 @@ module.exports = {
 	logout: (req, res) => {
 		req.session = null;
 		res.redirect(homeAdmin);
+	},
+
+	emailPoints: (con, data, callback) => {
+		console.log(data);
+
+		con.query(
+			`SELECT * FROM clients WHERE id = '${data}'`,
+			(error, results) => {
+				if (error) throw error;
+
+				console.log(results);
+
+				const mailSubject = '¡Mira cuantos puntos!';
+
+				const mailHTML = `<h1 style="text-align:center; color:#333333;">Hola ${results[0].name},</h1>
+					<p style="text-align:center; color:#333333;"><b>Recuerda que en Susy Repostería tenemos un grandioso sistema de puntos para tí.</b>
+					<p Cada compra que realizas te suma puntos.
+					</b>
+					<b><p style="text-align:center; color:#333333;">Actualmente tienes:</b>
+					<P style="text-align:center; Font-size:24px; color:#E61B76; Font-weight:bold;">${results[0].points} Pts.</P></b>
+
+					<b><p style="text-align:center; color:#333333;">Ingresa a tu cuenta en:
+					<a href="https://mispuntos.susyreposteria.com/
+					"style="color:#E61B76 "text-align:center">https://mispuntos.susyreposteria.com/
+					</a></p></b>
+					<p style="text-align:center; color:#333333;">¡Gracias por confiar en nosotros! <br/>`;
+
+				nodemailerSend(results[0].email, mailSubject, mailHTML).catch(
+					console.log(error)
+				);
+
+				return callback(null, {
+					auth: false,
+					alert: true,
+					alertTitle: '¡Excelente!',
+					alertMessage: 'Los puntos se han informado a tu cliente.',
+					alertIcon: 'success',
+					showConfirmButton: true,
+					timer: 8000,
+					ruta: '/admin/clientes',
+				});
+			}
+		);
 	},
 };
