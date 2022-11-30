@@ -260,7 +260,7 @@ window.addEventListener('load', () => {
 	}
 });
 
-function toggleCart(id) {
+function toggleCartClient(id) {
 	/* Zona carrito */
 	const pointsDiv = document.querySelector('#points');
 	const noRewardCart = document.querySelector('#no-rewards');
@@ -287,7 +287,7 @@ function toggleCart(id) {
 			rewardCartList.innerHTML += `<li class="for-reward-${id} p-2 text-sm">
 					<span class="text-cPink">+</span> 
 					${rewardTitle} 
-					<strong class="">${rewardPoints}</strong>
+					<strong class="">${rewardPoints} Pts.</strong>
 				</li>`;
 
 			// restamos los puntos disponibles
@@ -332,19 +332,23 @@ function toggleCart(id) {
 			rewardCart.classList.add('hidden');
 		}
 	}
-	console.log(selectedReward);
 }
 
 function sendCart(element) {
-	console.log('hola');
-	console.log(element);
-	Swal.fire({
-		title: 'En desarrollo',
-		text: 'Pronto podras realizar el pedido de tu premio.',
-		icon: 'info',
-		showConfirmButton: true,
-		confirmButtonColor: '#233789',
-		timer: 3000,
-	});
-	element.setAttribute('disabled');
+	const modal = document.querySelector('#modal-info');
+	const inputOrderArray = document.querySelector('#inOrder');
+
+	modal.classList.add('flex');
+	modal.classList.remove('hidden');
+	modal.setAttribute('data-visible', 'true');
+
+	inputOrderArray.value = selectedReward;
+}
+
+function closeModal() {
+	const modal = document.querySelector('#modal-info');
+
+	modal.classList.add('hidden');
+	modal.classList.remove('flex');
+	modal.setAttribute('data-visible', 'false');
 }

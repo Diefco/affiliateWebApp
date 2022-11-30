@@ -35,7 +35,7 @@
 										<div class="bg-cBlue h-[3px] w-8 my-4  m-auto"></div>
 										<p class="mt-2 text-xs"><%= data[index].description %></p>
 										<p class="mt-4 text-lg font-bold reward-points" data-points="<%= data[index].pricePoints %>"><%= data[index].pricePoints %> pts.</p>
-										<button id="addCart-<%= data[index].id %>" data-incart="false" onclick="toggleCart('<%= data[index].id %>')" class="invisible block px-3 py-2 m-auto mt-4 mb-2 text-sm font-medium text-white border rounded border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring disabled:opacity-75 disabled:hover:bg-cBlue disabled:hover:text-white reward-button" <% if (data[index].pricePoints >= data[0].points) {%>disabled<% } %> >
+										<button id="addCart-<%= data[index].id %>" data-incart="false" onclick="toggleCartClient('<%= data[index].id %>')" class="invisible block px-3 py-2 m-auto mt-4 mb-2 text-sm font-medium text-white border rounded border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring disabled:opacity-75 disabled:hover:bg-cBlue disabled:hover:text-white reward-button" <% if (data[index].pricePoints >= data[0].points) {%>disabled<% } %> >
 											Agregar premio
 										</button>
 									</div>	
@@ -62,7 +62,7 @@
 									<div id="no-rewards">								
 										<p class="p-2 text-sm font-bold">No has selecionado ningún premio aún.</p>
 									</div>
-									<div id="rewardCart">
+									<div id="rewardCart" class="hidden">
 										<ul id="cartList"></ul>
 										<button onclick="sendCart(this)" class="block px-3 py-2 m-auto mt-4 mb-2 text-sm font-medium text-white border rounded border-cPink bg-cPink hover:bg-transparent hover:text-cPink focus:outline-none focus:ring">
 											<i class="fa-solid fa-trophy"></i> Hacer pedido
@@ -77,6 +77,49 @@
 				<% } %>	
 			</div>
 		</section>
+	</div>
+
+	<div id="modal-info"  class="fixed top-0 left-0 z-50 items-center justify-center w-full h-full py-8 overflow-scroll md:p-0 md:overflow-auto hidden" data-visible="false" style="background-color: #0000009e;">
+		<div id="modal-info-close" class="absolute text-lg text-slate-100 top-4 right-3 md:top-4 md:right-8 md:text-xl cursor-pointer" onclick="closeModal()">X</div>
+		<div class="relative max-w-4xl p-6 m-6 bg-white rounded shadow md:p-10 top-8 md:top-auto">
+			<h2 class="mt-2 mb-2 text-2xl font-semibold">Información de entrega</h2>
+			<div class="bg-cBlue h-[3px] w-12 mb-4"></div>			
+			<p class="my-1 text-sm">A continuación especifique los datos de <b>quien recibira el premio.</b></p>
+
+			<form action="/newOrderClient">			
+				<label for="receiverName" class="block mt-4 ml-1 text-sm font-medium">Nombre<span class="text-red-600">*</span></label>
+				<input type="text" name="receiverName" id="receiverName" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Nombre del receptor" required/>						
+
+				<label for="receiverPhone" class="block mt-4 ml-1 text-sm font-medium">Teléfono<span class="text-red-600">*</span></label>
+				<input type="text" inputmode="numeric" name="receiverPhone" id="receiverPhone" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Teléfono del receptor" required/>						
+
+				<label for="receiverDate" class="block mt-4 ml-1 text-sm font-medium">Fecha de entrega <span class="text-red-600">*</span></label>
+				<div class="relative">
+					<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+						<svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+					</div>
+					<input datepicker name="receiverDate" id="receiverDate" type="text" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5" placeholder="Seleciona una fecha" required>
+				</div>
+
+				<label for="receiverHour" class="block mt-4 ml-1 text-sm font-medium">Hora de entrega<span class="text-red-600">*</span></label>
+				<input type="time" name="receiverHour" id="receiverHour" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Hora de entrega" required/>
+
+				<label for="receiverAddress" class="block mt-4 ml-1 text-sm font-medium">Dirección de entrega<span class="text-red-600">*</span></label>
+				<input type="text" name="receiverAddress" id="receiverAddress" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm" placeholder="Direccion de entrega" required/>
+
+				<label for="description" class="block mt-4 ml-1 text-sm font-medium ">Información adicional</label>
+				<textarea name="description" id="description" class="block w-full p-2 mt-2 text-sm border-gray-200 rounded-lg shadow-sm focus:ring-cBlue" rows="4" placeholder="Escribe un mensaje o datos adicionales."></textarea>
+
+				<input name="inOrder" id="inOrder" type="text" class="hidden"/>
+
+				<button
+				type="submit"
+				class="block py-3 m-auto mt-6 text-sm font-medium text-white rounded-lg w-60 bg-cPink"
+				>
+					Solicitar premio(s)
+				</button>
+			</form>
+		</div>
 	</div>
 	<%- include('templates/footer'); -%>
 </body>
