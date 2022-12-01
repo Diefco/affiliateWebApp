@@ -38,9 +38,14 @@ module.exports = {
 	},
 
 	edit: (req, res) => {
-		AdminPurchases.getById(req.con, req.params.id, (err, rows) => {
-			res.render('admin/purchasesDetail', { data: rows[0] });
-		});
+		if (req.session.loggedin && req.session.idAdmin) {
+			AdminPurchases.getById(req.con, req.params.id, (err, rows) => {
+				res.render('admin/purchasesDetail', { data: rows[0] });
+			});
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
 	},
 	update: (req, res) => {
 		if (req.session.loggedin && req.session.idAdmin) {

@@ -52,7 +52,6 @@ module.exports = {
 	edit: (req, res) => {
 		if (req.session.loggedin && req.session.idAdmin) {
 			AdminClients.getById(req.con, req.params.id, (err, rows) => {
-				console.log(rows[0]);
 				res.render('admin/clientDetail', { data: rows[0] });
 			});
 		} else {

@@ -69,9 +69,14 @@ module.exports = {
 	},
 
 	edit: (req, res) => {
-		AdminOrder.getById(req.con, req.params.id, (err, rows) => {
-			res.render('admin/orderDetail', { data: rows[0] });
-		});
+		if (req.session.loggedin && req.session.idAdmin) {
+			AdminOrder.getById(req.con, req.params.id, (err, rows) => {
+				res.render('admin/orderDetail', { data: rows[0] });
+			});
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
 	},
 
 	getListByClient: (req, res) => {
@@ -97,7 +102,6 @@ module.exports = {
 				req.params.id,
 				(err, results) => {
 					if (err) throw err;
-					console.log(results);
 					res.render(`admin/orderDetail`, results);
 				}
 			);
