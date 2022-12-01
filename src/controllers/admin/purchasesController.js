@@ -3,7 +3,7 @@ const AdminPurchases = require('../../models/admin/purchasesModel.js');
 module.exports = {
 	index: (req, res) => {
 		// renderiza el view .ejs:
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			res.render('admin/purchasesList');
 		} else {
 			// No tiene sesión
@@ -11,7 +11,7 @@ module.exports = {
 		}
 	},
 	getList: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminPurchases.get(req.con, (err, results) => {
 				res.send(results);
 			});
@@ -21,13 +21,13 @@ module.exports = {
 		}
 	},
 	new: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			return res.render('admin/purchasesCreate');
 		}
 		res.redirect('/admin/');
 	},
 	create: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminPurchases.create(req.con, req.body, (err, results) => {
 				res.render('admin/purchasesList', results);
 			});
@@ -43,7 +43,7 @@ module.exports = {
 		});
 	},
 	update: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminPurchases.update(req.con, req.body, req.params.id, (err) => {
 				if (err) throw err;
 				res.redirect('/admin/compras/');
@@ -55,7 +55,7 @@ module.exports = {
 	},
 
 	getListByClient: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminPurchases.getListByClient(
 				req.con,
 				req.params.id,
@@ -70,7 +70,7 @@ module.exports = {
 	},
 
 	destroy: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminPurchases.destroy(req.con, req.params.id);
 		} else {
 			// El usuario no tiene sessión

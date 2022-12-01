@@ -3,7 +3,7 @@ const AdminOrder = require('../../models/admin/orderModel.js');
 module.exports = {
 	index: (req, res) => {
 		// renderiza el view .ejs:
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			res.render('admin/orderList');
 		} else {
 			// No tiene sesión
@@ -11,7 +11,7 @@ module.exports = {
 		}
 	},
 	getList: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminOrder.get(req.con, (err, results) => {
 				res.send(results);
 			});
@@ -21,7 +21,7 @@ module.exports = {
 		}
 	},
 	getListByRewards: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminOrder.getListByRewards(
 				req.con,
 				req.params.id,
@@ -37,7 +37,7 @@ module.exports = {
 	},
 
 	new: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			return res.render('admin/orderCreate');
 		}
 
@@ -45,7 +45,7 @@ module.exports = {
 	},
 
 	create: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			// Definimidos el idAdmin para la consulta en BD.
 			req.body.idAdmin = req.session.idUser;
 			AdminOrder.create(req.con, req.body, (err, results) => {
@@ -58,7 +58,7 @@ module.exports = {
 	},
 
 	destroy: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminOrder.destroy(req.con, req.params.id, (err, results) => {
 				res.redirect('/admin/pedidos');
 			});
@@ -75,7 +75,7 @@ module.exports = {
 	},
 
 	getListByClient: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminOrder.getListByClient(
 				req.con,
 				req.params.id,
@@ -90,7 +90,7 @@ module.exports = {
 	},
 
 	update: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminOrder.update(
 				req.con,
 				req.body,

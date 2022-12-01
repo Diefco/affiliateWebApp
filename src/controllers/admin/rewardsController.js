@@ -3,7 +3,7 @@ const AdminReward = require('../../models/admin/rewardsModel.js');
 module.exports = {
 	index: (req, res) => {
 		// renderiza el view .ejs:
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			res.render('admin/rewardsList');
 		} else {
 			// No tiene sesión
@@ -11,7 +11,7 @@ module.exports = {
 		}
 	},
 	getList: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminReward.get(req.con, (err, results) => {
 				res.send(results);
 			});
@@ -22,7 +22,7 @@ module.exports = {
 	},
 
 	new: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			return res.render('admin/rewardsCreate');
 		}
 
@@ -30,7 +30,7 @@ module.exports = {
 	},
 
 	create: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			// Definimidos el idAdmin para la consulta en BD.
 			req.body.idAdmin = req.session.idUser;
 			AdminReward.create(req.con, req, (err, results) => {
@@ -43,7 +43,7 @@ module.exports = {
 	},
 
 	destroy: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminReward.destroy(req.con, req.params.id, (err, results) => {
 				res.redirect('/admin/premios');
 			});
@@ -60,7 +60,7 @@ module.exports = {
 	},
 
 	update: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminReward.update(req.con, req, req.params.id, (err) => {
 				if (err) throw err;
 				res.redirect('/admin/premios/');

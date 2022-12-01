@@ -6,7 +6,7 @@ const homeAdmin = '/admin/clientes';
 module.exports = {
 	index: (req, res) => {
 		// renderiza el view .ejs:
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			return res.redirect(homeAdmin);
 		}
 		res.render('admin/login');

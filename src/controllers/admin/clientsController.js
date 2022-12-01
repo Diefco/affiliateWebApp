@@ -4,7 +4,7 @@ module.exports = {
 	index: (req, res) => {
 		console.log(req.session);
 		// renderiza el view .ejs:
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			res.render('admin/clientList');
 		} else {
 			// No tiene sesión
@@ -12,7 +12,7 @@ module.exports = {
 		}
 	},
 	getList: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminClients.get(req.con, (err, results) => {
 				console.log(results);
 				res.send(results);
@@ -23,7 +23,7 @@ module.exports = {
 		}
 	},
 	new: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			return res.render('admin/clientCreate');
 		}
 
@@ -31,7 +31,7 @@ module.exports = {
 	},
 
 	create: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			// Definimidos el idAdmin para la consulta en BD.
 			req.body.idAdmin = req.session.idUser;
 
@@ -50,14 +50,19 @@ module.exports = {
 	},
 
 	edit: (req, res) => {
-		AdminClients.getById(req.con, req.params.id, (err, rows) => {
-			console.log(rows[0]);
-			res.render('admin/clientDetail', { data: rows[0] });
-		});
+		if (req.session.loggedin && req.session.idAdmin) {
+			AdminClients.getById(req.con, req.params.id, (err, rows) => {
+				console.log(rows[0]);
+				res.render('admin/clientDetail', { data: rows[0] });
+			});
+		} else {
+			// El usuario no tiene sessión
+			res.redirect('/admin/');
+		}
 	},
 
 	update: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminClients.update(
 				req.con,
 				req.body,
@@ -81,7 +86,7 @@ module.exports = {
 	},
 
 	destroy: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminClients.destroy(req.con, req.params.id);
 		} else {
 			// El usuario no tiene sessión
@@ -90,7 +95,7 @@ module.exports = {
 	},
 
 	emailPoints: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminClients.emailPoints(req.con, req.params.id, (err, results) => {
 				if (err) throw err;
 				return res.render('admin/clientList', results);
@@ -102,7 +107,7 @@ module.exports = {
 	},
 
 	emailChangePassword: (req, res) => {
-		if (req.session.loggedin) {
+		if (req.session.loggedin && req.session.idAdmin) {
 			AdminClients.emailChangePassword(
 				req.con,
 				req.params.id,
