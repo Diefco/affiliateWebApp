@@ -1,7 +1,7 @@
 const ClientLogin = require('../models/loginModel.js');
 
 // Primera URL para el usuario logeado
-const homeClient = '/mi-cuenta';
+const homeClient = '/premios';
 
 module.exports = {
 	index: (req, res) => {

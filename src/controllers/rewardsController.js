@@ -9,7 +9,7 @@ module.exports = {
 			});
 		} else {
 			// El usuario no tiene sessión
-			res.send('No hay datos disponibles.');
+			res.redirect('/');
 		}
 	},
 	getList: (req, res) => {
