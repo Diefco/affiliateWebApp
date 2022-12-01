@@ -2,10 +2,16 @@ const nodemailerSend = require('../../config/nodemailer');
 
 module.exports = {
 	get: function (con, callback) {
-		con.query('SELECT * FROM clients', callback);
+		con.query(
+			'SELECT clients.*,SUM(purchases.pointsPurchase) AS totalPoints FROM clients JOIN purchases ON purchases.idClient=clients.id',
+			callback
+		);
 	},
 	getById: function (con, id, callback) {
-		con.query(`SELECT * FROM clients WHERE id = ${id}`, callback);
+		con.query(
+			`SELECT clients.*,SUM(purchases.pointsPurchase) AS totalPoints FROM clients JOIN purchases ON purchases.idClient=clients.id WHERE clients.id = ${id}`,
+			callback
+		);
 	},
 	create: function (con, data, callback) {
 		if (data.email) {

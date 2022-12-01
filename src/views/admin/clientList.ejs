@@ -48,6 +48,12 @@
 			}, {
 				id: 'phone',
 				name: 'Télefono'
+			},{
+				id: 'puntos',
+				name: 'Puntos disp.'
+			},{
+				id: 'comprasTotales',
+				name: 'Compras totales'
 			}, {
 				id: 'actions',
 				name: '',
@@ -59,7 +65,7 @@
 			sort: true,
 			server: {
 				url: '/admin/clientList',
-				then: data => data.map(client => [client.id, client.name, client.email, client.phone, html(`<a href="/admin/clientes/edit/${client.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deleteClient(${client.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
+				then: data => data.map(client => [client.id, client.name, client.email, client.phone,client.points+" Pts.","$ "+client.totalPoints*1000  ,html(`<a href="/admin/clientes/edit/${client.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a><a href="" onClick="deleteClient(${client.id})"><i class="mx-1 text-gray-500 fa-solid fa-trash-can hover:text-cPink"></i></a>`)]),
 				handle: (res) => {
 				// No hay clientes registrados aun
 				if (res.status === 404) return {data: []};
