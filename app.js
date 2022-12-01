@@ -51,6 +51,8 @@ const { allowedNodeEnvironmentFlags } = require('process');
 app.use('/admin/', adminRouter);
 app.use('/', clientRouter);
 
+//prueba cron
+
 // Puerto y lanzamiento de la app
 app.set('port', process.env.PORT || 3000);
 

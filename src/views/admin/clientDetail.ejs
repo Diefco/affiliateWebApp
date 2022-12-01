@@ -113,20 +113,25 @@
 							<% if(data.totalPoints) { %> <%= data.totalPoints %> Puntos<%} else {%> 0 Puntos<%}%>
 						</span>
 
+						<strong class="block mt-4 text-sm text-black">Compras totales:</strong> 
+						<span class="text-2xl text-cBlue">
+							<% if(data.totalPoints) { %>$ <%= data.totalPoints*1000 %> <%} else {%> 0 Puntos<%}%>
+						</span>
+
 						<h3 class="mt-8 mb-2 text-xl font-semibold">Correos al cliente:</h3>
 						<div class="bg-cBlue h-[3px] w-8 mb-4 mx-auto"></div>
 						<p class="block mt-2 text-black">Estos botones te permiten enviar mensajes al correo electronico del cliente con las siguientes funciones:</p> 
 						
 						<a href="email">
 							<button
-								class="m-2 w-40 py-3 mt-6 font-medium rounded-lg border-2 border-cBlue text-cBlue focus:ring-cBlue hover:border-cBlue hover:bg-cBlue hover:text-white"
+								class="w-40 py-3 m-2 mt-6 font-medium border-2 rounded-lg border-cBlue text-cBlue focus:ring-cBlue hover:border-cBlue hover:bg-cBlue hover:text-white"
 								>
 								Notificar puntos actuales
 							</button>
 						</a>
 						<a href="changePassword">
 							<button
-								class="m-2 w-40 py-3 mt-6 font-medium rounded-lg border-2 border-cBlue text-cBlue focus:ring-cBlue hover:border-cBlue hover:bg-cBlue hover:text-white"
+								class="w-40 py-3 m-2 mt-6 font-medium border-2 rounded-lg border-cBlue text-cBlue focus:ring-cBlue hover:border-cBlue hover:bg-cBlue hover:text-white"
 								>
 								Enlace cambio de contraseña
 							</button>

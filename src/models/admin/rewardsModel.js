@@ -99,12 +99,12 @@ module.exports = {
 									}
 								);
 							} else {
-								fs.unlinkSync(
-									path.join(
-										__dirname,
-										'../../assets/img/uploads/' + imageName
-									)
-								);
+								// fs.unlinkSync(
+								// 	path.join(
+								// 		__dirname,
+								// 		'../../assets/img/uploads/' + imageName
+								// 	)
+								// );
 
 								con.query(
 									`UPDATE rewards SET image='${filename}', nameReward ='${data.body.name}', description ='${data.body.description}', pricePoints ='${data.body.points}' WHERE id = ${id}`,
@@ -134,12 +134,12 @@ module.exports = {
 						}
 					);
 				} else {
-					fs.unlinkSync(
-						path.join(
-							__dirname,
-							'../../assets/img/uploads/' + imageName
-						)
-					);
+					// fs.unlinkSync(
+					// 	path.join(
+					// 		__dirname,
+					// 		'../../assets/img/uploads/' + imageName
+					// 	)
+					// );
 					con.query(
 						`DELETE FROM rewards WHERE id = ${id}`,
 						(error) => {

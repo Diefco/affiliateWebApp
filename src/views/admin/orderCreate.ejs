@@ -12,7 +12,7 @@
 	<section class="content">
 		<div class="flex justify-between gap-4">
 			<div>
-				<h1 class="mb-2 text-3xl font-semibold">Crear Nuevo Pedido</h1>
+				<h1 class="mb-2 text-3xl font-semibold">Crear Nueva Redención</h1>
 				<div class="bg-cBlue h-[3px] w-28 mb-4"></div>
 			</div>
 			<div>
@@ -86,10 +86,10 @@
 		new Grid({
 			search: true,
 			columns: [{
-				id: 'id',
-				name: 'ID',
-				width: '70px',
-			}, {
+				id: 'photo',
+				name: 'Foto',
+				width: '100px',
+			},{
 				id: 'name',
 				name: 'Premio'
 			}, {
@@ -103,7 +103,7 @@
 			sort:false,
 			 server: {
 				url: 'http://localhost:3018/admin/rewardList',
-		 		then: data => data.map(reward => [reward.id, reward.nameReward, reward.pricePoints,
+		 		then: data => data.map(reward => [html(`<img src="/assets/img/uploads/${reward.image}" class="object-cover w-full rounded aspect-square"/>`),reward.nameReward, reward.pricePoints,
 				 html(`<span onClick="toggleCart(${reward.id})" id="addCart-${reward.id}" reward-id="${reward.id}" data-incart="false" class="px-3 py-2 mt-3 text-sm font-medium text-white border rounded cursor-pointer inline-block3 border-cBlue bg-cBlue hover:bg-transparent hover:text-cBlue focus:outline-none focus:ring-cBlue">
 							<i class="fa-solid fa-plus"></i>
 						</span>`)]),

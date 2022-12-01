@@ -98,10 +98,6 @@
 		const grid = new Grid({
 			search: true,
 			columns: [{
-				id: 'id',
-				name: 'ID',
-				width: '70px',
-			}, {
 				id: 'photo',
 				name: 'Foto',
 				width: '100px',
@@ -121,7 +117,7 @@
 				// 			<i class="fa-solid fa-plus"></i>
 				// 		</span>`)]),
 				// <img src="/assets/img/uploads/${reward.image}" class="object-cover w-full rounded aspect-square">
-				 then: data => data.map(reward => [reward.id, html(`<img src="/assets/img/uploads/${reward.image}" class="object-cover w-full rounded aspect-square"/>`), reward.nameReward, reward.pricePoints]),
+				 then: data => data.map(reward => [ html(`<img src="/assets/img/uploads/${reward.image}" class="object-cover w-full rounded aspect-square"/>`), reward.nameReward, reward.pricePoints]),
 			 	handle: (res) => {
 			 	// no matching records found
 			 	if (res.status === 404) return {data: []};
