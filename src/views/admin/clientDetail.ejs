@@ -111,7 +111,11 @@
 						<span class="text-3xl text-cPink">
 							<% if(data.points) { %> <%= data.points %> Puntos<%} else {%> 0 Puntos<%}%>
 						</span>
-						
+						<strong class="block mt-4 text-sm text-black">Puntos totales obtenidos:</strong> 
+						<span class="text-2xl text-cBlue">
+							<% if(data.totalPoints) { %> <%= data.totalPoints %> Puntos<%} else {%> 0 Puntos<%}%>
+						</span>
+
 						<h3 class="mt-16 mb-2 text-xl font-semibold">Correos al cliente:</h3>
 						<div class="bg-cBlue h-[3px] w-8 mb-4 mx-auto"></div>
 						<p class="block mt-2 text-black">Estos botones te permiten enviar mensajes al correo electronico del cliente con las siguientes funciones:</p> 

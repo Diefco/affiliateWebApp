@@ -14,6 +14,7 @@ module.exports = {
 	getList: (req, res) => {
 		if (req.session.loggedin) {
 			AdminClients.get(req.con, (err, results) => {
+				console.log(results);
 				res.send(results);
 			});
 		} else {
@@ -50,6 +51,7 @@ module.exports = {
 
 	edit: (req, res) => {
 		AdminClients.getById(req.con, req.params.id, (err, rows) => {
+			console.log(rows[0]);
 			res.render('admin/clientDetail', { data: rows[0] });
 		});
 	},
