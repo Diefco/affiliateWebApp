@@ -352,3 +352,15 @@ function closeModal() {
 	modal.classList.remove('flex');
 	modal.setAttribute('data-visible', 'false');
 }
+
+function showPasword() {
+	const inputsPassword = document.querySelectorAll('.input-password');
+
+	inputsPassword.forEach((elemento) => {
+		if (elemento.getAttribute('type') == 'password') {
+			elemento.setAttribute('type', 'text');
+		} else {
+			elemento.setAttribute('type', 'password');
+		}
+	});
+}

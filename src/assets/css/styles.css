@@ -990,12 +990,12 @@ select {
   width: 2rem;
 }
 
-.w-96 {
-  width: 24rem;
-}
-
 .w-60 {
   width: 15rem;
+}
+
+.w-96 {
+  width: 24rem;
 }
 
 .w-auto {
@@ -1113,10 +1113,6 @@ select {
 
 .overflow-y-auto {
   overflow-y: auto;
-}
-
-.overflow-y-scroll {
-  overflow-y: scroll;
 }
 
 .rounded-lg {
@@ -1443,9 +1439,9 @@ select {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
-.text-slate-200 {
+.text-slate-100 {
   --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity));
+  color: rgb(241 245 249 / var(--tw-text-opacity));
 }
 
 .text-red-600 {
@@ -1456,11 +1452,6 @@ select {
 .text-gray-600 {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
-}
-
-.text-slate-100 {
-  --tw-text-opacity: 1;
-  color: rgb(241 245 249 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1713,16 +1704,12 @@ select {
     top: 1rem;
   }
 
-  .md\:right-6 {
-    right: 1.5rem;
+  .md\:right-8 {
+    right: 2rem;
   }
 
   .md\:top-auto {
     top: auto;
-  }
-
-  .md\:right-8 {
-    right: 2rem;
   }
 
   .md\:block {
@@ -1749,16 +1736,12 @@ select {
     overflow: auto;
   }
 
-  .md\:overflow-y-auto {
-    overflow-y: auto;
+  .md\:p-0 {
+    padding: 0px;
   }
 
   .md\:p-10 {
     padding: 2.5rem;
-  }
-
-  .md\:p-0 {
-    padding: 0px;
   }
 
   .md\:text-xl {
