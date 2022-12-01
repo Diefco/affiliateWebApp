@@ -84,9 +84,9 @@
 		</section>
 	</div>
 
-	<div id="modal-info"  class="fixed top-0 left-0 z-50 items-center justify-center hidden w-full h-full py-8 overflow-scroll md:p-0 md:overflow-auto" data-visible="false" style="background-color: #0000009e;">
+	<div id="modal-info"  class="fixed top-0 left-0 z-30 items-center justify-center hidden w-full h-full py-8 overflow-scroll md:p-0 md:overflow-auto" data-visible="false" style="background-color: #0000009e;">
 		<div id="modal-info-close" class="absolute text-lg cursor-pointer text-slate-100 top-4 right-3 md:top-4 md:right-8 md:text-xl" onclick="closeModal()">X</div>
-		<div class="relative max-w-4xl p-6 m-6 bg-white rounded shadow md:p-10 top-8 md:top-auto">
+		<div class="relative max-w-4xl p-6 m-6 bg-white rounded shadow md:p-10 top-8 md:top-auto z-40">
 			<h2 class="mt-2 mb-2 text-2xl font-semibold">Información de entrega</h2>
 			<div class="bg-cBlue h-[3px] w-12 mb-4"></div>			
 			<p class="my-1 text-sm">A continuación especifique los datos de <b>quien recibira el premio.</b></p>
@@ -104,7 +104,7 @@
 					<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 						<svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
 					</div>
-					<input datepicker name="receiverDate" id="receiverDate" type="text" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5" placeholder="Seleciona una fecha" required>
+					<input name="receiverDate" id="receiverDate" type="text" class="bg-white border border-gray-200 text-gray-900 sm:text-sm rounded-lg focus:ring-cBlue block w-full pl-10 p-2.5" placeholder="Seleciona una fecha" required>
 				</div>
 
 				<label for="receiverHour" class="block mt-4 ml-1 text-sm font-medium">Hora de entrega<span class="text-red-600">*</span></label>
@@ -128,6 +128,8 @@
 			</form>
 		</div>
 	</div>
+
+	<script src="assets/js/datepicker_mod.js"></script>
 	<%- include('templates/footer'); -%>
 </body>
 
