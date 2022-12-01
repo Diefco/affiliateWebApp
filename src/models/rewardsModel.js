@@ -14,10 +14,8 @@ module.exports = {
 							email: resultClientes[0].email,
 							points: resultClientes[0].points,
 						},
-						rewards: resultRewards[0] || false,
+						rewards: resultRewards || false,
 					};
-
-					console.log(results.cliente);
 
 					callback(null, results);
 				});
