@@ -28,6 +28,7 @@ module.exports = {
 				// autenticación correcta, creamos sesión
 				req.session.loggedin = true;
 				req.session.idUser = results.sessionIdUser;
+				req.session.idAdmin = results.sessionIdAdmin;
 				req.session.email = results.sessionEmail;
 				//ToDo: Cambiar a /admin/pedidos/
 				res.redirect(homeAdmin);

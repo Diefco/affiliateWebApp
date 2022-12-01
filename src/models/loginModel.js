@@ -89,7 +89,6 @@ module.exports = {
 					});
 
 					const link = `http://localhost:3018/reset-password/${results[0].id}/${token}`;
-					console.log(link);
 
 					const mailSubject =
 						'¿Necesitas recuperar tu contraseña? 🔑';

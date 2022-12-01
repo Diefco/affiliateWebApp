@@ -97,18 +97,11 @@
 						
 						<button
 							type="submit"
-							class="block w-40 py-3 mt-6 font-medium text-white rounded-lg bg-cPink focus:ring-cBlue"
+							class="block w-40 py-3 mt-6 font-medium text-white rounded-lg bg-cPink focus:ring-cBlue hover:bg-cBlue"
 							>
 								Actualizar
 						</button>
 					</form>
-					<a href="email">
-						<button
-							class="block w-40 py-3 mt-6 font-medium text-white rounded-lg bg-cPink focus:ring-cBlue"
-							>
-							Correo
-						</button>
-					</a>
 					<% } %>
 				</div>
 				<div class="flex items-center justify-center w-2/6 p-4 py-6 bg-white shadow">		
@@ -118,6 +111,25 @@
 						<span class="text-3xl text-cPink">
 							<% if(data.points) { %> <%= data.points %> Puntos<%} else {%> 0 Puntos<%}%>
 						</span>
+						
+						<h3 class="mt-16 mb-2 text-xl font-semibold">Correos al cliente:</h3>
+						<div class="bg-cBlue h-[3px] w-8 mb-4 mx-auto"></div>
+						<p class="block mt-2 text-black">Estos botones te permiten enviar mensajes al correo electronico del cliente con las siguientes funciones:</p> 
+						
+						<a href="email">
+							<button
+								class="m-2 w-40 py-3 mt-6 font-medium rounded-lg border-2 border-cBlue text-cBlue focus:ring-cBlue hover:border-cBlue hover:bg-cBlue hover:text-white"
+								>
+								Notificar puntos actuales
+							</button>
+						</a>
+						<a href="changePassword">
+							<button
+								class="m-2 w-40 py-3 mt-6 font-medium rounded-lg border-2 border-cBlue text-cBlue focus:ring-cBlue hover:border-cBlue hover:bg-cBlue hover:text-white"
+								>
+								Enlace cambio de contraseña
+							</button>
+						</a>
 					</div>
 				</div>
 			</div>

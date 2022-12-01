@@ -2,6 +2,7 @@ const AdminClients = require('../../models/admin/clientsModel.js');
 
 module.exports = {
 	index: (req, res) => {
+		console.log(req.session);
 		// renderiza el view .ejs:
 		if (req.session.loggedin) {
 			res.render('admin/clientList');
@@ -92,6 +93,22 @@ module.exports = {
 				if (err) throw err;
 				return res.render('admin/clientList', results);
 			});
+		} else {
+			// autenticación correcta, creamos sesión
+			res.redirect('/admin/');
+		}
+	},
+
+	emailChangePassword: (req, res) => {
+		if (req.session.loggedin) {
+			AdminClients.emailChangePassword(
+				req.con,
+				req.params.id,
+				(err, results) => {
+					if (err) throw err;
+					return res.render('admin/clientList', results);
+				}
+			);
 		} else {
 			// autenticación correcta, creamos sesión
 			res.redirect('/admin/');

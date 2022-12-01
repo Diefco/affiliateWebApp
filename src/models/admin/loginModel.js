@@ -32,6 +32,7 @@ module.exports = {
 						auth: true,
 						msg: 'El correo y contraseña son correctos',
 						sessionIdUser: results[0].id,
+						sessionIdAdmin: results[0].id,
 						sessionEmail: results[0].email,
 					});
 				}
