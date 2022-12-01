@@ -168,7 +168,13 @@ function setDatepicker() {
 	}
 }
 
-setDatepicker();
+const datepickerEl = document.querySelector('#receiverDate');
+if (datepickerEl) {
+	new Datepicker(datepickerEl, {
+		// options
+		minDate: '+4d',
+	});
+}
 
 const adminPedidoCart = [];
 function toggleCart(id) {
