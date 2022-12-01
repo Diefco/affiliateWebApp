@@ -3,9 +3,10 @@ module.exports = {
 		const { idUser } = session;
 
 		con.query(
-			`SELECT * FROM clients WHERE id = '${idUser}'`,
+			`SELECT clients.*,SUM(purchases.pointsPurchase) AS totalPoints FROM clients JOIN purchases ON purchases.idClient=clients.id WHERE clients.id = ${idUser}`,
 			(error, results, fields) => {
 				if (error) throw error;
+
 				callback(null, {
 					id: results[0].id,
 					email: results[0].email,
@@ -13,6 +14,7 @@ module.exports = {
 					phone: results[0].phone,
 					address: results[0].address,
 					points: results[0].points,
+					totalPoints: results[0].totalPoints,
 				});
 			}
 		);
