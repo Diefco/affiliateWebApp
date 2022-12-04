@@ -207,7 +207,7 @@ module.exports = {
 			}
 		);
 	},
-	emailChangePassword: (con, data, callback) => {
+	emailChangePassword: (con, data, url, callback) => {
 		con.query(
 			`SELECT * FROM clients WHERE id = '${data}'`,
 			(error, results) => {
@@ -224,7 +224,7 @@ module.exports = {
 						expiresIn: '7d',
 					});
 
-					const link = `http://localhost:3018/reset-password/${results[0].id}/${token}`;
+					const link = `${url}/reset-password/${results[0].id}/${token}`;
 
 					const mailSubject =
 						'Te ayudamos a recuperar tu contraseña 🔑';
@@ -234,11 +234,11 @@ module.exports = {
 					Este correo te facilita un enlace para crear una nueva <br/>
 					contraseña en tu cuenta de <b>Mis Puntos</b>, la plataforma<br/>
 					donde podras solicitar premios por tus compras.</p>
-					<p style="text-align:center; color:#333333;">Puedes crear la nueva contraseña en el siguiente enlace:<br/>
+					<p style="text-align:center; color:#333333;"><b>Puedes crear la nueva contraseña en el siguiente enlace:</b><br/>
 					<b><a href="${link}" target="_blank" style="color:#E61B76;">Clic aquí para crear una nueva contraseña</a></b><br/>
-					Recuerda que este enlace solo estará disponible por 30 minutos.</p>
+					Recuerda que este enlace solo estará disponible por 3 días.</p>
 					<p style="text-align:center; color:#333333;"> <b>En tu cuenta tienes:</b> <br/>
-					<span style="text-align:center; font-size:24px; color:#E61B76; font-weight:bold;">${results[0].points} Pts.</span> </p>
+					<span style="text-align:center; font-size:16px; color:#E61B76; font-weight:bold;">${results[0].points} Pts.</span> </p>
 					<p style="text-align:center; color:#333333;">Si necesitas más ayuda, siempre puedes contactarnos al correo: <br/>
 					<a href="info@susyreposteria.com"style="color:#E61B76;">info@susyreposteria.com</a></p>`;
 
@@ -253,7 +253,7 @@ module.exports = {
 						alert: true,
 						alertTitle: '¡Excelente!',
 						alertMessage:
-							'Los puntos se han informado a tu cliente.',
+							'Se ha enviado un enlace de cambio de contraseña.',
 						alertIcon: 'success',
 						showConfirmButton: true,
 						timer: 8000,

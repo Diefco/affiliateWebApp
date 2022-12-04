@@ -32,20 +32,25 @@ module.exports = {
 		res.render('forgotPassword');
 	},
 	forgotPasswordAuth: (req, res) => {
-		ClientLogin.forgotPasswordAuth(req.con, req.body, (err, results) => {
-			if (results.auth === false) {
-				// Fallo autenticación, renderiza el view .ejs:
-				res.render('forgotPassword', results);
-			} else {
-				// autenticación correcta, creamos sesión
-				req.session.loggedin = true;
-				req.session.idUser = results.sessionIdUser;
-				req.session.email = results.sessionEmail;
+		ClientLogin.forgotPasswordAuth(
+			req.con,
+			req.body,
+			req.protocol + '://' + req.headers.host,
+			(err, results) => {
+				if (results.auth === false) {
+					// Fallo autenticación, renderiza el view .ejs:
+					res.render('forgotPassword', results);
+				} else {
+					// autenticación correcta, creamos sesión
+					req.session.loggedin = true;
+					req.session.idUser = results.sessionIdUser;
+					req.session.email = results.sessionEmail;
 
-				//ToDo: Cambiar a /mi-cuenta/pedidos/
-				res.redirect(homeClient);
+					//ToDo: Cambiar a /mi-cuenta/pedidos/
+					res.redirect(homeClient);
+				}
 			}
-		});
+		);
 	},
 	resetPassword: (req, res) => {
 		ClientLogin.resetPassword(req.con, req.params, (err, results) => {

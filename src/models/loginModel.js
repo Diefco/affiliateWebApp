@@ -69,7 +69,7 @@ module.exports = {
 			});
 		}
 	},
-	forgotPasswordAuth: (con, data, callback) => {
+	forgotPasswordAuth: (con, data, url, callback) => {
 		const { email } = data;
 
 		con.query(
@@ -88,7 +88,7 @@ module.exports = {
 						expiresIn: '30m',
 					});
 
-					const link = `http://localhost:3018/reset-password/${results[0].id}/${token}`;
+					const link = `${url}/reset-password/${results[0].id}/${token}`;
 
 					const mailSubject =
 						'¿Necesitas recuperar tu contraseña? 🔑';

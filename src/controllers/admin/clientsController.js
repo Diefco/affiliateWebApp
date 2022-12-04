@@ -109,6 +109,7 @@ module.exports = {
 			AdminClients.emailChangePassword(
 				req.con,
 				req.params.id,
+				req.protocol + '://' + req.headers.host,
 				(err, results) => {
 					if (err) throw err;
 					return res.render('admin/clientList', results);

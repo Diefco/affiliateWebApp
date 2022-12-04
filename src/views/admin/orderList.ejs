@@ -70,7 +70,7 @@
 			// 	]				
 			// ],
 			 server: {
-			 	url: 'http://localhost:3018/admin/orderList',
+			 	url: '/admin/orderList',
 			 	then: data => data.map(order => [order.orderId, order.orderDate, order.deliveryDate, order.email, order.stateName,
 		             html(`<a href="/admin/pedidos/edit/${order.orderId}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>`)]),
 			 	handle: (res) => {
