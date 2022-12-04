@@ -2,7 +2,6 @@ const AdminClients = require('../../models/admin/clientsModel.js');
 
 module.exports = {
 	index: (req, res) => {
-		console.log(req.session);
 		// renderiza el view .ejs:
 		if (req.session.loggedin && req.session.idAdmin) {
 			res.render('admin/clientList');

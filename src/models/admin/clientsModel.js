@@ -5,8 +5,12 @@ const jwt = require('jsonwebtoken');
 module.exports = {
 	get: function (con, callback) {
 		con.query(
-			'SELECT clients.*,SUM(purchases.pointsPurchase) AS totalPoints FROM clients JOIN purchases ON purchases.idClient=clients.id',
-			callback
+			'SELECT clients.*, IF(SUM(purchases.pointsPurchase)>0, SUM(purchases.pointsPurchase), 0) AS totalPoints FROM clients LEFT JOIN purchases ON purchases.idClient = clients.id;',
+			(error, results) => {
+				if (error) throw error;
+
+				callback(null, results);
+			}
 		);
 	},
 	getById: function (con, id, callback) {
