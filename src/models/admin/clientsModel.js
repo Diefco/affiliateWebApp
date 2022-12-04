@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 module.exports = {
 	get: function (con, callback) {
 		con.query(
-			'SELECT clients.*, IF(SUM(purchases.pointsPurchase)>0, SUM(purchases.pointsPurchase), 0) AS totalPoints FROM clients LEFT JOIN purchases ON purchases.idClient = clients.id;',
+			'SELECT clients.*, (SELECT SUM(purchases.pointsPurchase) FROM purchases WHERE purchases.idClient = clients.id group by clients.id) AS totalPoints FROM clients;',
 			(error, results) => {
 				if (error) throw error;
 
