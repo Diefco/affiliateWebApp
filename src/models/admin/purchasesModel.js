@@ -12,7 +12,7 @@ module.exports = {
 	},
 	getById: function (con, id, callback) {
 		con.query(
-			`SELECT purchases.id, purchases.namePurchase, DATE_FORMAT(purchases.datePurchase, "%d/%m/%Y") as  datePurchase,purchases.description ,clients.email, purchases.valuePurchase, purchases.pointsPurchase FROM purchases JOIN clients ON purchases.idClient = clients.id WHERE purchases.id = ${id}`,
+			`SELECT purchases.id, purchases.namePurchase, DATE_FORMAT(purchases.datePurchase, "%d/%m/%Y") as datePurchase,purchases.description ,clients.email, purchases.valuePurchase, purchases.pointsPurchase FROM purchases JOIN clients ON purchases.idClient = clients.id WHERE purchases.id = ${id}`,
 			(error, results) => {
 				if (error) throw error;
 
@@ -23,13 +23,20 @@ module.exports = {
 
 	create: function (con, data, callback) {
 		if (data.emailClient) {
+			const dateParts = data.datePurchase.split('/');
+			data.datePurchase = new Date(
+				+dateParts[2],
+				dateParts[1] - 1,
+				+dateParts[0]
+			);
+			//data.datePurchase = JSON.stringify(data.datePurchase);
+
 			con.query(
 				`SELECT * FROM clients WHERE email = '${data.emailClient}'`,
 				(error, results, fields) => {
 					if (error) throw error;
 					if (results.length > 0) {
-						data.datePurchase = new Date(data.datePurchase);
-
+						console.log();
 						con.query(
 							'INSERT INTO purchases SET ?',
 							{
@@ -121,7 +128,12 @@ module.exports = {
 				const calcPoints =
 					results2[0].points - oldPointsPurchase + newPointsPurchase;
 
-				data.datePurchase = new Date(data.datePurchase);
+				const dateParts = data.datePurchase.split('/');
+				data.datePurchase = new Date(
+					+dateParts[2],
+					dateParts[1] - 1,
+					+dateParts[0]
+				);
 				// Se debe realizar un stringify a este date por la forma
 				// en que se pasa la variable en la consulta
 				// de lo contrario enviara este tipo de fecha:

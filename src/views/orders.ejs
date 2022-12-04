@@ -53,7 +53,7 @@
 			server: {
 				url: '/orderList',
 				then: data => data.map(order => [order.orderDate, order.deliveryDate, order.stateName,
-		             html(`<a href="pedidos/${order.id}/"><i class="mx-1 text-gray-500 fa-solid fa-pen-to-square hover:text-cPink"></i></a>`)]),
+		             html(`<a href="pedidos/${order.id}/"><i class="mx-1 text-gray-500 fa-solid fa-eye hover:text-cPink"></i></a>`)]),
 				handle: (res) => {
 				// no matching records found
 				if (res.status === 404) return {data: []};

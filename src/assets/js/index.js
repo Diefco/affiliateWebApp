@@ -158,21 +158,25 @@ function showPreview(event) {
 }
 
 /* set date en datepicker */
-function setDatepicker() {
-	const dateInput = document.querySelector('.datepicker');
-	if (dateInput) {
-		const dateValue = dateInput.getAttribute('data-value');
-		setTimeout(() => {
-			dateInput.value = dateValue;
-		}, 300);
-	}
-}
+// function setDatepicker() {
+// 	const dateInput = document.querySelector('.datepicker');
+// 	if (dateInput) {
+// 		const dateValue = dateInput.getAttribute('data-value');
+// 		setTimeout(() => {
+// 			dateInput.value = dateValue;
+// 		}, 300);
+// 	}
+// }
 
 const datepickerEl = document.querySelector('#receiverDate');
 if (datepickerEl) {
+	let minDate = new Date();
+	minDate.setDate(minDate.getDate() + 3);
 	new Datepicker(datepickerEl, {
 		// options
-		minDate: '+4d',
+		format: 'dd/mm/yyyy',
+		minDate: minDate,
+		autoclose: true,
 	});
 }
 

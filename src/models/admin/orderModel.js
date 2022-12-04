@@ -182,9 +182,10 @@ module.exports = {
 			`SELECT idOrderState, idReward FROM orders WHERE id = '${id}'`,
 			(error, results, fields) => {
 				if (error) throw error;
-				console.log(results);
+
 				let actualState = results[0].idOrderState;
 				let idReward = results[0].idReward;
+
 				if (actualState == 5 && data.orderState != 5) {
 					con.query(
 						`SELECT pricePoints FROM rewards WHERE id in (${idReward})`,
